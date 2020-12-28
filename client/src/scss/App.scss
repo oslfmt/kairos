@@ -1,0 +1,198 @@
+@import 'variables';
+/* ====================================== */
+/* GENERIC STYLING */
+/* ====================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+a, a:hover {
+    text-decoration: none;
+    color: #333333;
+}
+
+// REUSABLE COMPONENTS
+header {
+    .row:last-child {
+        padding-left: 4rem;
+    }
+
+    a {
+        width: 80px;
+    }
+}
+
+.profile-pic-sm {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.fa-star {
+    color: #f1c40f;
+}
+
+/* ====================================== */
+/* HOME PAGE */
+/* ====================================== */
+#main {
+    .jumbotron {
+        margin-top: 4rem;
+        width: 600px;
+    }
+    
+    a {
+        height: 60px;
+        width: 100px;
+        padding-top: 0.75rem;
+    }
+}
+
+/* SERVICES SECTION */
+#services {
+    margin-top: 9rem;
+}
+/* card class */
+.card {
+    height: 400px;
+}
+
+#how-it-works {
+    padding: 6rem 0;
+}
+
+#advantages {
+    padding: 4rem 0;
+}
+
+/* ====================================== */
+/* SIGN-UP PAGE */
+/* ====================================== */
+#signup-form {
+    margin-top: 6rem;
+
+    .card {
+        width: 50%;
+        height: 80%;
+    }
+
+    a {
+        width: 150px;
+    }
+}
+
+/* ====================================== */
+/* BROWSE PAGE */
+/* ====================================== */
+
+
+/* ====================================== */
+/* PROFILE PAGE */
+/* ====================================== */
+#profile {
+    .col-4 {
+        .card {
+            height: 800px;
+            background-color: $primary-color;
+            border: none;
+            margin-right: 3rem;
+
+            img {
+                height: 200px;
+                width: 200px;
+                border-radius: 50%;
+                margin-top: 40px;
+            }
+
+            button {
+                width: 50px;
+                height: 30px;
+                margin-top: 0.25rem;
+            }
+        }
+    }
+
+    .col-8 {
+        .card {
+            height: 40%;
+            background-color: $grey-color;
+            border: none;
+            margin-bottom: 3rem;
+        }
+
+        .edit-btn {
+            width: 60px;
+            height: 30px;
+            margin: 0.5rem;
+        }
+
+        button:first-child {
+            margin-right: 2rem;
+        }
+    }
+}
+/* ====================================== */
+/* JOB-FORM PAGE */
+/* ====================================== */
+#postjob {
+    span,
+    .error-msg {
+        color: red;
+    }
+
+    .small-text {
+        font-size: 12px;
+        color: red;
+        margin-top: 6px;
+    }
+}
+
+/* ====================================== */
+/* NOTIFY FREELANCER PAGE */
+/* ====================================== */
+#freelancers {
+    .card {
+        height: 140px;
+
+        button {
+            height: 40px;
+            margin-right: 1rem;
+        }
+    }
+}
+
+/* ====================================== */
+/* SERVICE DETAILS PAGE */
+/* ====================================== */
+#service-details {
+    .review-section {
+        margin-bottom: 4rem;
+    }
+
+    .col-md-8 {
+        .jumbotron {
+            height: 250px;
+        }
+        
+    }
+    .col-md-4 {
+        .jumbotron:first-child {
+            height: 500px;
+            background-color: $primary-color;
+            margin-bottom: 0;
+
+            img {
+                height: 200px;
+                width: 200px;
+                border-radius: 50%;
+                margin-bottom: 2rem;
+            }
+        }
+    }
+}
