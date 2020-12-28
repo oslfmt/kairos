@@ -20,7 +20,11 @@ db.once('open', () => console.log('Connected to MongoDB'));
 
 app.get('/', (req, res) => {
     // FUTURE IMPLEMENTATION: get request to retrieve sample job postings to list on homepage
+    Job.find((err, jobs) => {
+        if (err) return console.error(err);
 
+        res.send(jobs);
+    })
 });
 
 app.post('/postjob', (req, res) => {
