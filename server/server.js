@@ -16,17 +16,29 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
 db.once('open', () => console.log('Connected to MongoDB'));
 
-
-
+// ENDPOINTS
+// Home page
 app.get('/', (req, res) => {
-    // FUTURE IMPLEMENTATION: get request to retrieve sample job postings to list on homepage
-    Job.find((err, jobs) => {
-        if (err) return console.error(err);
-
-        res.send(jobs);
-    })
+    Job.
+        find().
+        limit(4).
+        exec((err, jobs) => {
+            if (err) return console.error(err);
+            res.send(jobs);
+        });
 });
 
+// browse page
+app.get('/browse', (req, res) => {
+    Job.
+        find().
+        exec((err, jobs) => {
+            if (err) return console.error(err);
+            res.send(jobs);
+        });
+});
+
+// posting a new job
 app.post('/postjob', (req, res) => {
     let job = new Job(req.body);
 

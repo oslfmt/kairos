@@ -1,17 +1,24 @@
+import axios from 'axios';
 import React, { Component } from 'react';
-import Job from './Job';
+import JobDeck from './JobDeck';
 
 export default class BrowseGrid extends Component {
 	constructor(props) {
 		super(props);
 
-		this.setState({
+		this.state = {
 			jobs: []
-		});
+		};
 	}
 
-	jobList() {
-		
+	componentDidMount() {
+		axios.get('http://localhost:4000/browse')
+			.then(res => {
+				this.setState({
+					jobs: res.data
+				});
+			})
+			.catch(err => console.error(err));
 	}
 
 	render() {
@@ -22,16 +29,14 @@ export default class BrowseGrid extends Component {
 							<h3 className="display-5">Top Services</h3>
 						</div>
 						<div className="row">
-							{this.jobList()}
+							<JobDeck jobs={this.state.jobs} />
 						</div>
 
 						<div className="row mt-5">
 								<h3 className="display-5">Services</h3>
 						</div>
 						<div className="row">
-							<Job />
-							<Job />
-							<Job />
+							<JobDeck jobs={this.state.jobs} />
 						</div>
 				</div>
 			</section>

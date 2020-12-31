@@ -1,9 +1,28 @@
+import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import Job from '../Job';
+import JobDeck from '../JobDeck';
 
 export default class Home extends Component {
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			jobs: []
+		};
+	}
+
+	componentDidMount() {
+		axios.get('http://localhost:4000/')
+			.then(res => {
+				this.setState({
+					jobs: res.data
+				});
+			})
+			.catch(err => console.error(err));
+	}
+
 	render() {
 		return (
 			<div>
@@ -46,13 +65,7 @@ export default class Home extends Component {
 
 				<section id="services">
 					<div className="container-fluid bg-primary pt-3 mt-5 p-5">
-						<div className="card-deck">
-							<Job />
-							<Job />
-							<Job />
-							<Job />
-							<Job />
-						</div>
+						<JobDeck jobs={this.state.jobs} />
 					</div>
 				</section>
 
