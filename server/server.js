@@ -6,10 +6,14 @@ const cors = require('cors');
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
-const PORT = 3000;
+const PORT = 4000;
 
 let Job = require('./Job-model');
+
+// import router used for authentication endpoint
+// processes endpoing '/register' for user registration
 const AuthRoute = require('./routes/auth');
+app.use(AuthRoute);
 
 mongoose.connect('mongodb+srv://user1:test123@cluster0.98it7.mongodb.net/Cluster0?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -57,5 +61,3 @@ app.post('/postjob', (req, res) => {
 app.listen(PORT, () => {
     console.log('App listening at port ' + PORT);
 });
-
-app.use('api', AuthRoute);
