@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
 export default class SignupForm extends Component {
 	render() {
@@ -10,7 +9,7 @@ export default class SignupForm extends Component {
             <div className="card">
 							<div className="card-body">
 								<h2 className="card-title">Sign Up</h2>
-								<form action="#">
+								<form action="/register" method="POST">
 									<div className="form-row">
 										<div className="form-group col-md-6">
 											<label htmlFor="firstName">First Name</label>
@@ -23,20 +22,20 @@ export default class SignupForm extends Component {
 									</div>
 									<div className="form-row">
 										<div className="form-group col-md">
-											<label htmlFor="university">University</label>
-											<input type="text" className="form-control" id="university"></input>
+											<label htmlFor="university">University Email</label>
+											<input type="email" className="form-control" id="email" name="email"></input>
 										</div>
 									</div>
 									<div className="form-row">
 										<div className="form-group col-md">
 											<label htmlFor="username">Username</label>
-											<input type="text" className="form-control" id="username"></input>
+											<input type="text" className="form-control" id="name"  name="name"></input>
 										</div>
 									</div>
 									<div className="form-row">
 										<div className="form-group col-md-6">
 												<label htmlFor="password">Password</label>
-												<input type="text" className="form-control" id="password"></input>
+												<input type="password" className="form-control" id="password" name="password"></input>
 										</div>
 										<div className="form-group col-md-6">
 												<label htmlFor="confirmPassword">Confirm Password</label>
@@ -45,7 +44,7 @@ export default class SignupForm extends Component {
 									</div>
 									<div className="form-row mt-3">
 										<div className="form-group col-md text-center">
-											<Link className="btn btn-lg btn-primary" to="/profile">Join</Link>
+											<button className="btn btn-lg btn-primary" type="submit">Join</button>
 										</div>
 									</div>
 								</form>
