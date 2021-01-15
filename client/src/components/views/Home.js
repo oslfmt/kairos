@@ -57,7 +57,6 @@ export default class Home extends Component {
               </div>
               <div className="row pl-5">
 								<h2 className="display-5">Freelancing For the Community</h2>
-								<input className="form-control pl-2" type="text" placeholder="Search for services..."></input>
               </div>
             </div>
         	</div>

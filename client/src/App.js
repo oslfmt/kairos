@@ -37,7 +37,6 @@ class App extends Component {
           </Route>
 
           <Route path="/browse">
-            <Header />
             <BrowseGrid />
             <Footer />
           </Route>
