@@ -13,6 +13,7 @@ export default class BrowseGrid extends Component {
 		};
 
 		this.handleSearch = this.handleSearch.bind(this);
+		this.updateJobs = this.updateJobs.bind(this);
 	}
 
 	componentDidMount() {
@@ -32,10 +33,20 @@ export default class BrowseGrid extends Component {
 		});
 	}
 
+	updateJobs(jobs) {
+		this.setState({
+			jobs: jobs
+		});
+	}
+
 	render() {
 		return (
 			<div>
-				<Header onSearchChange={this.handleSearch} searchQuery={this.state.searchQuery}/>
+				<Header
+					onSearchChange={this.handleSearch} 
+					searchQuery={this.state.searchQuery} 
+					jobUpdate={this.updateJobs}
+				/>
 				<section id="job-grid">
 					<div className="container-md mt-5 mb-5">
 							<div className="row">
@@ -49,7 +60,7 @@ export default class BrowseGrid extends Component {
 									<h3 className="display-5">Services</h3>
 							</div>
 							<div className="row">
-								<JobDeck jobs={this.state.jobs} />
+								{/* <JobDeck jobs={this.state.jobs} /> */}
 							</div>
 					</div>
 				</section>

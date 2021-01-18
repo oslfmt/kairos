@@ -32,12 +32,26 @@ app.get('/', (req, res) => {
 app.get('/browse', (req, res) => {
     // IMPLEMENT: on request object, add search query and update logic to handle search query
     // If no search query provided, do a generic GET request
-    Job.
+    let searchQuery = req.query.searchQuery;
+
+    // if searchQuery is blank, then page is just loaded so fetch all generic jobs
+    if (searchQuery === undefined) {
+        Job.
         find().
         exec((err, jobs) => {
             if (err) return console.error(err);
             res.send(jobs);
         });
+    } else {
+        Job.
+        find().
+        where('description', /.description/i).
+        exec((err, jobs) => {
+            if (err) return console.error(err);
+            res.send(jobs);
+        });
+    }
+    console.log('this is a test')
 });
 
 // posting a new job

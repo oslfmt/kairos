@@ -7,8 +7,6 @@ export default function JobDeck(props) {
 	);
 
 	return (
-		<div className="card-deck">
-			{jobs}
-		</div>
+		<div className="card-deck">{jobs}</div>
 	);
 }

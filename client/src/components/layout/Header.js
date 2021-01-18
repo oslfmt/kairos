@@ -14,16 +14,14 @@ export default class Header extends Component {
 	}
 
 	handleSubmit() {
-		// when 'GO' button clicked, 2 things must happen:
-		// 1. fetch the "BrowseGrid" component
-		// 2. Submit the user search query to fetch matching jobs
-		// 3. Render those fetched jobs on 'BrowseGrid'
 		axios.get('http://localhost:4000/browse', {
 			params: {
-				query: this.props.searchQuery
+				searchQuery: this.props.searchQuery
 			}
 		})
-			.then(res => console.log(res))
+			.then(res => {
+				this.props.jobUpdate(res.data);
+			})
 			.catch(err => console.log(err));
 	}
 
@@ -46,7 +44,7 @@ export default class Header extends Component {
 						/>
 					</div>
 					<div className="col-4">
-						<Link to="/browse" className="btn btn-primary" onClick={this.handleSubmit}>Go</Link>
+						<button className="btn btn-primary" onClick={this.handleSubmit}>Go</button>
 					</div>
 				</div>
 				<div className="row text-center">
