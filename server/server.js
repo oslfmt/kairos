@@ -51,7 +51,6 @@ app.get('/browse', (req, res) => {
             res.send(jobs);
         });
     }
-    console.log('this is a test')
 });
 
 // posting a new job
