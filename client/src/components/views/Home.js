@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import JobDeck from '../JobDeck';
+import LoginButton from '../LoginButton';
+import LogoutButton from '../LogoutButton';
 
 export default class Home extends Component {
 	constructor(props) {
@@ -35,7 +37,9 @@ export default class Home extends Component {
 							<Link className="nav-link" to="#">Advantages</Link>
 						</li>
 						<li className="nav-item">
-							<Link className="nav-link" to="#">Log In</Link>
+							<LoginButton />
+							<LogoutButton />
+							
 						</li>
 						<li className="nav-item">
 							<Link className="nav-link" to="/signup">Sign Up</Link>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import profilePic from '../../img/profilepic.jpg';
+
+import ProfileImg from '../profile-img';
+
 
 export default class Profile extends Component {
 	render() {
@@ -12,7 +14,7 @@ export default class Profile extends Component {
 							<div className="col-4">
 								<div className="card">
 									<div className="card-body text-center">
-										<img src={profilePic} className="img-fluid" alt="profile pic"></img>
+										<ProfileImg />
 										<form className="mt-4 text-left text-white" action="">
 											<div className="form-group">
 												<label htmlFor="university">University</label>

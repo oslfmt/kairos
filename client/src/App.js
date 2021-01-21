@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+
 // import css file
 import './css/main.css';
 
@@ -14,6 +15,7 @@ import JobForm from './components/views/JobForm';
 import Footer from './components/layout/Footer';
 import FreelancerList from './components/Freelancer-list';
 import BrowseGrid from './components/BrowseGrid';
+import LoginButton from './components/LoginButton';
 
 class App extends Component {
   render() {
@@ -21,7 +23,7 @@ class App extends Component {
       <Router>
         <Switch>
           <Route path="/signup">
-            <SignupForm />
+            <LoginButton />
           </Route>
 
           <Route path="/profile">
