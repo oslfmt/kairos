@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
             if (err) return console.error(err);
             res.send(jobs);
         });
+    console.log('test')
 });
 
 // browse page
