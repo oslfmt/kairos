@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { SearchBox } from 'react-instantsearch-dom';
 
 export default class Header extends Component {
 	constructor(props) {
@@ -35,13 +36,14 @@ export default class Header extends Component {
 						</h1>
 					</div>
 					<div className="col-3">
-						<input
+						{/* <input
 							type="text" 
 							className="form-control" 
 							placeholder="Search..."
 							value={this.props.searchQuery}
 							onChange={this.handleInputChange}
-						/>
+						/> */}
+						<SearchBox searchAsYouType={false} />
 					</div>
 					<div className="col-4">
 						<button className="btn btn-primary" onClick={this.handleSubmit}>Go</button>

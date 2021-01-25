@@ -9,6 +9,7 @@ app.use(cors());
 const PORT = 4000;
 
 let Job = require('./Job-model');
+const fetchDataFromDatabase = require('./search');
 
 mongoose.connect('mongodb+srv://user1:test123@cluster0.98it7.mongodb.net/Cluster0?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -26,7 +27,6 @@ app.get('/', (req, res) => {
             if (err) return console.error(err);
             res.send(jobs);
         });
-    console.log('test')
 });
 
 // browse page
@@ -67,6 +67,7 @@ app.post('/postjob', (req, res) => {
             res.status(400).send("Failed: " + err);
         });
 });
+
 
 app.listen(PORT, () => {
     console.log('App listening at port ' + PORT);

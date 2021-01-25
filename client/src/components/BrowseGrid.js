@@ -2,6 +2,8 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import JobDeck from './JobDeck';
 import Header from './layout/Header'
+import { Hits } from 'react-instantsearch-dom';
+import Job from './Job';
 
 export default class BrowseGrid extends Component {
 	constructor(props) {
@@ -47,6 +49,7 @@ export default class BrowseGrid extends Component {
 					searchQuery={this.state.searchQuery} 
 					jobUpdate={this.updateJobs}
 				/>
+				<Hits />
 				<section id="job-grid">
 					<div className="container-md mt-5 mb-5">
 							<div className="row">
