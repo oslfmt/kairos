@@ -30,6 +30,8 @@ app.get('/', (req, res) => {
 
 // browse page
 app.get('/browse', (req, res) => {
+    // IMPLEMENT: on request object, add search query and update logic to handle search query
+    // If no search query provided, do a generic GET request
     Job.
         find().
         exec((err, jobs) => {
