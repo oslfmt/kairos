@@ -38,7 +38,7 @@ export default class Header extends Component {
 					<div className="col-3">
 						{/* <input
 							type="text" 
-							className="form-control" 
+							className="form-control"
 							placeholder="Search..."
 							value={this.props.searchQuery}
 							onChange={this.handleInputChange}
