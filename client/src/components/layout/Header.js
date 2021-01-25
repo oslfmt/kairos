@@ -61,7 +61,7 @@ export default class Header extends Component {
 							<Link to="">Writing</Link>
 					</div>
 				</div>
-      </div>
+      		</div>
 		)
 	}
 }
