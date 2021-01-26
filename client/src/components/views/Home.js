@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { SearchBox } from 'react-instantsearch-dom';
 import { Link } from 'react-router-dom';
+import CustomHits from '../JobDeck';
+import { Configure } from 'react-instantsearch-dom';
 
 import JobDeck from '../JobDeck';
 
@@ -52,19 +55,23 @@ export default class Home extends Component {
                   <h1 className="display-2 pr-3">Collancer</h1>
                 </div>
 								<div className="col-4">
-										<a href="signup.html" className="btn btn-lg btn-primary">Join</a>
+										<Link to="/signup" className="btn btn-lg btn-primary">Join</Link>
 								</div>
               </div>
               <div className="row pl-5">
 								<h2 className="display-5">Freelancing For the Community</h2>
               </div>
+							<div className="row pl-5">
+								<SearchBox />
+							</div>
             </div>
         	</div>
     		</section>
 
 				<section id="services">
 					<div className="container-fluid bg-primary pt-3 mt-5 p-5">
-						<JobDeck jobs={this.state.jobs} />
+						<Configure hitsPerPage={4} />
+						<CustomHits hitComponent={JobDeck} />
 					</div>
 				</section>
 

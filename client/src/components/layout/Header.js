@@ -45,9 +45,9 @@ export default class Header extends Component {
 						/> */}
 						<SearchBox searchAsYouType={false} />
 					</div>
-					<div className="col-4">
+					{/* <div className="col-4">
 						<button className="btn btn-primary" onClick={this.handleSubmit}>Go</button>
-					</div>
+					</div> */}
 				</div>
 				<div className="row text-center">
 					<div className="col-xl-1">

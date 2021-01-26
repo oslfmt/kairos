@@ -9,6 +9,10 @@ index.setSettings({
         'title',
         'skills, otherSkills',
         'description'
+    ],
+    attributesForFaceting: [
+        'skills',
+        'price',
     ]
 }).then(() => {
     console.log('Settings set');

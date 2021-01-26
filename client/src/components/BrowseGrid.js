@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { Component } from 'react';
 import JobDeck from './JobDeck';
 import Header from './layout/Header'
 import CustomHits from './JobDeck';
+import { RefinementList } from 'react-instantsearch-dom';
 
 export default class BrowseGrid extends Component {
 	render() {
@@ -10,12 +10,22 @@ export default class BrowseGrid extends Component {
 			<div>
 				<Header />
 				<section id="job-grid">
-					<div className="container-md mt-5 mb-5">
+					<div className="container-fluid p-5">
 						<div className="row">
-							<h3 className="display-5">Results</h3>
-						</div>
-						<div className="row">
-							<CustomHits hitComponent={JobDeck} />
+							<div className="col-auto">
+								<div className="jumbotron p-3">
+									<h4 className="lead">Category</h4>
+									<RefinementList attribute="skills" />
+								</div>
+								<div className="jumbotron p-3">
+									<h4 className="lead">Price</h4>
+									<RefinementList attribute="price" />
+								</div>
+							</div>
+							<div className="col">
+								<h3 className="display-5 mb-4">Results</h3>
+								<CustomHits hitComponent={JobDeck} />
+							</div>
 						</div>
 					</div>
 				</section>
