@@ -11,6 +11,8 @@ const PORT = 4000;
 let Job = require('./Job-model');
 const fetchDataFromDatabase = require('./search');
 
+fetchDataFromDatabase();
+
 mongoose.connect('mongodb+srv://user1:test123@cluster0.98it7.mongodb.net/Cluster0?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;

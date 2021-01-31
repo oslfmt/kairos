@@ -36,10 +36,11 @@ class App extends Component {
             <Footer />
           </Route>
 
-          <Route path="/browse">
-            <BrowseGrid />
-            <Footer />
-          </Route>
+          <Route path="/browse"
+            render={(props) => (
+              <BrowseGrid {...props} />
+            )}
+          />
 
           <Route path="/notify">
             <Header />

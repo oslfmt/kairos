@@ -2,10 +2,24 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { SearchBox } from 'react-instantsearch-dom';
 import { Link } from 'react-router-dom';
-import CustomHits from '../JobDeck';
-import { Configure } from 'react-instantsearch-dom';
 
-import JobDeck from '../JobDeck';
+import Job from '../Job';
+
+/**
+ * Renders a custom list of jobs fetched from DB
+ * @param {*} props 
+ */
+function JobList(props) {
+	const jobList = props.jobs.map(job => (
+		<Job key={job._id} data={job} />
+	));
+
+	return (
+		<div className="card-deck">
+			{jobList}
+		</div>
+	)
+}
 
 export default class Home extends Component {
 	constructor(props) {
@@ -16,6 +30,9 @@ export default class Home extends Component {
 		};
 	}
 
+	/**
+	 * On mount, fetch jobs from DB and store in component state
+	 */
 	componentDidMount() {
 		axios.get('http://localhost:4000/')
 			.then(res => {
@@ -70,8 +87,7 @@ export default class Home extends Component {
 
 				<section id="services">
 					<div className="container-fluid bg-primary pt-3 mt-5 p-5">
-						<Configure hitsPerPage={4} />
-						<CustomHits hitComponent={JobDeck} />
+						<JobList jobs={this.state.jobs} />
 					</div>
 				</section>
 
@@ -128,6 +144,6 @@ export default class Home extends Component {
 					</div>
 				</section>
 		</div>
-		)
+		);
 	}
 }

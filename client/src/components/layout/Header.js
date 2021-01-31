@@ -1,32 +1,42 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { SearchBox } from 'react-instantsearch-dom';
 
 export default class Header extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			query: '',
+			submit: false,
+		}
+		
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
+	/**
+	 * Sets state of query field to the user input typed in search box
+	 * @param {the event object} e 
+	 */
 	handleInputChange(e) {
-		this.props.onSearchChange(e.target.value);
+		this.setState({
+			query: e.target.value
+		});
 	}
 
-	handleSubmit() {
-		axios.get('http://localhost:4000/browse', {
-			params: {
-				searchQuery: this.props.searchQuery
-			}
-		})
-			.then(res => {
-				this.props.jobUpdate(res.data);
-			})
-			.catch(err => console.log(err));
+	handleSubmit(e) {
+		e.preventDefault();
+		
+		this.setState({
+			submit: true
+		});
 	}
 
 	render() {
+		// store state in variables
+		const {query, submit} = this.state;
+
 		return (
 			<div className="container-fluid p-3 bg-light">
 				<div className="row justify-content-start align-items-center">
@@ -36,18 +46,16 @@ export default class Header extends Component {
 						</h1>
 					</div>
 					<div className="col-3">
-						{/* <input
-							type="text" 
-							className="form-control"
-							placeholder="Search..."
-							value={this.props.searchQuery}
+						<SearchBox
+							searchAsYouType={false} 
+							defaultRefinement={this.props.query} 
 							onChange={this.handleInputChange}
-						/> */}
-						<SearchBox searchAsYouType={false} />
+							onSubmit={this.handleSubmit}
+						/>
 					</div>
-					{/* <div className="col-4">
+					<div className="col-4">
 						<button className="btn btn-primary" onClick={this.handleSubmit}>Go</button>
-					</div> */}
+					</div>
 				</div>
 				<div className="row text-center">
 					<div className="col-xl-1">
@@ -63,7 +71,15 @@ export default class Header extends Component {
 							<Link to="">Writing</Link>
 					</div>
 				</div>
-      		</div>
-		)
+
+				{/* if submit is 'true', redirect to browse page */}
+				{submit ? <Redirect push 
+										to={{
+											pathname:"/browse",
+											state: { query: query }
+										}}
+									/> : null}
+      </div>
+		);
 	}
 }

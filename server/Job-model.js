@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 const JobSchema = new Schema({
     title: String,
     description: String,
-    price: Number,
+    price: String,
     skills: Array,
-    otherSkills: String
+    otherSkills: String,
+    paymentForms: Array
 });
 
 module.exports = mongoose.model('Job', JobSchema);
