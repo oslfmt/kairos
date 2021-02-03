@@ -7,48 +7,55 @@ const index = client.initIndex('test_jobs');
 
 // set search settings on index
 index.setSettings({
-    searchableAttributes: [
-        'title',
-        'skills, otherSkills',
-        'description'
-    ],
-    attributesForFaceting: [
-        'skills',
-        'price',
-        'paymentForms',
-    ]
+  searchableAttributes: [
+    'title',
+    'skills, otherSkills',
+    'description'
+  ],
+  attributesForFaceting: [
+    'skills',
+    'price',
+    'paymentForms',
+  ]
 }).then(() => {
-    console.log('Settings set');
+  console.log('Settings set');
 });
 
+/**
+ * Mutates an object by renaming a specified key
+ * @param {object} obj - the object to modify
+ * @param {string} oldKey - the key name to be changed
+ * @param {string} newKey - the new key name
+ */
 function renameKey(obj, oldKey, newKey) {
-    if (oldKey !== newKey) {
-        Object.defineProperty(obj, newKey,
-            Object.getOwnPropertyDescriptor(obj, oldKey));
-        delete obj[oldKey];
-    }
+  if (oldKey !== newKey) {
+    Object.defineProperty(obj, newKey,
+      Object.getOwnPropertyDescriptor(obj, oldKey));
+    delete obj[oldKey];
+  }
+  return obj;
 }
 
-// fetch data from mongoDB database
+/**
+ * Fetches data from mongoDB database and saves all records to Algolia search index.
+ */
 function fetchDataFromDatabase() {
-    Job.find()
-        .exec((err, jobs) => {
-            if (err) return console.error(err);
+  Job.find()
+    .exec((err, jobs) => {
+      if (err) return console.error(err);
 
-            let newJobs = jobs.map(job => {
-                job.update({$set: {title: 'test'}});
-                return job;
-            });
-            console.log(newJobs);
+      // create a new array where _id is renamed to objectID for each record
+      let newJobs = jobs.map(job => {
+        return renameKey(job.toObject(), '_id', 'objectID');
+      });
 
-            // save jobs to algolia index
-            // index.saveObjects(jobs, { autoGenerateObjectIDIfNotExist: true })
-            //     .then(({ objectIDs }) => {
-            //         console.log(objectIDs);
-            //     })
-            //     .catch(err => console.log(err));
-        });
-    return true;
+      // save and update records to algolia index
+      index.saveObjects(newJobs)
+        .then(() => {
+            console.log('All records updated and saved');
+        })
+        .catch(err => console.log(err));
+    });
 }
 
 module.exports = fetchDataFromDatabase;

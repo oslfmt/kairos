@@ -1,42 +1,21 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { SearchBox } from 'react-instantsearch-dom';
+import { Link } from 'react-router-dom';
+import CustomSearchBox from '../search/CustomSearchBox';
 
+/**
+ * Renders the UI for the Header component. This component is reusable, and is placed at the top of most pages.
+ * 
+ * These props are only used by the specialized 'BrowseGrid' Header because this is the only header that will save
+ * queries from another page and use them as a default refinement.
+ * @props query - the user input search query; passed to CustomSearchBox for a defaultRefinement
+ * @props browse - indicates if Header is on 'browse' page; passed to CustomSearchBox to render proper SearchBox based
+ * 								 on value of prop
+ * 
+ * @child CustomSearchBox - customized InstantSearch component that renders the appropriate SearchBox depending on the
+ * 													truth value of browse prop
+ */
 export default class Header extends Component {
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			query: '',
-			submit: false,
-		}
-		
-		this.handleInputChange = this.handleInputChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
-
-	/**
-	 * Sets state of query field to the user input typed in search box
-	 * @param {the event object} e 
-	 */
-	handleInputChange(e) {
-		this.setState({
-			query: e.target.value
-		});
-	}
-
-	handleSubmit(e) {
-		e.preventDefault();
-		
-		this.setState({
-			submit: true
-		});
-	}
-
 	render() {
-		// store state in variables
-		const {query, submit} = this.state;
-
 		return (
 			<div className="container-fluid p-3 bg-light">
 				<div className="row justify-content-start align-items-center">
@@ -46,15 +25,7 @@ export default class Header extends Component {
 						</h1>
 					</div>
 					<div className="col-3">
-						<SearchBox
-							searchAsYouType={false} 
-							defaultRefinement={this.props.query} 
-							onChange={this.handleInputChange}
-							onSubmit={this.handleSubmit}
-						/>
-					</div>
-					<div className="col-4">
-						<button className="btn btn-primary" onClick={this.handleSubmit}>Go</button>
+						<CustomSearchBox browse={this.props.browse} query={this.props.query} />
 					</div>
 				</div>
 				<div className="row text-center">
@@ -71,14 +42,6 @@ export default class Header extends Component {
 							<Link to="">Writing</Link>
 					</div>
 				</div>
-
-				{/* if submit is 'true', redirect to browse page */}
-				{submit ? <Redirect push 
-										to={{
-											pathname:"/browse",
-											state: { query: query }
-										}}
-									/> : null}
       </div>
 		);
 	}

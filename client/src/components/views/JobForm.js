@@ -197,7 +197,7 @@ export default class JobForm extends Component {
 									onChange={this.handleCheckbox}
 								/>
 								<Checkbox 
-									label="Pay what you want" 
+									label="Pay what I want" 
 									onChange={this.handleCheckbox}
 								/>
 								<Checkbox 

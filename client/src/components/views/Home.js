@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { SearchBox } from 'react-instantsearch-dom';
 import { Link } from 'react-router-dom';
+import CustomSearchBox from '../search/CustomSearchBox';
 
 import Job from '../Job';
 
@@ -79,7 +79,7 @@ export default class Home extends Component {
 								<h2 className="display-5">Freelancing For the Community</h2>
               </div>
 							<div className="row pl-5">
-								<SearchBox />
+								<CustomSearchBox />
 							</div>
             </div>
         	</div>
