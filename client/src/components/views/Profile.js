@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import ProfileImg from '../profile-img';
+import ProfileImg from '../UserProfileInfo/profile-img';
+import Header from '../layout/Header';
 
 
 export default class Profile extends Component {
 	render() {
 		return (
 			<div>
+				<Header />
 				<section id="profile">
 					<div className="container-fluid">
 						<div className="row m-5">

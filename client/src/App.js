@@ -8,7 +8,6 @@ import './css/main.css';
 
 // import pages
 import Home from './components/views/Home';
-import SignupForm from './components/Signup-Form';
 import Profile from './components/views/Profile';
 import Header from './components/layout/Header';
 import JobForm from './components/views/JobForm';
