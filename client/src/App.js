@@ -13,7 +13,7 @@ import Header from './components/layout/Header';
 import JobForm from './components/views/JobForm';
 import Footer from './components/layout/Footer';
 import FreelancerList from './components/Freelancer-list';
-import BrowseGrid from './components/BrowseGrid';
+import BrowseGrid from './components/search/BrowseGrid';
 
 class App extends Component {
   render() {
@@ -36,10 +36,13 @@ class App extends Component {
             <Footer />
           </Route>
 
-          <Route path="/browse">
-            <BrowseGrid />
-            <Footer />
-          </Route>
+          {/* render: func - passes route props (match, location, history) to BrowseGrid 
+              https://reactrouter.com/core/api/Route/render-func */}
+          <Route path="/browse"
+            render={(props) => (
+              <BrowseGrid {...props} />
+            )}
+          />
 
           <Route path="/notify">
             <Header />

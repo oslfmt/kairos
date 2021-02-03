@@ -3,10 +3,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import algoliasearch from 'algoliasearch';
+import { InstantSearch } from 'react-instantsearch-dom';
+
+const searchClient = algoliasearch('R9Y9XV4UI3', '0925b07c442589f3802c5b4231d906e9');
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <InstantSearch searchClient={searchClient} indexName="test_jobs">
+      <App />
+    </InstantSearch>
   </React.StrictMode>,
   document.getElementById('root')
 );
