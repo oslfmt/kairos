@@ -15,6 +15,11 @@ const fetchDataFromDatabase = require('./search');
 // or use mongoDB change stream to call this whenever data is updated in DB, but this might be more expensive?
 fetchDataFromDatabase();
 
+// import router used for authentication endpoint
+// processes endpoing '/register' for user registration
+const AuthRoute = require('./routes/auth');
+app.use(AuthRoute);
+
 mongoose.connect('mongodb+srv://user1:test123@cluster0.98it7.mongodb.net/Cluster0?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;

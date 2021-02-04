@@ -5,6 +5,8 @@ import CustomSearchBox from '../search/CustomSearchBox';
 
 import Job from '../Job';
 
+import HeaderAll from '../layout/HeaderAll';
+
 /**
  * Renders a custom list of jobs fetched from DB
  * @param {*} props 
@@ -46,22 +48,7 @@ export default class Home extends Component {
 	render() {
 		return (
 			<div>
-				<nav className="navbar navbar-expand-sm bg-light flex-row-reverse p-4">
-					<ul className="navbar-nav">
-						<li className="nav-item">
-							<Link className="nav-link" to="#">How It Works</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="#">Advantages</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="#">Log In</Link>
-						</li>
-						<li className="nav-item">
-							<Link className="nav-link" to="/signup">Sign Up</Link>
-						</li>
-					</ul>
-				</nav>
+				<HeaderAll/>
 
 				{/* Main section */}
 				<section id="main">

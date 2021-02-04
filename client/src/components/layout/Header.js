@@ -14,6 +14,7 @@ import CustomSearchBox from '../search/CustomSearchBox';
  * @child CustomSearchBox - customized InstantSearch component that renders the appropriate SearchBox depending on the
  * 													truth value of browse prop
  */
+
 export default class Header extends Component {
 	render() {
 		return (

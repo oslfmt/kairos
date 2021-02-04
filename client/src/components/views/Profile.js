@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import profilePic from '../../img/profilepic.jpg';
+
+import ProfileImg from '../UserProfileInfo/profile-img';
+import Header from '../layout/Header';
+
 
 export default class Profile extends Component {
 	render() {
 		return (
 			<div>
+				<Header />
 				<section id="profile">
 					<div className="container-fluid">
 						<div className="row m-5">
 							<div className="col-4">
 								<div className="card">
 									<div className="card-body text-center">
-										<img src={profilePic} className="img-fluid" alt="profile pic"></img>
+										<ProfileImg />
 										<form className="mt-4 text-left text-white" action="">
 											<div className="form-group">
 												<label htmlFor="university">University</label>
