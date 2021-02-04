@@ -4,6 +4,7 @@ export default class Footer extends Component {
 	render() {
 		return (
 			<div>
+				
 				<footer>
 					<div className="container-fluid p-4 bg-dark">
 						<div className="row align-items-center text-center justify-content-around text-light">

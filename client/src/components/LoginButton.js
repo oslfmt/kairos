@@ -8,7 +8,7 @@ const LoginButton = () => {
   return (
     !isAuthenticated && (
       <Link className="nav-link">
-      <a onClick={() => loginWithPopup()}>
+      <a href="/#" onClick={() => loginWithPopup()}>
         Log In
       </a>
       </Link>

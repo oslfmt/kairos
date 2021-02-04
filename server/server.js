@@ -1,7 +1,10 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
+const featuredSchema = new Schema({}, { collection: "featured" });
+module.exports = mongoose.model('featured', featuredSchema);
 
 const app = express();
 app.use(bodyParser.json());
