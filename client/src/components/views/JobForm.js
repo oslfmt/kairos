@@ -11,7 +11,8 @@ export default class JobForm extends Component {
 			description: '',
 			skills: [],
 			otherSkills: '',
-			price: 0
+			price: '',
+			paymentForms: []
 		};
 
 		this.submitJob = this.submitJob.bind(this);
@@ -37,13 +38,6 @@ export default class JobForm extends Component {
 		} else {
 			document.querySelector("#desc-error").classList.add('d-none');
 		}
-		
-		if (this.state.price === 0 || !Number.isInteger(parseInt(this.state.price))) {
-			document.querySelector("#price-error").classList.remove('d-none');
-			errors = 1;
-		} else {
-			document.querySelector("#price-error").classList.add('d-none');
-		}
 
 		// submit form if no errors
 		if (!errors) {
@@ -63,7 +57,8 @@ export default class JobForm extends Component {
 			description: this.state.description,
 			skills: this.state.skills,
 			otherSkills: this.state.otherSkills,
-			price: this.state.price
+			price: this.state.price,
+			paymentForms: this.state.paymentForms
 		};
 
 		// submit a post request (containing job data)
@@ -81,7 +76,8 @@ export default class JobForm extends Component {
 			description: '',
 			skills: [],
 			otherSkills: '',
-			price: 0
+			price: '',
+			paymentForms: []
 		});
 	}
 
@@ -96,23 +92,31 @@ export default class JobForm extends Component {
 	}
 
 	handleCheckbox(e) {
-		// create copy of array for immutability
-		const skills = this.state.skills.slice();
-		const target = e.target;
-		const value = target.nextSibling.innerText;
+		let array; // array for holding checkbox state
 
-		// if skill not in array, it must be checked so push it to
+		// check if the checkbox belongs to checkbox-list of "skills" or "payments"
+		const checkboxGroup = e.target.parentElement.parentElement.classList[1];
+		if (checkboxGroup === "skills") {
+			// set array to "skills" array
+			array = this.state.skills.slice();
+		} else if (checkboxGroup === "paymentForms") {
+			array = this.state.paymentForms.slice();
+		}
+
+		const value = e.target.nextSibling.innerText;
+
+		// if element not in array, it must be checked so push it to
 		// the array; otherwise, unchecked, so remove from array
-		if (!skills.find(elem => elem === value)) {
-			skills.push(value);
+		if (!array.find(elem => elem === value)) {
+			array.push(value);
 		} else {
-			let index = skills.indexOf(value);
-			skills.splice(index, 1);
+			let index = array.indexOf(value);
+			array.splice(index, 1);
 		}
 
 		// set state to new array
 		this.setState({
-			skills: skills
+			[checkboxGroup]: array
 		});
 	}
 
@@ -143,7 +147,7 @@ export default class JobForm extends Component {
 									id="description" 
 									cols="30" 
 									rows="10" 
-									placeholder="Describe your project briefly..."
+									placeholder="Describe your project briefly, including what you would like done"
 									name="description"
 									value={this.state.description}
 									onChange={this.handleInputChange}
@@ -154,7 +158,7 @@ export default class JobForm extends Component {
 								<label htmlFor="file">Input any files relating to your project here, such as images, descriptions,etc.</label>
 								<input type="file" className="form-control-file"></input>
 							</div>
-							<div className="form-group">
+							<div className="form-group skills">
 								<label>Mark any skills related to your job:</label>
 								<Checkbox 
 									label="Programming" 
@@ -186,15 +190,34 @@ export default class JobForm extends Component {
 									onChange={this.handleInputChange}
 								/>
 							</div>
+							<div className="form-group paymentForms">
+								<label>What forms of payment are you willing to pay? <span>*</span></label>
+								<Checkbox
+									label="Flat fee" 
+									onChange={this.handleCheckbox}
+								/>
+								<Checkbox 
+									label="Pay what I want" 
+									onChange={this.handleCheckbox}
+								/>
+								<Checkbox 
+									label="Endorsement" 
+									onChange={this.handleCheckbox}
+								/>
+								<Checkbox 
+									label="Open to discussion" 
+									onChange={this.handleCheckbox}
+								/>
+							</div>
 							<div className="form-group">
-								<label>What price do you charge? <span>*</span></label>
+								<label>What price range are you willing to pay?</label>
 								<input
 									type="text" 
 									className="form-control" 
 									name="price"
 									onChange={this.handleInputChange}
 								/>
-								<p id="price-error" className="small-text font-italic d-none">Please enter a price (that is a number)</p>
+								<p id="price-error" className="small-text font-italic d-none">Please enter a price that is a number</p>
 							</div>
 							<button type='submit' onClick={this.handleValidation} className="btn btn-primary mb-5">Submit</button>
 						</form>
@@ -203,6 +226,6 @@ export default class JobForm extends Component {
 					</div>
     		</section>
 			</div>
-		)
+		);
 	}
 }

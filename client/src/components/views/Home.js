@@ -1,8 +1,27 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import CustomSearchBox from '../search/CustomSearchBox';
 
-import JobDeck from '../JobDeck';
+import Job from '../Job';
+
 import HeaderAll from '../layout/HeaderAll';
+
+/**
+ * Renders a custom list of jobs fetched from DB
+ * @param {*} props 
+ */
+function JobList(props) {
+	const jobList = props.jobs.map(job => (
+		<Job key={job._id} data={job} />
+	));
+
+	return (
+		<div className="card-deck">
+			{jobList}
+		</div>
+	)
+}
 
 export default class Home extends Component {
 	constructor(props) {
@@ -13,6 +32,9 @@ export default class Home extends Component {
 		};
 	}
 
+	/**
+	 * On mount, fetch jobs from DB and store in component state
+	 */
 	componentDidMount() {
 		axios.get('http://localhost:4000/')
 			.then(res => {
@@ -37,20 +59,22 @@ export default class Home extends Component {
                   <h1 className="display-2 pr-3">Collancer</h1>
                 </div>
 								<div className="col-4">
-										<a href="signup.html" className="btn btn-lg btn-primary">Join</a>
+										<Link to="/signup" className="btn btn-lg btn-primary">Join</Link>
 								</div>
               </div>
               <div className="row pl-5">
 								<h2 className="display-5">Freelancing For the Community</h2>
-								<input className="form-control pl-2" type="text" placeholder="Search for services..."></input>
               </div>
+							<div className="row pl-5">
+								<CustomSearchBox />
+							</div>
             </div>
         	</div>
     		</section>
 
 				<section id="services">
 					<div className="container-fluid bg-primary pt-3 mt-5 p-5">
-						<JobDeck jobs={this.state.jobs} />
+						<JobList jobs={this.state.jobs} />
 					</div>
 				</section>
 
@@ -107,6 +131,6 @@ export default class Home extends Component {
 					</div>
 				</section>
 		</div>
-		)
+		);
 	}
 }

@@ -11,10 +11,10 @@ import Home from './components/views/Home';
 import Profile from './components/views/Profile';
 import Header from './components/layout/Header';
 import JobForm from './components/views/JobForm';
-import Footer from './components/layout/Footer';
 import FreelancerList from './components/Freelancer-list';
-import BrowseGrid from './components/BrowseGrid';
+import BrowseGrid from './components/search/BrowseGrid';
 import LoginButton from './components/LoginButton';
+
 
 class App extends Component {
   render() {
@@ -28,31 +28,29 @@ class App extends Component {
           <Route path="/profile">
             <Header />
             <Profile />
-            <Footer />
           </Route>
 
           <Route path="/postjob">
             <Header />
             <JobForm />
-            <Footer />
           </Route>
 
-          <Route path="/browse">
-            <Header />
-            <BrowseGrid />
-            <Footer />
-          </Route>
+          {/* render: func - passes route props (match, location, history) to BrowseGrid 
+              https://reactrouter.com/core/api/Route/render-func */}
+          <Route path="/browse"
+            render={(props) => (
+              <BrowseGrid {...props} />
+            )}
+          />
 
           <Route path="/notify">
             <Header />
             <FreelancerList />
-            <Footer />
           </Route>
 
           {/* load home page at root */}
           <Route exact path="/">
             <Home />
-            <Footer />
           </Route>
         </Switch>
       </Router>
