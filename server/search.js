@@ -1,8 +1,9 @@
 let Job = require('./Job-model');
 
 // import and create algolia search client
+const algoliaAdminKey = process.env.ALGOLIA_SEARCH_ADMIN_API_KEY;
 const algoliasearch = require('algoliasearch');
-const client = algoliasearch('R9Y9XV4UI3', '6f7d18c4f5c34f9b9e6d8d1f23be0f4c');
+const client = algoliasearch('R9Y9XV4UI3', algoliaAdminKey);
 const index = client.initIndex('test_jobs');
 
 // set search settings on index

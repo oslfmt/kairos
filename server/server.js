@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const featuredSchema = new Schema({}, { collection: "featured" });
 module.exports = mongoose.model('featured', featuredSchema);
+require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.json());
@@ -18,7 +19,7 @@ const fetchDataFromDatabase = require('./search');
 // or use mongoDB change stream to call this whenever data is updated in DB, but this might be more expensive?
 fetchDataFromDatabase();
 
-mongoose.connect('mongodb+srv://user1:test123@cluster0.98it7.mongodb.net/Cluster0?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
