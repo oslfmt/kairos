@@ -6,7 +6,7 @@ const Profile = () => {
 
   return (
     isAuthenticated && ( 
-      <img style={{borderRadius: "50%", blockSize: "50px"}} src={user.picture} alt={user.name}/>
+      <img class="rounded mb-1 img-thumbnail" style={{borderRadius: "50%", blockSize: "50px", width: "130"}} src={user.picture} alt={user.name}/>
     )
   )
 }
