@@ -14,7 +14,6 @@ import FreelancerList from './components/Freelancer-list';
 import BrowseGrid from './components/search/BrowseGrid';
 import LoginButton from './components/LoginButton';
 import Footer from './components/layout/Footer';
-import JobDetail from './components/JobDetail';
 
 
 class App extends Component {
@@ -47,12 +46,6 @@ class App extends Component {
           <Route path="/notify">
             <Header />
             <FreelancerList />
-          </Route>
-
-          <Route path="/servicedetails">
-            <Header />
-            <JobDetail />
-            <Footer />
           </Route>
 
           {/* load home page at root */}

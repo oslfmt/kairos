@@ -1,20 +1,14 @@
 import React, { Component } from 'react';
-import Popup from 'reactjs-popup';
-import 'reactjs-popup/dist/index.css';
-import Modal from './Modal';
+import JobModalContent from './JobModalContent';
 
 export default class Job extends Component {
 	constructor(props) {
 		super(props);
 
 		// the description initially is an empty string
-    // show is set to false, since by default Job card is not clicked
 		this.state = {
 			description: '',
-      show: false,
 		};
-
-    this.togglePopup = this.togglePopup.bind(this);
 	}
 
 	/**
@@ -35,29 +29,21 @@ export default class Job extends Component {
 		});
 	}
 
-  /**
-   * Sets show to the opposite boolean value whenever buttons are clicked to show/hide modal
-   */
-  togglePopup() {
-    this.setState({
-      show: !this.state.show
-    });
-  }
-
 	render() {
+    const job = this.props.data;
 		return (
 			<div className="col-3">
 				<div className="card m-0 mb-5 position-relative">
 					<div className="card-body">
-						<a className="stretched-link" onClick={this.togglePopup}></a>
-						<h5 className="card-title">{this.props.data.title}</h5>
+						<a className="stretched-link" data-toggle="modal" data-target="#exampleModal" onClick={this.togglePopup}/>
+						<h5 className="card-title">{job.title}</h5>
 						<p className="card-text" id="description">{this.state.description}</p>
 						<div className="row align-items-center ">
 							<div className="col-9">
-								<PaymentFormsList items={this.props.data.paymentForms} />
+								<PaymentFormsList items={job.paymentForms} />
 							</div>
 							<div className="col-3">
-								<p className="font-weight-bold text-center" style={{'color': 'green'}}>${this.props.data.price}</p>
+								<p className="font-weight-bold text-center" style={{'color': 'green'}}>${job.price}</p>
 							</div>
 							<div className="row d-flex align-items-center position-absolute p-2" style={{'bottom': 0, 'right': 25}}>
 								<div className="col-8">
@@ -66,8 +52,30 @@ export default class Job extends Component {
 							</div>
 						</div>
 					</div>
+
+          {/* Modal-render on card click--may extract to own component in future, but bootstrap classes are uncompatible */}
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <div className="container-fluid">
+                    <JobModalContent jobData={job} />
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
 				</div>
-        {this.state.show ? <Modal jobDetails={this.props.data} toggle={this.togglePopup} /> : null}
 			</div>
 		);
 	}
