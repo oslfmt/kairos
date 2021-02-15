@@ -28,7 +28,9 @@ export default class Job extends Component {
 		this.setState({
 			description: description
 		});
+    console.log(test);
 	}
+  
 
 	render() {
     const job = this.props.data;
