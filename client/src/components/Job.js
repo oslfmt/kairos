@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import JobModalContent from './JobModalContent';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -35,7 +36,7 @@ export default class Job extends Component {
 			<div className="col-3">
 				<div className="card m-0 mb-5 position-relative">
 					<div className="card-body">
-						<a className="stretched-link" data-toggle="modal" data-target="#exampleModal" onClick={this.togglePopup}/>
+						<a className="stretched-link" data-toggle="modal" data-target="#exampleModal" />
 						<h5 className="card-title">{job.title}</h5>
 						<p className="card-text" id="description">{this.state.description}</p>
 						<div className="row align-items-center ">
@@ -52,29 +53,6 @@ export default class Job extends Component {
 							</div>
 						</div>
 					</div>
-
-          {/* Modal-render on card click--may extract to own component in future, but bootstrap classes are uncompatible */}
-          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <div className="container-fluid">
-                    <JobModalContent jobData={job} />
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-              </div>
-            </div>
-          </div>
 				</div>
 			</div>
 		);
