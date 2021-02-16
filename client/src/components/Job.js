@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
@@ -9,7 +9,10 @@ export default class Job extends Component {
 		// the description initially is an empty string
 		this.state = {
 			description: '',
+      show: false
 		};
+
+    this.handleShow = this.handleShow.bind(this);
 	}
 
 	/**
@@ -29,6 +32,12 @@ export default class Job extends Component {
 			description: description
 		});
 	}
+  
+  handleShow() {
+    this.setState({
+      show: !this.state.show
+    })
+  }
 
 	render() {
     const job = this.props.data;
@@ -36,7 +45,8 @@ export default class Job extends Component {
 			<div className="col-3">
 				<div className="card m-0 mb-5 position-relative">
 					<div className="card-body">
-						<a className="stretched-link" data-toggle="modal" data-target="#exampleModal" />
+            {/* Clicking anywhere on card triggers modal */}
+						<a className="stretched-link" onClick={this.handleShow} />
 						<h5 className="card-title">{job.title}</h5>
 						<p className="card-text" id="description">{this.state.description}</p>
 						<div className="row align-items-center ">
@@ -54,9 +64,34 @@ export default class Job extends Component {
 						</div>
 					</div>
 				</div>
+        {this.state.show ? <JobModal handleShow={this.handleShow} show={true} jobData={job} /> : null}
 			</div>
 		);
 	}
+}
+
+function JobModal(props) {
+
+  const handleClose = () => {
+    props.handleShow()
+  };
+
+  return (
+    <Modal show={props.show} onHide={handleClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>Modal heading</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>{props.jobData.title}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+        <Button variant="primary" onClick={handleClose}>
+          Save Changes
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
 }
 
 /**

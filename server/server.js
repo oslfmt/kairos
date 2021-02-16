@@ -12,8 +12,12 @@ app.use(bodyParser.json());
 app.use(cors());
 const PORT = 4000;
 
+// Import Search Functionality
 let Job = require('./Job-model');
 const fetchDataFromDatabase = require('./search');
+
+// Import Stripe Payment Functionality
+const transaction = require("./transaction");
 
 // would like to somehow call this to batch indexes every certain time period (ex every 10 min)
 // or use mongoDB change stream to call this whenever data is updated in DB, but this might be more expensive?
@@ -80,3 +84,25 @@ app.post('/postjob', (req, res) => {
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);
 });
+
+// PAYMENT FUNCTIONALITY TESTS
+(async () => {
+  // test paymentIntent
+  // const obj = await transaction.paymentFunction();
+  // console.log('payment created');
+  
+  // // create test account
+  // const account = await transaction.createConnectedAccount();
+  // console.log('Account ID:' + account.id);
+
+  // create test account link for redirecting to onboarding
+  // transaction.retrieveAccounts()
+  //   .then(res => {
+  //     const accountID = res.data[0].id;
+  //     return accountID;
+  //   })
+  //   .then(accountID => {
+  //     const accountLink = transaction.createAccountLink(accountID);
+  //     console.log(accountLink);
+  //   })
+})();
