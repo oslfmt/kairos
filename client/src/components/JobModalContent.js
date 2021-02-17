@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ListGroup from 'react-bootstrap/ListGroup';
 
 export default class JobModalContent extends Component {
   render() {
@@ -18,11 +19,7 @@ export default class JobModalContent extends Component {
           </div>
           <div className="skills-info">
             <h3>Skills and Expertise</h3>
-            <ul>
-              <li>skill 1</li>
-              <li>skill 2</li>
-              <li>skill 3</li>
-            </ul>
+            <SkillsList skills={job.skills} />
           </div>
           <div className="payment-info">
             <h3>Payment Forms Accepted</h3>
@@ -44,4 +41,19 @@ export default class JobModalContent extends Component {
       </div>
     );
   }
+}
+
+// fix findDOMnode problem
+const SkillsList = (props) => {
+  const skills = props.skills;
+  console.log(skills);
+  const skillsList = skills.map((skill, index) => {
+    <ListGroup.Item key={index}>{skill}</ListGroup.Item>
+  });
+
+  return (
+    <ListGroup>
+      {skillsList}
+    </ListGroup>
+  )
 }

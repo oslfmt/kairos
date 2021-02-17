@@ -1,6 +1,7 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import JobModalContent from './JobModalContent';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -70,24 +71,29 @@ export default class Job extends Component {
 	}
 }
 
+/**
+ * This component is a modal popup that displays the job details, client profile, and an apply button
+ * 
+ * @prop show - boolean indicating whether to display modal
+ * @prop handleShow - handler function to change state of parent component
+ * @prop jobData - job details to display
+ */
 function JobModal(props) {
-
   const handleClose = () => {
     props.handleShow()
   };
 
   return (
-    <Modal show={props.show} onHide={handleClose}>
+    <Modal size="xl" show={props.show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Job Details</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{props.jobData.title}</Modal.Body>
+      <Modal.Body>
+        <JobModalContent jobData={props.jobData} />
+      </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Close
-        </Button>
-        <Button variant="primary" onClick={handleClose}>
-          Save Changes
         </Button>
       </Modal.Footer>
     </Modal>
@@ -100,8 +106,8 @@ function JobModal(props) {
  */
 function PaymentFormsList(props) {
 	const paymentForms = props.items;
-	const paymentFormsList = paymentForms.map(item => {
-		return <li className="list-group-item">{item}</li>;
+	const paymentFormsList = paymentForms.map((item, index) => {
+		return <li key={index} className="list-group-item">{item}</li>;
 	});
 
 	return (
