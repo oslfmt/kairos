@@ -14,6 +14,7 @@ import FreelancerList from './components/Freelancer-list';
 import BrowseGrid from './components/search/BrowseGrid';
 import LoginButton from './components/LoginButton';
 import Footer from './components/layout/Footer';
+import PaymentPage from './components/PaymentPage';
 
 
 class App extends Component {
@@ -46,6 +47,11 @@ class App extends Component {
           <Route path="/notify">
             <Header />
             <FreelancerList />
+          </Route>
+
+          <Route path="/secret">
+            <Header />
+            <PaymentPage />
           </Route>
 
           {/* load home page at root */}

@@ -80,6 +80,14 @@ app.post('/postjob', (req, res) => {
     });
 });
 
+// Client Secret endpoint
+app.get('/secret', (req, res) => {
+  // create paymentIntent then send client secret to response
+  transaction.createPaymentIntent()
+    .then(intent => {
+      res.json({client_secret: intent.client_secret});
+    });
+});
 
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);
@@ -87,9 +95,6 @@ app.listen(PORT, () => {
 
 // PAYMENT FUNCTIONALITY TESTS
 (async () => {
-  // test paymentIntent
-  // const obj = await transaction.paymentFunction();
-  // console.log('payment created');
   
   // // create test account
   // const account = await transaction.createConnectedAccount();

@@ -80,7 +80,6 @@ export default class Profile extends Component {
 						</div>
 					</div>
 					
-
 					<div class="col-md-9 mx-auto">
 						<div class="bg-white shadow rounded overflow-hidden">
 							<div class="px-4 py-3">
@@ -91,8 +90,10 @@ export default class Profile extends Component {
 											<p class="font-italic mb-0">Web Developer</p>
 										</div>
 										<div class="col-md-4 mx-auto">
-										<img src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></img>
+                      <img src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" class="img-fluid rounded shadow-sm"></img>
+                      <Link to="/secret" className="btn btn-success">Pay to Escrow</Link>
 										</div>
+                    
 									</div>
 									<div class="row py-5 px-4">
 										<div class="col-md-4 mx-auto">

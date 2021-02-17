@@ -1,11 +1,16 @@
 const stripe = require('stripe')('sk_test_51ILBPtFOjo9Of2cpjtVTjYXt2SCgoGpWnnFYFPVKhMU3XmegC7go8yCJHQS2vfkco4PTFGGjjU4J7zSGz5TXbKT200UGJlMyzd');
 
-const paymentFunction = async () => {
+const createPaymentIntent = async () => {
+  // amounts are currently hardcoded; will need to change later
   const paymentIntent = await stripe.paymentIntents.create({
     amount: 1000,
     currency: 'usd',
     payment_method_types: ['card'],
-    receipt_email: 'kory.anders@example.com'
+    receipt_email: 'kory.anders@example.com',
+    // application_fee_amount: 123,
+    // transfer_data: {
+    //   destination: '{{CONNECTED_STRIPE_ACCOUNT_ID}}'
+    // },
   });
 
   return paymentIntent;
@@ -34,7 +39,7 @@ const createAccountLink = async (accountID) => {
 }
 
 module.exports = {
-  paymentFunction,
+  createPaymentIntent,
   createConnectedAccount,
   retrieveAccounts,
   createAccountLink,
