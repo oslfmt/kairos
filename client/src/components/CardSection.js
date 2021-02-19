@@ -1,22 +1,5 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
 import {CardElement} from '@stripe/react-stripe-js';
-
-export default class PaymentPage extends Component {
-  componentDidMount() {
-
-  }
-
-  render() {
-    return (
-      <div className="container mt-4">
-        <h1>Enter Payment Details</h1>
-        <CardSection />
-      </div>
-      
-    )
-  }
-}
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -38,9 +21,11 @@ const CARD_ELEMENT_OPTIONS = {
 
 function CardSection() {
   return (
-    <label>
-      Card details
+    <div>
+      <label>Card details</label>
       <CardElement options={CARD_ELEMENT_OPTIONS} />
-    </label>
+    </div>
   );
 };
+
+export default CardSection;

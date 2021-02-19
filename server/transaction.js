@@ -1,4 +1,4 @@
-const stripe = require('stripe')('sk_test_51ILBPtFOjo9Of2cpjtVTjYXt2SCgoGpWnnFYFPVKhMU3XmegC7go8yCJHQS2vfkco4PTFGGjjU4J7zSGz5TXbKT200UGJlMyzd');
+const stripe = require('stripe')('sk_test_51IMGlyEoOA5uRAruugbPjjUCx6fce2ZIJltJ274FvfImWTX41WvbsU9srKtHJtTcoPYyhSQWQXreL89H1EfVRxUd00FD16w7iy');
 
 const createPaymentIntent = async () => {
   // amounts are currently hardcoded; will need to change later

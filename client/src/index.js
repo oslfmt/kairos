@@ -17,7 +17,7 @@ const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
 const searchClient = algoliasearch('R9Y9XV4UI3', '0925b07c442589f3802c5b4231d906e9');
 
 // Stripe payments
-const stripePromise = loadStripe("pk_test_51ILBPtFOjo9Of2cpevI1Pt0biIXFUboC9Q0DuIdoraxtA6lOp6vtdggV60B36tDMrQZi6aB4devchpwT1kzRb9w200XMQ9Q1iS");
+const stripePromise = loadStripe("pk_test_51IMGlyEoOA5uRAru6HioLhe03erElwORp0zINGeKCFoXucS2O9DIWPgFufnU2IdkW7Hl9lYyTRWJFycEkEvAhh8400cEFd6ED1");
 
 ReactDOM.render(
   <Auth0Provider
