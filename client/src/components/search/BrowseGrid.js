@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import JobDeck from '../JobDeck';
+import JobDeck from '../Job/JobDeck';
 import Header from '../layout/Header';
-import CustomHits from '../JobDeck';
+import CustomHits from '../Job/JobDeck';
 import { RefinementList } from 'react-instantsearch-dom';
 
 /**

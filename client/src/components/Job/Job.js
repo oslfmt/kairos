@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import JobModalContent from './JobModalContent';
+import ItemList from './ItemList';
 
 export default class Job extends Component {
 	constructor(props) {
@@ -52,7 +53,7 @@ export default class Job extends Component {
 						<p className="card-text" id="description">{this.state.description}</p>
 						<div className="row align-items-center ">
 							<div className="col-9">
-								<PaymentFormsList items={job.paymentForms} />
+								<ItemList items={job.paymentForms} />
 							</div>
 							<div className="col-3">
 								<p className="font-weight-bold text-center" style={{'color': 'green'}}>${job.price}</p>
@@ -98,21 +99,4 @@ function JobModal(props) {
       </Modal.Footer>
     </Modal>
   );
-}
-
-/**
- * This component renders a list of payment forms for each job posting
- * @param {*} props pass in the paymentForms indicated from the index
- */
-function PaymentFormsList(props) {
-	const paymentForms = props.items;
-	const paymentFormsList = paymentForms.map((item, index) => {
-		return <li key={index} className="list-group-item">{item}</li>;
-	});
-
-	return (
-		<ul className="list-group">
-			{paymentFormsList}
-		</ul>
-	);
 }

@@ -1,4 +1,4 @@
-import Job from './Job';
+import Job from './Job.js';
 import { connectHits } from 'react-instantsearch-dom';
 
 // Component to display a row of 4 jobs
