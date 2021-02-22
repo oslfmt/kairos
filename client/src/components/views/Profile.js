@@ -20,7 +20,7 @@ const ProfileImg = () => {
 		<h4 class="mt-0 mb-0">{user.name}</h4>
 	  )
 	)
-  }
+}
 
   const ProfileInfo = () => {
 	const { user, isAuthenticated } = useAuth0();
