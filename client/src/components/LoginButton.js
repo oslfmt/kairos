@@ -13,7 +13,7 @@ const LoginButton = () => {
       </a>
       </Link>
     )
-  )
+  );
 }
 
-export default LoginButton
+export default LoginButton;

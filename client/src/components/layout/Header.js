@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CustomSearchBox from '../search/CustomSearchBox';
+import UserIconDropDown from '../UserIconDropDown';
 
 /**
  * Renders the UI for the Header component. This component is reusable, and is placed at the top of most pages.
@@ -27,7 +28,11 @@ export default class Header extends Component {
 					</div>
 					<div className="col-3">
 						<CustomSearchBox browse={this.props.browse} query={this.props.query} />
+            <UserIconDropDown />
 					</div>
+          <div className="col-3">
+            
+          </div>
 				</div>
 				<div className="row text-center">
 					<div className="col-xl-1">

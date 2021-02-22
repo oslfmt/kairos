@@ -4,6 +4,10 @@ import Button from 'react-bootstrap/Button';
 import JobModalContent from './JobModalContent';
 import ItemList from './ItemList';
 
+/**
+ * This component renders a Job card on the browse page. It is a card that displays simple info
+ * that is relevant to the particular job.
+ */
 export default class Job extends Component {
 	constructor(props) {
 		super(props);

@@ -82,7 +82,9 @@ export default class Profile extends Component {
 					
 
 					<div class="col-md-9 mx-auto">
+          <Link to="/postjob" className="btn" />
 						<div class="bg-white shadow rounded overflow-hidden">
+              
 							<div class="px-4 py-3">
 								<h5 class="mb-0">Active Jobs (3)</h5>
 								<div class="p-4 rounded shadow-sm bg-light">
