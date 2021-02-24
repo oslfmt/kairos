@@ -7,13 +7,12 @@ import './css/main.css';
 
 // import pages
 import Home from './components/views/Home';
-import Profile from './components/views/Profile';
 import Header from './components/layout/Header';
 import JobForm from './components/views/JobForm';
 import FreelancerList from './components/Freelancer-list';
 import BrowseGrid from './components/search/BrowseGrid';
 import LoginButton from './components/LoginButton';
-import Footer from './components/layout/Footer';
+import Dashboard from './components/dashboard/Dashboard';
 
 
 class App extends Component {
@@ -25,9 +24,9 @@ class App extends Component {
             <LoginButton />
           </Route>
 
-          <Route path="/profile">
+          <Route path="/dashboard">
             <Header />
-            <Profile />
+            <Dashboard />
           </Route>
 
           <Route path="/postjob">

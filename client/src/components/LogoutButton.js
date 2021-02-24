@@ -6,7 +6,7 @@ const LogoutButton = () => {
 
   return (
     isAuthenticated && (
-      <a href="/#" class="dropdown-item text-center" onClick={() => logout()}>
+      <a href="/#" className="dropdown-item text-center" onClick={() => logout()}>
         Log Out
       </a>
     )

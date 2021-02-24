@@ -7,11 +7,9 @@ const SignUpButton = () => {
 
   return (
     !isAuthenticated && (
-      <Link className="nav-link">
       <a href='#/' onClick={() => loginWithPopup({ screen_hint: 'signup' })}>
         Sign Up
       </a>
-      </Link>
     )
   )
 }
