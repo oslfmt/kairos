@@ -9,6 +9,7 @@ export default class PostsGrid extends Component {
       <Jumbotron className="mt-3 p-2">
         <ActiveJob />
         <ActiveJob />
+        <ActiveJob />
       </Jumbotron>
     );
   }

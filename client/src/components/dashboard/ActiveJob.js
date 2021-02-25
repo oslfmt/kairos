@@ -21,7 +21,7 @@ export default class ActiveJob extends Component {
               <div>
                 <p>Freelancer Name</p>
               </div>
-              <Button>Chat</Button>
+              <Button className="mb-2">Chat</Button>
               <Button>Pay to Escrow</Button>
             </Col>
           </Row>
@@ -30,5 +30,3 @@ export default class ActiveJob extends Component {
     )
   }
 }
-
-{/* <img src="https://images.unsplash.com/photo-1469594292607-7bd90f8d3ba4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80" alt="" className="img-fluid rounded shadow-sm"></img> */}

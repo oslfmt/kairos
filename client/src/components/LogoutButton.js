@@ -6,11 +6,11 @@ const LogoutButton = () => {
 
   return (
     isAuthenticated && (
-      <a href="/#" className="dropdown-item text-center" onClick={() => logout()}>
+      <a className="dropdown-item text-center" onClick={() => logout({ returnTo: window.location.origin })}>
         Log Out
       </a>
     )
   )
 }
 
-export default LogoutButton
+export default LogoutButton;
