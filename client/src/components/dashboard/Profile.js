@@ -1,14 +1,45 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
+import FormControl from 'react-bootstrap/FormControl';
 
 export default function Profile() {
-  const { user, isAuthenticated } = useAuth0();
-  const [edit, setEdit] = useState(false);
+  const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const [userMetadata, setUserMetadata] = useState(null);
+  const domain = "collancer-dev.us.auth0.com";
 
+  // effects run after every completed render, but can choose to fire only when certain values have changed
+  useEffect(() => {
+    const getUserMetadata = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently({
+          audience: `https://${domain}/api/v2/`,
+          scope: "read:current_user",
+        });
+
+        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
+  
+        const metadataResponse = await fetch(userDetailsByIdUrl, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        const user_metadata = await metadataResponse.json();
+  
+        setUserMetadata(user_metadata);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+  
+    if (isAuthenticated) {
+      getUserMetadata();
+    }
+  }, [user]);
+  
   return (
     isAuthenticated && (
       <Card className="bg-white shadow rounded overflow-hidden mt-3 mb-4">
@@ -25,21 +56,18 @@ export default function Profile() {
         </div>
         <Card.Body>
           <Card.Text className="mt-5">
-            <h5 className="mb-2">Profile Info</h5>
+            Profile Info
             <InputGroup>
               <FormControl
-                placeholder={user.description}
-                className="weird"
+                placeholder={userMetadata ? userMetadata.app_metadata.roles[0] : null}
                 readOnly
               />
             </InputGroup>
-            <div className="add-info pt-4">
-              <p>Client Reputation: 100pts</p>
-              <p>Jobs Completed: 5</p>
-              <p>Date Joined: Feb 10 2021</p>
-            </div>
+            Client Reputation: 100pts
+            Jobs Completed: 5
+            Date Joined: Feb 10 2021
           </Card.Text>
-          <Button className="btn btn-sm" style={{'float': 'right'}} onClick={() => setEdit(!edit)}>Edit Profile</Button>
+          <Button className="btn btn-sm" style={{'float': 'right'}}>Edit Profile</Button>
         </Card.Body>
       </Card>
     )

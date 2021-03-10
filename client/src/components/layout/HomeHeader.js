@@ -43,9 +43,13 @@ const LoginButton = () => {
 const SignUpButton = () => {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
 
+  const signUp = () => {
+    loginWithRedirect({screen_hint: 'signup'});
+  }
+
   return (
     !isAuthenticated && (
-      <Nav.Link onClick={() => loginWithRedirect({screen_hint: 'signup'})}>
+      <Nav.Link onClick={() => signUp()}>
         Sign Up
       </Nav.Link>
     )

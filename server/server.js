@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const featuredSchema = new Schema({}, { collection: "featured" });
-module.exports = mongoose.model('featured', featuredSchema);
+module.exports = mongoose.model('featured', featuredSchema);  
 require('dotenv').config();
 
 const app = express();
@@ -22,6 +22,9 @@ const transaction = require("./transaction");
 // would like to somehow call this to batch indexes every certain time period (ex every 10 min)
 // or use mongoDB change stream to call this whenever data is updated in DB, but this might be more expensive?
 fetchDataFromDatabase();
+
+const getUsers = require('./Auth');
+// getUsers();
 
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
@@ -79,7 +82,6 @@ app.post('/postjob', (req, res) => {
       res.status(400).send("Failed: " + err);
     });
 });
-
 
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);

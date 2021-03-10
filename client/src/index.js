@@ -14,12 +14,15 @@ const searchClient = algoliasearch('R9Y9XV4UI3', '0925b07c442589f3802c5b4231d906
 // auth0
 const domain = 'collancer-dev.us.auth0.com';
 const clientID = 'UgcmqYj5BnsCo3gCmcrMli7HX6BM5mNI';
+// const clientID = 'H3zxB3DQAvnjQdZSarGbOks84W2oH9ay';
 
 ReactDOM.render(
   <Auth0Provider
     domain={domain}
     clientId={clientID}
     redirectUri='http://localhost:3000/dashboard'
+    audience="https://collancer-dev.us.auth0.com/api/v2/"
+    scope="read:current_user update:current_user_metadata"
   >
     <React.StrictMode>
       <InstantSearch searchClient={searchClient} indexName="test_jobs">
