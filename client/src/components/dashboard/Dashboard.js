@@ -58,11 +58,12 @@ export default class Dashboard extends Component {
 const GetStartedForm = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [username, setUsername] = useState('');
-  // const []
-  const domain = "collancer-dev.us.auth0.com";
-
+  const [organization, setOrganization] = useState('');
+  const [description, setDescription] = useState('');
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const domain = "collancer-dev.us.auth0.com";
 
     if (isAuthenticated) {
       getAccessTokenSilently({
@@ -100,24 +101,36 @@ const GetStartedForm = () => {
 
   const handleInput = (e) => {
     const userInput = e.target.value;
-    console.log(e.target.name);
-    
-    setUsername(userInput);
+    const id = e.target.id;
+
+    if (id === 'username') {
+      setUsername(userInput);
+    } else if (id === 'organization') {
+      setOrganization(userInput);
+    } else {
+      setDescription(userInput);
+    }
   }
 
   return (
-    <Form className="m-3 p-3 bg-light">
-      <h3>Please Enter some info to set up your account:</h3>
-      <Form.Group>
-        <Form.Control type="text" placeholder="Username" value={username} onChange={handleInput}/>
-      </Form.Group>
-      <Form.Group>
-        <Form.Control type="text" placeholder="Organization" />
-      </Form.Group>
-      <Form.Group>
-        <Form.Control as="textarea" rows={3} placeholder="Description" />
-      </Form.Group>
-      <Button type="submit" onClick={handleSubmit}>Submit</Button>
-    </Form>
+    <form className="m-3 p-3 bg-light">
+      <h3>Please enter some info to set up your account:</h3>
+      <div class="form-group">
+        <label for="username">Name</label>
+        <input type="text" class="form-control" id="username" value={username} onChange={handleInput}/>
+        <small class="form-text text-muted">Please enter your first and last name</small>
+      </div>
+      <div class="form-group">
+        <label for="organization">Organization</label>
+        <input type="text" class="form-control" id="organization" value={organization} onChange={handleInput}/>
+        <small class="form-text text-muted">Enter the university you attend, or an organization you are affiliated with.</small>
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" as="textarea" rows={3} class="form-control" id="description" value={description} onChange={handleInput}/>
+        <small class="form-text text-muted">A brief description of what you plan to use the site for.</small>
+      </div>
+      <button type="submit" class="btn btn-primary" onClick={handleSubmit}>Submit</button>
+    </form>
   );
 }
