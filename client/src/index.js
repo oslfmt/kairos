@@ -22,7 +22,7 @@ ReactDOM.render(
     clientId={clientID}
     redirectUri='http://localhost:3000/dashboard'
     audience="https://collancer-dev.us.auth0.com/api/v2/"
-    scope="read:current_user update:current_user_metadata"
+    scope="read:current_user update:current_user_metadata create:current_user_metadata"
   >
     <React.StrictMode>
       <InstantSearch searchClient={searchClient} indexName="test_jobs">

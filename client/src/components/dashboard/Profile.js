@@ -28,7 +28,6 @@ export default function Profile() {
         });
 
         const user_metadata = await metadataResponse.json();
-  
         setUserMetadata(user_metadata);
       } catch (e) {
         console.error(e);

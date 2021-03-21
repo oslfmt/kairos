@@ -1,3 +1,5 @@
+
+
 function getUsers(user, context, callback) {
   if (context.stats.loginsCount === 1) {
     const ManagementClient = require('auth0@2.9.1').ManagementClient;
@@ -22,5 +24,7 @@ function getUsers(user, context, callback) {
 
   callback(null, user, context);
 }
+
+
 
 module.exports = getUsers;

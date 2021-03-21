@@ -6,6 +6,8 @@ const { Schema } = mongoose;
 const featuredSchema = new Schema({}, { collection: "featured" });
 module.exports = mongoose.model('featured', featuredSchema);  
 require('dotenv').config();
+const axios = require('axios').default;
+const http = require('http');
 
 const app = express();
 app.use(bodyParser.json());
@@ -82,6 +84,56 @@ app.post('/postjob', (req, res) => {
       res.status(400).send("Failed: " + err);
     });
 });
+
+app.get('/dashboard', (req, res) => {
+  const domain = "collancer-dev.us.auth0.com";
+
+  const data = JSON.stringify({
+    client_id: "H3zxB3DQAvnjQdZSarGbOks84W2oH9ay",
+    client_secret: "B9JTloXtkAHE5jCIMk0TIP6_1jNuS_HGqsiXLvC2geTX5pgyPSELB0mMefI_FML7",
+    audience: `https://${domain}/api/v2/`,
+    grant_type: "client_credentials"
+  });
+
+  const options = {
+    hostname: '127.0.0.1',
+    port: 80,
+    method: 'POST',
+    path: `https://${domain}/oauth/token`,
+    headers: { 'content-type': 'application/x-www-form-urlencoded' }
+  };
+
+  const request = http.request(options, res => {
+    console.log(`statusCode: ${res.statusCode}`);
+
+    res.on('data', d => {
+      process.stdout.write(d);
+    });
+  });
+
+  request.on('error', error => {
+    console.error(error);
+  });
+
+  request.write(data);
+  request.end();
+  // var options = {
+  //   method: 'PATCH',
+  //   url: `https://${domain}/api/v2/users/user_id`,
+  //   headers: {authorization: 'Bearer ABCD', 'content-type': 'application/json'},
+  //   data: {
+  //     user_metadata: {
+  //       test: 'test'
+  //     }
+  //   }
+  // };
+  
+  // axios.request(options).then(function (response) {
+  //   res.send(response.data);
+  // }).catch(function (error) {
+  //   console.error(error);
+  // });
+})
 
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);
