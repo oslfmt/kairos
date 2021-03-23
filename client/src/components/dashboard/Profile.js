@@ -1,9 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl';
 
 export default function Profile() {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -27,8 +23,8 @@ export default function Profile() {
           },
         });
 
-        const user_metadata = await metadataResponse.json();
-        setUserMetadata(user_metadata);
+        const userMetadata = await metadataResponse.json();
+        setUserMetadata(userMetadata);
       } catch (e) {
         console.error(e);
       }
@@ -41,34 +37,39 @@ export default function Profile() {
   
   return (
     isAuthenticated && (
-      <Card className="bg-white shadow rounded overflow-hidden mt-3 mb-4">
-        <div className="px-4 pt-0 pb-4 cover-profile">
-          <div className="media align-items-end profile-head-profile">
-            <div className="profile mr-3">
-              <img className="rounded-circle rounded mb-1 img-thumbnail" style={{height: "auto", width: "auto"}} src={user.picture} alt={user.name}/>
-            </div>
-            <div className="media-body mb-5 text-white">
-              <h4 className="mt-0 mb-0">{user.nickname}</h4>
-              <p className="midium mb-4"><i className="fas fa-map-marker-alt mr-2"></i>Truman State University</p>
+      <div className="card">
+        <div className="bg-white shadow rounded overflow-hidden mt-3 mb-4">
+          <div className="px-4 pt-0 pb-4 cover-profile">
+            <div className="media align-items-end profile-head-profile">
+              <div className="profile mr-3">
+                <img className="rounded-circle rounded mb-1 img-thumbnail" style={{height: "auto", width: "auto"}} src={user.picture} alt={user.name}/>
+              </div>
+              <div className="media-body mb-5 text-white">
+                <h4 className="mt-0 mb-0">{userMetadata ? userMetadata.user_metadata.username : null}</h4>
+                <p className="midium mb-4"><i className="fas fa-map-marker-alt mr-2"></i>Truman State University</p>
+              </div>
             </div>
           </div>
+          <div className="card-body">
+            <p className="card-text mt-5">Profile Info</p>
+            <form>
+              <div className="form-group">
+                <input className="form-control" placeholder={userMetadata ? userMetadata.app_metadata.roles[0] : null}
+                  readOnly />
+              </div>
+              <div className="form-group">
+                <input className="form-control" placeholder={userMetadata ? userMetadata.user_metadata.organization : null}
+                  readOnly />
+              </div>
+              <div className="form-group">
+                <input className="form-control" placeholder={userMetadata ? userMetadata.user_metadata.description : null}
+                  readOnly />
+              </div>
+            </form>
+            <button className="btn-primary btn-sm" style={{'float': 'right'}}>Edit Profile</button>
+          </div>
         </div>
-        <Card.Body>
-          <Card.Text className="mt-5">
-            Profile Info
-            <InputGroup>
-              <FormControl
-                placeholder={userMetadata ? userMetadata.app_metadata.roles[0] : null}
-                readOnly
-              />
-            </InputGroup>
-            Client Reputation: 100pts
-            Jobs Completed: 5
-            Date Joined: Feb 10 2021
-          </Card.Text>
-          <Button className="btn btn-sm" style={{'float': 'right'}}>Edit Profile</Button>
-        </Card.Body>
-      </Card>
+      </div>
     )
   );
 }
