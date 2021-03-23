@@ -14,6 +14,7 @@ import BrowseGrid from './components/search/BrowseGrid';
 import Dashboard from './components/dashboard/Dashboard';
 import Footer from './components/layout/Footer'
 import { HomeHeader } from './components/layout/HomeHeader'
+import SignUpForm from './components/SignUpForm'
 
 class App extends Component {
   render() {
@@ -27,6 +28,10 @@ class App extends Component {
             <Header />
             <Dashboard />
             <Footer />
+          </Route>
+
+          <Route path="/signupinfo">
+            <SignUpForm />
           </Route>
 
           <Route path="/postjob">
