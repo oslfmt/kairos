@@ -34,6 +34,13 @@ export default function Profile() {
       getUserMetadata();
     }
   }, [user]);
+
+  const editProfile = () => {
+    const inputElements = document.getElementsByClassName('form-control');
+    for (let elem of inputElements) {
+      elem.readOnly = false;
+    }
+  }
   
   return (
     isAuthenticated && (
@@ -66,7 +73,7 @@ export default function Profile() {
                   readOnly />
               </div>
             </form>
-            <button className="btn-primary btn-sm" style={{'float': 'right'}}>Edit Profile</button>
+            <button className="btn-primary btn-sm" style={{'float': 'right'}} onClick={editProfile}>Edit Profile</button>
           </div>
         </div>
       </div>

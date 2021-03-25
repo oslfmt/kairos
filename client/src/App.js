@@ -21,9 +21,6 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/signup">
-          </Route>
-
           <Route path="/dashboard">
             <Header />
             <Dashboard />
