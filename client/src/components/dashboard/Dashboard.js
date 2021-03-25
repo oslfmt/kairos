@@ -7,7 +7,6 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Profile from './Profile';
 import PostsGrid from './PostsGrid';
-import Form from 'react-bootstrap/Form'
 
 export default class Dashboard extends Component {
   render() {

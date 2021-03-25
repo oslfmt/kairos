@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function Profile() {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [userMetadata, setUserMetadata] = useState(null);
+  const [editMode, setEditMode] = useState(false);
   const domain = "collancer-dev.us.auth0.com";
 
   // effects run after every completed render, but can choose to fire only when certain values have changed
@@ -36,9 +37,13 @@ export default function Profile() {
   }, [user]);
 
   const editProfile = () => {
+    // set edit mode to opposite of previous state
+    setEditMode(prevState => !prevState);
+
+    // for each input element, toggle the readOnly attribute
     const inputElements = document.getElementsByClassName('form-control');
     for (let elem of inputElements) {
-      elem.readOnly = false;
+      elem.readOnly = !elem.readOnly;
     }
   }
   
@@ -73,7 +78,11 @@ export default function Profile() {
                   readOnly />
               </div>
             </form>
-            <button className="btn-primary btn-sm" style={{'float': 'right'}} onClick={editProfile}>Edit Profile</button>
+            {editMode ?
+              <button className="btn-success btn-sm" style={{'float': 'right'}} onClick={editProfile}>Save</button>
+              : 
+              <button className="btn-primary btn-sm" style={{'float': 'right'}} onClick={editProfile}>Edit Profile</button>
+            }
           </div>
         </div>
       </div>
