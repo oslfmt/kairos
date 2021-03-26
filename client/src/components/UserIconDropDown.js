@@ -11,7 +11,12 @@ export default function UserIconDropDown() {
   return (
     isAuthenticated && (
       <NavDropdown title={<Image src={user.picture} style={{'height': '50px'}} className="mr-3" roundedCircle/>}>
-        <Link to="/dashboard" className="dropdown-item text-center">Profile</Link>
+        <NavDropdown.Item>
+          <Link to="/dashboard" className="dropdown-item text-center">Profile</Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item>
+          <Link to="/createfreelancer" className="dropdown-item text-center">Create Freelancer<br></br>Account</Link>
+        </NavDropdown.Item>
         <NavDropdown.Item>
           <LogoutButton />
         </NavDropdown.Item>

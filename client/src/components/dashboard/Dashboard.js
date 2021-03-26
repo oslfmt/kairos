@@ -1,45 +1,52 @@
 import React, { Component } from 'react'
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import Nav from 'react-bootstrap/Nav';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import Profile from './Profile';
 import PostsGrid from './PostsGrid';
+import { Link } from 'react-router-dom'
 
 export default class Dashboard extends Component {
   render() {
     return (
-      <Container className="mt-3" fluid>
-        <Row>
-          <Col sm={4}>
-            <Navbar bg="light" variant="dark">
-              <Nav.Link>Dashboard</Nav.Link>
-              <Nav.Link>Messages</Nav.Link>
-              <Nav.Link>Settings</Nav.Link>
-            </Navbar>
-          </Col>
-          <Col sm={7}>
-            <Navbar bg="light" variant="dark">
-              <Nav.Link>Active Jobs (3)</Nav.Link>
-              <Nav.Link>Active Postings (2)</Nav.Link>
-              <Nav.Link>Completed Jobs (1)</Nav.Link>
-            </Navbar>
-          </Col>
-          <Col sm={1} className="align-items-center d-flex">
-            <Button>Post Job</Button>
-          </Col>
-        </Row>
-        <Row>
-          <Col sm={4}>
+      <div className="container-fluid mt-3">
+        <div className="row">
+          <div className="col-4">
+            <div className="navbar bg-light">
+              <div className="nav-item">
+                <Link to="">Dashboard</Link>
+              </div>
+              <div className="nav-item">
+                <Link to="">Messages</Link>
+              </div>
+              <div className="nav-item">
+                <Link to="">Settings</Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-7">
+            <div className="navbar bg-light">
+              <div className="nav-item">
+                <Link to="">Active Jobs (3)</Link>
+              </div>
+              <div className="nav-item">
+                <Link to="">Active Postings (2)</Link>
+              </div>
+              <div className="nav-item">
+                <Link to="">Completed Jobs (1)</Link>
+              </div>
+            </div>
+          </div>
+          <div className="col-1 align-items-center d-flex">
+            <Link type="button" to="/postjob" className="btn btn-primary">Post Job</Link>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-4">
             <Profile />
-          </Col>
-          <Col sm={8}>
+          </div>
+          <div className="col-8">
             <PostsGrid />
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     );
   }
 }
