@@ -42,7 +42,6 @@ const LoginButton = () => {
 
 const SignUpButton = () => {
   const { loginWithRedirect, isAuthenticated } = useAuth0();
-
   const signUp = () => {
     loginWithRedirect({screen_hint: 'signup'});
   }

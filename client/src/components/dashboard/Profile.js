@@ -44,12 +44,14 @@ export default function Profile() {
     const inputElements = document.getElementsByClassName('form-control');
     for (let elem of inputElements) {
       elem.readOnly = !elem.readOnly;
+      if(elem.readOnly === false) {elem.value = elem.placeholder;}
+      else{elem.placeholder = elem.value;}
     }
   }
   
   return (
     isAuthenticated && (
-      <div className="card">
+      <div className="card-prof">
         <div className="bg-white shadow rounded overflow-hidden mt-3 mb-4">
           <div className="px-4 pt-0 pb-4 cover-profile">
             <div className="media align-items-end profile-head-profile">
@@ -57,7 +59,7 @@ export default function Profile() {
                 <img className="rounded-circle rounded mb-1 img-thumbnail" style={{height: "auto", width: "auto"}} src={user.picture} alt={user.name}/>
               </div>
               <div className="media-body mb-5 text-white">
-                <h4 className="mt-0 mb-0">{userMetadata ? userMetadata.user_metadata.username : null}</h4>
+                {/*<h4 className="mt-0 mb-0">{userMetadata ? userMetadata.user_metadata.username : null}</h4>*/}
                 <p className="midium mb-4"><i className="fas fa-map-marker-alt mr-2"></i>Truman State University</p>
               </div>
             </div>
