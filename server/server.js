@@ -4,21 +4,31 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const featuredSchema = new Schema({}, { collection: "featured" });
-module.exports = mongoose.model('featured', featuredSchema);
+module.exports = mongoose.model('featured', featuredSchema);  
+require('dotenv').config();
+const axios = require('axios').default;
+const http = require('http');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 const PORT = 4000;
 
+// Import Search Functionality
 let Job = require('./Job-model');
 const fetchDataFromDatabase = require('./search');
+
+// Import Stripe Payment Functionality
+const transaction = require("./transaction");
 
 // would like to somehow call this to batch indexes every certain time period (ex every 10 min)
 // or use mongoDB change stream to call this whenever data is updated in DB, but this might be more expensive?
 fetchDataFromDatabase();
 
-mongoose.connect('mongodb+srv://user1:test123@cluster0.98it7.mongodb.net/Cluster0?retryWrites=true&w=majority', {useNewUrlParser: true, useUnifiedTopology: true});
+const getUsers = require('./Auth');
+// getUsers();
+
+mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error: '));
@@ -75,7 +85,32 @@ app.post('/postjob', (req, res) => {
     });
 });
 
+app.get('/dashboard', (req, res) => {
+  
+})
 
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);
 });
+
+// PAYMENT FUNCTIONALITY TESTS
+(async () => {
+  // test paymentIntent
+  // const obj = await transaction.paymentFunction();
+  // console.log('payment created');
+  
+  // // create test account
+  // const account = await transaction.createConnectedAccount();
+  // console.log('Account ID:' + account.id);
+
+  // create test account link for redirecting to onboarding
+  // transaction.retrieveAccounts()
+  //   .then(res => {
+  //     const accountID = res.data[0].id;
+  //     return accountID;
+  //   })
+  //   .then(accountID => {
+  //     const accountLink = transaction.createAccountLink(accountID);
+  //     console.log(accountLink);
+  //   })
+})();

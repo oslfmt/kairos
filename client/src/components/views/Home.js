@@ -2,10 +2,7 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import CustomSearchBox from '../search/CustomSearchBox';
-
-import Job from '../Job';
-
-import HeaderAll from '../layout/HeaderAll';
+import Job from '../Job/Job.js';
 
 /**
  * Renders a custom list of jobs fetched from DB
@@ -48,8 +45,6 @@ export default class Home extends Component {
 	render() {
 		return (
 			<div>
-				<HeaderAll/>
-
 				{/* Main section */}
 				<section id="main">
         	<div className="container mt-4">
