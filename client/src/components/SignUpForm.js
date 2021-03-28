@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
 import { Redirect } from 'react-router-dom';
-const axios = require('axios').default;
+import { updateUserMetadata } from './AuthHelper';
 
 /**
  * A form that first time users fill out to get their basic account set up
@@ -10,48 +10,19 @@ const axios = require('axios').default;
  * 2. All user data is sent and stored on current user Auth0 account object. Probably the user_metadata
  * 3. The new dashboard reflects the new changes
  */
- const SignUpForm = () => {
+const SignUpForm = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [redirect, setRedirect] = useState(false);
   const [profileData, setProfileData] = useState({username: '', organization: '', description: ''});
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const domain = "collancer-dev.us.auth0.com";
 
     if (isAuthenticated) {
-      // retrieves access token with required scopes. Then uses token in authorization header
-      // to send a PATCH request to designated endnpoint to change user profile data, using the data
-      // provided in the form.
-      getAccessTokenSilently({
-        audience: `https://${domain}/api/v2/`,
-        scope: "read:current_user create:current_user_metadata",
-      })
-      .then(accessToken => {
-        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
-
-        const options = {
-          method: 'PATCH',
-          url: userDetailsByIdUrl,
-          headers: {
-            authorization: `Bearer ${accessToken}`,
-            'content-type': 'application/json'
-          },
-          data: {
-            user_metadata: {
-              "username": profileData.username,
-              "organization": profileData.organization,
-              "description": profileData.description,
-            }
-          }
-        };
-        
-        // make axios PATCH request and setRedirect to true
-        axios.request(options).then(() => setRedirect(true))
-          .catch(err => console.error(err));
-      })
-      .catch(error => console.error(error));
+      updateUserMetadata(user, profileData, getAccessTokenSilently);
     }
+
+    setRedirect(true);
   }
 
   const handleInput = (e) => {
