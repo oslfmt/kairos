@@ -7,7 +7,8 @@ const JobSchema = new Schema({
     price: String,
     skills: Array,
     otherSkills: String,
-    paymentForms: Array
+    paymentForms: Array,
+    userID: String
 });
 
 module.exports = mongoose.model('Job', JobSchema);

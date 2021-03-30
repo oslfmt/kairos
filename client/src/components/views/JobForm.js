@@ -1,8 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { withAuth0 } from '@auth0/auth0-react';
 import Checkbox from '../Checkbox';
 const axios = require('axios');
 
-export default class JobForm extends Component {
+class JobForm extends Component {
 	constructor(props) {
 		super(props);
 
@@ -52,13 +53,16 @@ export default class JobForm extends Component {
 	}
 	
 	submitJob() {
+    const { user } = this.props.auth0;
+
 		const Job = {
 			title: this.state.title,
 			description: this.state.description,
 			skills: this.state.skills,
 			otherSkills: this.state.otherSkills,
 			price: this.state.price,
-			paymentForms: this.state.paymentForms
+			paymentForms: this.state.paymentForms,
+      userID: user.sub
 		};
 
 		// submit a post request (containing job data)
@@ -229,3 +233,5 @@ export default class JobForm extends Component {
 		);
 	}
 }
+
+export default withAuth0(JobForm);

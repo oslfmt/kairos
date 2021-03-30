@@ -23,9 +23,6 @@ const transaction = require("./transaction");
 // or use mongoDB change stream to call this whenever data is updated in DB, but this might be more expensive?
 fetchDataFromDatabase();
 
-const getUsers = require('./Auth');
-// getUsers();
-
 mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const db = mongoose.connection;
@@ -83,9 +80,16 @@ app.post('/postjob', (req, res) => {
     });
 });
 
+// load user jobs on dashboard
 app.get('/dashboard', (req, res) => {
+  const id = req.query.userID;
   
-})
+  Job.find({ userID: id }, (err, docs) => {
+    if (err) return console.error(err);
+
+    res.json(docs);
+  });
+});
 
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);
