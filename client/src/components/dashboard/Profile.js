@@ -1,15 +1,18 @@
 import React, {useState, useEffect} from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
+import { updateUserMetadata } from '../AuthHelper';
 
 export default function Profile() {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [userMetadata, setUserMetadata] = useState(null);
   const [editMode, setEditMode] = useState(false);
-  const domain = "collancer-dev.us.auth0.com";
 
   // effects run after every completed render, but can choose to fire only when certain values have changed
+  // ERROR: there is some issue with userMetadata being undefined, on the very first render. After refresh, it works
   useEffect(() => {
     const getUserMetadata = async () => {
+      const domain = "collancer-dev.us.auth0.com";
+
       try {
         const accessToken = await getAccessTokenSilently({
           audience: `https://${domain}/api/v2/`,
@@ -34,7 +37,7 @@ export default function Profile() {
     if (isAuthenticated) {
       getUserMetadata();
     }
-  }, [user]);
+  }, [user, getAccessTokenSilently, isAuthenticated]);
 
   const editProfile = () => {
     // set edit mode to opposite of previous state
@@ -47,6 +50,24 @@ export default function Profile() {
       if(elem.readOnly === false) {elem.value = elem.placeholder;}
       else{elem.placeholder = elem.value;}
     }
+    
+    // submit updated data if in edit mode
+    if (editMode) {
+      updateUserMetadata(user, userMetadata.user_metadata, getAccessTokenSilently);
+    }
+  }
+
+  const handleInput = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setUserMetadata(prevState => {
+      // this is inefficient because it recopies the entire user object on every input change, when
+      // we really only need to change the user_metadata
+      let newState = { ...prevState };
+      newState.user_metadata[name] = value;
+      return { ...newState, ...prevState };
+    });
   }
   
   return (
@@ -59,7 +80,7 @@ export default function Profile() {
                 <img className="rounded-circle rounded mb-1 img-thumbnail" style={{height: "auto", width: "auto"}} src={user.picture} alt={user.name}/>
               </div>
               <div className="media-body mb-5 text-white">
-                {/*<h4 className="mt-0 mb-0">{userMetadata ? userMetadata.user_metadata.username : null}</h4>*/}
+                <h4 className="mt-0 mb-0">{userMetadata ? userMetadata.user_metadata.username : null}</h4>
                 <p className="midium mb-4"><i className="fas fa-map-marker-alt mr-2"></i>Truman State University</p>
               </div>
             </div>
@@ -68,15 +89,19 @@ export default function Profile() {
             <p className="card-text mt-5">Profile Info</p>
             <form>
               <div className="form-group">
-                {/*<input className="form-control" placeholder={userMetadata ? userMetadata.app_metadata.roles[0] : null}
-                  readOnly />*/}
-              </div>
-              <div className="form-group">
-                <input className="form-control" placeholder={userMetadata ? userMetadata.user_metadata.organization : null}
+                <input 
+                  className="form-control" 
+                  name="organization" 
+                  onChange={handleInput}
+                  placeholder={userMetadata ? userMetadata.user_metadata.organization : null}
                   readOnly />
               </div>
               <div className="form-group">
-                <input className="form-control" placeholder={userMetadata ? userMetadata.user_metadata.description : null}
+                <input 
+                  className="form-control" 
+                  name="description"
+                  onChange={handleInput} 
+                  placeholder={userMetadata ? userMetadata.user_metadata.description : null}
                   readOnly />
               </div>
             </form>

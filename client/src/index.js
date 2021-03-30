@@ -19,8 +19,8 @@ ReactDOM.render(
   <Auth0Provider
     domain={domain}
     clientId={clientID}
-    // redirectUri={newUser ? '/dashboard' : '/signupform'}
-    redirectUri='http://localhost:3000/dashboard'
+    // redirectUri={newUser ? '/dashboard' : '/signupinfo'}
+    redirectUri='http://localhost:3000/signupinfo'
     audience="https://collancer-dev.us.auth0.com/api/v2/"
     scope="read:current_user update:current_user_metadata create:current_user_metadata"
   >
