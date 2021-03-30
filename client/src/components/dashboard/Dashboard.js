@@ -26,8 +26,8 @@ export default class Dashboard extends Component {
               <div className="nav-item">
                 <Link to="">Active Jobs (3)</Link>
               </div>
-              <div className="nav-item">
-                <Link to="">Active Postings (2)</Link>
+              <div className="nav-item activePostings">            
+                <Link to="">Active Postings 0</Link>
               </div>
               <div className="nav-item">
                 <Link to="">Completed Jobs (1)</Link>

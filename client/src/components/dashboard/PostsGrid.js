@@ -23,12 +23,12 @@ export default function PostsGrid() {
       <JobsList jobs={jobs} />
     </div>
   );
+  /* This is the number of posted jobs*/
 }
 
 const JobsList = (props) => {
   const jobCards = props.jobs.map((job, index) => (
     <ActiveJob jobDetails={job} key={index} />
   ))
-
   return <ul>{jobCards}</ul>;
 }
