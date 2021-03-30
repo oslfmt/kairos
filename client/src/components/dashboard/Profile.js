@@ -73,7 +73,7 @@ export default function Profile() {
   return (
     isAuthenticated && (
       <div className="card-prof">
-        <div className="bg-white shadow rounded overflow-hidden mt-3 mb-4">
+        <div style={{padding: "10px"}} className="bg-white shadow rounded overflow-hidden mt-3 mb-4">
           <div className="px-4 pt-0 pb-4 cover-profile">
             <div className="media align-items-end profile-head-profile">
               <div className="profile mr-3">

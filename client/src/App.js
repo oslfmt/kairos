@@ -53,6 +53,7 @@ class App extends Component {
           <Route exact path="/">
             <HomeHeader />
             <Home />
+            <Footer />
           </Route>
         </Switch>
       </Router>
