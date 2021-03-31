@@ -50,7 +50,7 @@ export default class Job extends Component {
 		return (
 			<div className="col-3">
 				<div className="card m-0 mb-5 position-relative">
-					<div className="card-body">
+					<div className="card-body" style={{height: "300px"}}>
             {/* Clicking anywhere on card triggers modal */}
 						<a className="stretched-link" onClick={this.handleShow} />
 						<h5 className="card-title">{job.title}</h5>

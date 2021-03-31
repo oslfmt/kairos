@@ -11,6 +11,7 @@ export default function PostsGrid(props) {
       <PostsList activePostings={activePostings} />
     </div>
   );
+  /* This is the number of posted jobs*/
 }
 
 const PostsList = (props) => {
