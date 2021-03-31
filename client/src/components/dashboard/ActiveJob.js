@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function ActiveJob(props) {
-  const job = props.jobDetails;
+  const job = props.postDetails;
 
   return (
     <div className="card shadow m-3">

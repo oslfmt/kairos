@@ -2,42 +2,11 @@ import React, {useState, useEffect} from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 import { updateUserMetadata } from '../AuthHelper';
 
-export default function Profile() {
+export default function Profile(props) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  const [userMetadata, setUserMetadata] = useState(null);
   const [editMode, setEditMode] = useState(false);
-
-  // effects run after every completed render, but can choose to fire only when certain values have changed
-  // ERROR: there is some issue with userMetadata being undefined, on the very first render. After refresh, it works
-  useEffect(() => {
-    const getUserMetadata = async () => {
-      const domain = "collancer-dev.us.auth0.com";
-
-      try {
-        const accessToken = await getAccessTokenSilently({
-          audience: `https://${domain}/api/v2/`,
-          scope: "read:current_user",
-        });
-
-        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
-  
-        const metadataResponse = await fetch(userDetailsByIdUrl, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        const userMetadata = await metadataResponse.json();
-        setUserMetadata(userMetadata);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-  
-    if (isAuthenticated) {
-      getUserMetadata();
-    }
-  }, [user, getAccessTokenSilently, isAuthenticated]);
+  const userMetadata = props.userMetadata;
+  const setUserMetadata = props.setUserMetadata;
 
   const editProfile = () => {
     // set edit mode to opposite of previous state
@@ -86,9 +55,10 @@ export default function Profile() {
             </div>
           </div>
           <div className="card-body">
-            <p className="card-text mt-5">Profile Info</p>
+            <p className="lead mt-5">Profile Info</p>
             <form>
               <div className="form-group">
+                <label>Organization</label>
                 <input 
                   className="form-control" 
                   name="organization" 
@@ -97,6 +67,7 @@ export default function Profile() {
                   readOnly />
               </div>
               <div className="form-group">
+                <label>Description</label>
                 <input 
                   className="form-control" 
                   name="description"

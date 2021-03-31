@@ -3,32 +3,20 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import ActiveJob from './ActiveJob';
 
-export default function PostsGrid() {
-  // possibly move this up to parent component, so we only have to do this once
-  const { user, isAuthenticated } = useAuth0();
-  const [jobs, setJobs] = useState([]);
-
-  // on component mount, send a GET request to endpoint for user Jobs
-  // set the received jobs array to component state
-  useEffect(() => {
-    if (isAuthenticated) {
-      axios.get(`http://localhost:4000/dashboard?userID=${user.sub}`)
-        .then(res => setJobs(res.data))
-        .catch(err => console.error(err));
-    }
-  });
+export default function PostsGrid(props) {
+  const activePostings = props.activePostings;
 
   return (
     <div className="jumbotron mt-3 p-2">
-      <JobsList jobs={jobs} />
+      <PostsList activePostings={activePostings} />
     </div>
   );
 }
 
-const JobsList = (props) => {
-  const jobCards = props.jobs.map((job, index) => (
-    <ActiveJob jobDetails={job} key={index} />
+const PostsList = (props) => {
+  const postCards = props.activePostings.map((post, index) => (
+    <ActiveJob postDetails={post} key={index} />
   ))
 
-  return <ul>{jobCards}</ul>;
+  return <ul>{postCards}</ul>;
 }
