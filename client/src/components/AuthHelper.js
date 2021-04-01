@@ -28,10 +28,13 @@ const updateUserMetadata = (user, profileData, retrieveToken) => {
       }
     };
     
-    axios.request(options).then(console.log('Profile data saved successfully!'))
+    axios.request(options)
+      .then(console.log('Profile updated successfully'))
       .catch(err => console.error(err));
   })
   .catch(error => console.error(error));
+
+  return new Promise(resolve => resolve(true));
 }
 
 export {

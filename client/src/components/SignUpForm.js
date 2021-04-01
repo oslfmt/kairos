@@ -15,14 +15,18 @@ const SignUpForm = () => {
   const [redirect, setRedirect] = useState(false);
   const [profileData, setProfileData] = useState({username: '', organization: '', description: ''});
   
-  const handleSubmit = async (e) => {
+  /**
+   * Updates the user_metadata on Auth0 store with the data typed in the signup form. Once data has been
+   * successfully stored on Auth0, redirects to the user dashboard.
+   * @param {SyntheticEvent} e event object on submit
+   */
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (isAuthenticated) {
-      updateUserMetadata(user, profileData, getAccessTokenSilently);
+      updateUserMetadata(user, profileData, getAccessTokenSilently)
+        .then(res => setRedirect(res))
     }
-
-    setRedirect(true);
   }
 
   const handleInput = (e) => {
