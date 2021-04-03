@@ -4,6 +4,10 @@ import Button from 'react-bootstrap/Button';
 import JobModalContent from './JobModalContent';
 import ItemList from './ItemList';
 
+/**
+ * This component renders a Job card on the browse page. It is a card that displays simple info
+ * that is relevant to the particular job.
+ */
 export default class Job extends Component {
 	constructor(props) {
 		super(props);
@@ -46,7 +50,7 @@ export default class Job extends Component {
 		return (
 			<div className="col-3">
 				<div className="card m-0 mb-5 position-relative">
-					<div className="card-body">
+					<div className="card-body" style={{height: "300px"}}>
             {/* Clicking anywhere on card triggers modal */}
 						<a className="stretched-link" onClick={this.handleShow} />
 						<h5 className="card-title">{job.title}</h5>
@@ -59,8 +63,8 @@ export default class Job extends Component {
 								<p className="font-weight-bold text-center" style={{'color': 'green'}}>${job.price}</p>
 							</div>
 							<div className="row d-flex align-items-center position-absolute p-2" style={{'bottom': 0, 'right': 25}}>
-								<div className="col-8">
-									<p>[CLIENT NAME]</p>
+								<div className="col-9">
+									<p>{job.clientName}</p>
 								</div>
 							</div>
 						</div>

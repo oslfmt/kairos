@@ -1,4 +1,4 @@
-const stripe = require('stripe')('sk_test_51ILBPtFOjo9Of2cpjtVTjYXt2SCgoGpWnnFYFPVKhMU3XmegC7go8yCJHQS2vfkco4PTFGGjjU4J7zSGz5TXbKT200UGJlMyzd');
+const stripe = require('stripe')(process.env.STRIPE_SK_TEST);
 
 const paymentFunction = async () => {
   const paymentIntent = await stripe.paymentIntents.create({

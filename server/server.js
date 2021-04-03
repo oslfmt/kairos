@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const featuredSchema = new Schema({}, { collection: "featured" });
-module.exports = mongoose.model('featured', featuredSchema);
+module.exports = mongoose.model('featured', featuredSchema);  
 require('dotenv').config();
 
 const app = express();
@@ -80,6 +80,16 @@ app.post('/postjob', (req, res) => {
     });
 });
 
+// load user jobs on dashboard
+app.get('/dashboard', (req, res) => {
+  const id = req.query.userID;
+  
+  Job.find({ userID: id }, (err, docs) => {
+    if (err) return console.error(err);
+
+    res.json(docs);
+  });
+});
 
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);

@@ -52,11 +52,6 @@ header a {
   margin-top: 9rem;
 }
 
-/* card class */
-.card {
-  height: 400px;
-}
-
 #how-it-works {
   padding: 6rem 0;
 }
@@ -71,7 +66,7 @@ header a {
 #signup-form {
   margin-top: 6rem;
 }
-#signup-form .card {
+#signup-form .card-prof {
   width: 50%;
   height: 80%;
 }
@@ -85,24 +80,24 @@ header a {
 /* ====================================== */
 /* PROFILE PAGE */
 /* ====================================== */
-#profile .col-4 .card {
+#profile .col-4 .card-prof {
   height: 800px;
   background-color: #9b59b6;
   border: none;
   margin-right: 3rem;
 }
-#profile .col-4 .card img {
+#profile .col-4 .card-prof img {
   height: 200px;
   width: 200px;
   border-radius: 50%;
   margin-top: 40px;
 }
-#profile .col-4 .card button {
+#profile .col-4 .card-prof button {
   width: 50px;
   height: 30px;
   margin-top: 0.25rem;
 }
-#profile .col-8 .card {
+#profile .col-8 .card-prof-prof {
   height: 40%;
   background-color: #bdc3c7;
   border: none;
@@ -133,10 +128,10 @@ header a {
 /* ====================================== */
 /* NOTIFY FREELANCER PAGE */
 /* ====================================== */
-#freelancers .card {
+#freelancers .card-prof {
   height: 140px;
 }
-#freelancers .card button {
+#freelancers .card-prof button {
   height: 40px;
   margin-right: 1rem;
 }
@@ -173,6 +168,10 @@ header a {
   background-image: url(https://images.unsplash.com/photo-1530305408560-82d13781b33a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1352&q=80);
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.dropdown-toggle::after {
+  display: none;
 }
 
 /*# sourceMappingURL=main.css.map */

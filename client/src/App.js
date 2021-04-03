@@ -7,27 +7,28 @@ import './css/main.css';
 
 // import pages
 import Home from './components/views/Home';
-import Profile from './components/views/Profile';
 import Header from './components/layout/Header';
 import JobForm from './components/views/JobForm';
 import FreelancerList from './components/Freelancer-list';
 import BrowseGrid from './components/search/BrowseGrid';
-import LoginButton from './components/LoginButton';
-import Footer from './components/layout/Footer';
-
+import Dashboard from './components/dashboard/Dashboard';
+import Footer from './components/layout/Footer'
+import { HomeHeader } from './components/layout/HomeHeader'
+import SignUpForm from './components/SignUpForm'
 
 class App extends Component {
   render() {
     return (
       <Router>
         <Switch>
-          <Route path="/signup">
-            <LoginButton />
+          <Route path="/dashboard">
+            <Header />
+            <Dashboard />
+            <Footer />
           </Route>
 
-          <Route path="/profile">
-            <Header />
-            <Profile />
+          <Route path="/signupinfo">
+            <SignUpForm />
           </Route>
 
           <Route path="/postjob">
@@ -50,7 +51,9 @@ class App extends Component {
 
           {/* load home page at root */}
           <Route exact path="/">
+            <HomeHeader />
             <Home />
+            <Footer />
           </Route>
         </Switch>
       </Router>

@@ -1,29 +1,26 @@
 import React from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-
 import LogoutButton from './LogoutButton';
-import ProfileImg from './UserProfileInfo/profile-img';
+import NavDropdown from 'react-bootstrap/NavDropdown';
+import Image from 'react-bootstrap/Image';
+import { Link } from 'react-router-dom';
 
-const UserIconDropDown = () => {
-  const { isAuthenticated } = useAuth0();
+export default function UserIconDropDown() {
+  const {user, isAuthenticated } = useAuth0();
 
   return (
     isAuthenticated && (
-      <div class="collapse navbar-collapse" id="navbar-list-4">
-        <ul class="navbar-nav">
-          <li class="nav-item dropdown">
-            <a href='/#' class="nav-link" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <ProfileImg />
-            </a>
-            <div style={{left: "-80px"}} class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item text-center" href="/profile">Profile</a>
-              <LogoutButton />
-            </div>
-          </li>   
-        </ul>
-      </div>
+      <NavDropdown title={<Image src={user.picture} style={{'height': '50px'}} className="mr-3" roundedCircle/>}>
+        <NavDropdown.Item>
+          <Link to="/dashboard" className="dropdown-item text-center">Profile</Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item>
+          <Link to="/createfreelancer" className="dropdown-item text-center">Create Freelancer<br></br>Account</Link>
+        </NavDropdown.Item>
+        <NavDropdown.Item>
+          <LogoutButton />
+        </NavDropdown.Item>
+      </NavDropdown>
     )
-  )
+  );
 }
-
-export default UserIconDropDown

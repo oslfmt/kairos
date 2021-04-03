@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import algoliasearch from 'algoliasearch';
@@ -13,20 +12,31 @@ import { Auth0Provider } from '@auth0/auth0-react';
 const searchClient = algoliasearch('R9Y9XV4UI3', '0925b07c442589f3802c5b4231d906e9');
 
 // auth0
-const domain = process.env.REACT_APP_AUTH0_DOMAIN;
-const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+const domain = 'collancer-dev.us.auth0.com';
+const clientID = 'UgcmqYj5BnsCo3gCmcrMli7HX6BM5mNI';
 
+// const onRedirectCallback = (appState) => {
+//   window.history.push(
+//     appState && appState.returnTo
+//     ? appState.returnTo
+//     : window.location.pathname
+//   );
+// }
 
 ReactDOM.render(
   <Auth0Provider
     domain={domain}
-    clientId={clientId}
-    redirectUri={window.location.origin}>
-      <React.StrictMode>
-        <InstantSearch searchClient={searchClient} indexName="test_jobs">
+    clientId={clientID}
+    redirectUri='http://localhost:3000/signupinfo'
+    audience="https://collancer-dev.us.auth0.com/api/v2/"
+    scope="read:current_user update:current_user_metadata create:current_user_metadata"
+    // onRedirectCallback={onRedirectCallback}
+  >
+    <React.StrictMode>
+      <InstantSearch searchClient={searchClient} indexName="test_jobs">
         <App />
-        </InstantSearch>
-      </React.StrictMode>
+      </InstantSearch>
+    </React.StrictMode>
   </Auth0Provider>,
   document.getElementById('root')
 );

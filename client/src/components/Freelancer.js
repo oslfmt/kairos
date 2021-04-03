@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Avatar from './Avatar';
 
 export default class Freelancer extends Component {
 	constructor(props) {
@@ -18,7 +17,6 @@ export default class Freelancer extends Component {
 					<div className="card-body d-flex align-items-center">
 						<div className="row align-items-center">
 							<div className="col-md-2 text-center">
-								<Avatar user={this.state} />
 							</div>
 							<div className="col-md-2">
 								<h5 className="card-title text-center text-white">{this.state.name}</h5>
