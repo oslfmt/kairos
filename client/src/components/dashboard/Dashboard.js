@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
+import { getUserMetadata } from '../AuthHelper';
 import axios from 'axios';
 import Profile from './Profile';
 import PostsGrid from './PostsGrid';
@@ -8,41 +9,17 @@ import { Link } from 'react-router-dom'
 export default function Dashboard() {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const [activePostings, setActivePostings] = useState([]);
-  const [userMetadata, setUserMetadata] = useState(null);
+  const [profileData, setProfileData] = useState(null);
 
   // effects run after every completed render, but can choose to fire only when certain values have changed
   // ERROR: there is some issue with userMetadata being undefined, on the very first render. After refresh, it works
   // The reason is probably it takes some time to update, so we need to wait until it is updated, before running
   // this effect immediately
-  useEffect(() => {
-    const getUserMetadata = async () => {
-      const domain = "collancer-dev.us.auth0.com";
-
-      try {
-        const accessToken = await getAccessTokenSilently({
-          audience: `https://${domain}/api/v2/`,
-          scope: "read:current_user",
-        });
-
-        const userDetailsByIdUrl = `https://${domain}/api/v2/users/${user.sub}`;
-  
-        const metadataResponse = await fetch(userDetailsByIdUrl, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
-
-        const userMetadata = await metadataResponse.json();
-        setUserMetadata(userMetadata);
-      } catch (e) {
-        console.error(e);
-      }
-    };
-  
+  useEffect(() => {  
     if (isAuthenticated) {
-      getUserMetadata();
+      getUserMetadata(user, getAccessTokenSilently, setProfileData);
     }
-  }, [user, getAccessTokenSilently, isAuthenticated]);
+  }, [getAccessTokenSilently, user, isAuthenticated]);
 
   // on component mount, send a GET request to endpoint for user Jobs
   // set the received jobs array to component state
@@ -52,7 +29,12 @@ export default function Dashboard() {
         .then(res => setActivePostings(res.data))
         .catch(err => console.error(err));
     }
-  });
+
+    // cleanup function resets the state
+    return () => {
+      setActivePostings([]);
+    }
+  }, [isAuthenticated, user.sub]);
 
   const renderPostGrid = (e) => {
     switch (e.target.name) {
@@ -96,7 +78,7 @@ export default function Dashboard() {
       </div>
       <div className="row">
         <div className="col-4">
-          <Profile userMetadata={userMetadata} setUserMetadata={setUserMetadata} />
+          <Profile userMetadata={profileData} setUserMetadata={setProfileData} />
         </div>
         <div className="col-8">
           <PostsGrid activePostings={activePostings} />

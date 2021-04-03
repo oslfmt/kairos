@@ -1,4 +1,5 @@
 const axios = require('axios').default;
+const domain = "collancer-dev.us.auth0.com";
 
 /**
  * Updates the user_metadata of a specific user
@@ -7,8 +8,7 @@ const axios = require('axios').default;
  * @param {Function} retrieveToken getAccessTokenSilently function provided by Auth0
  */
 const updateUserMetadata = (user, profileData, retrieveToken) => {
-  const domain = "collancer-dev.us.auth0.com";
-
+  
   retrieveToken({
     audience: `https://${domain}/api/v2/`,
     scope: "read:current_user create:current_user_metadata",
@@ -37,6 +37,35 @@ const updateUserMetadata = (user, profileData, retrieveToken) => {
   return new Promise(resolve => resolve(true));
 }
 
+/**
+ * Retrieves the full users profile, including all metadata, from auth0
+ * @param {Object} user the user object provided by Auth0
+ * @param {Function} retrieveToken getAccessTokenSilently function from Auth0
+ * @param {Function} callback function to call after userMetadata has been retrieved
+ */
+const getUserMetadata = (user, retrieveToken, callback) => {
+
+  retrieveToken({
+    audience: `https://${domain}/api/v2/`,
+    scope: "read:current_user",
+  })
+  .then(accessToken => {
+    const options = {
+      method: 'GET',
+      url: `https://${domain}/api/v2/users/${user.sub}`,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      }
+    }
+
+    axios.request(options)
+      .then(res => callback(res.data))
+      .catch(err => console.error(err));
+  })
+  .catch(err => console.error(err));
+};
+
 export {
-  updateUserMetadata
+  updateUserMetadata,
+  getUserMetadata
 }

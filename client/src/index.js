@@ -15,6 +15,14 @@ const searchClient = algoliasearch('R9Y9XV4UI3', '0925b07c442589f3802c5b4231d906
 const domain = 'collancer-dev.us.auth0.com';
 const clientID = 'UgcmqYj5BnsCo3gCmcrMli7HX6BM5mNI';
 
+// const onRedirectCallback = (appState) => {
+//   window.history.push(
+//     appState && appState.returnTo
+//     ? appState.returnTo
+//     : window.location.pathname
+//   );
+// }
+
 ReactDOM.render(
   <Auth0Provider
     domain={domain}
@@ -22,6 +30,7 @@ ReactDOM.render(
     redirectUri='http://localhost:3000/signupinfo'
     audience="https://collancer-dev.us.auth0.com/api/v2/"
     scope="read:current_user update:current_user_metadata create:current_user_metadata"
+    // onRedirectCallback={onRedirectCallback}
   >
     <React.StrictMode>
       <InstantSearch searchClient={searchClient} indexName="test_jobs">

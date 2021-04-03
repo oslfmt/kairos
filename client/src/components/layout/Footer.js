@@ -4,39 +4,39 @@ export default class Footer extends Component {
 	render() {
 		return (
 			<div>
-				<footer class="bg-dark text-center text-white">
+				<footer className="bg-dark text-center text-white">
 					{/* Grid container */}
-					<div class="container p-4 pb-0">
+					<div className="container p-4 pb-0">
 						{/* Section: Social media */}
-						<section class="mb-4">
+						<section className="mb-4">
 						{/* Facebook */}
-						<a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-							<i class="fab fa-facebook-f"></i>
+						<a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+							<i className="fab fa-facebook-f"></i>
 						</a>
 
 						{/* Twitter */}
-						<a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-							<i class="fab fa-twitter"></i>
+						<a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+							<i className="fab fa-twitter"></i>
 						</a>
 
 						{/* Google */}
-						<a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-							<i class="fab fa-google"></i>
+						<a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+							<i className="fab fa-google"></i>
 						</a>
 
 						{/* Instagram */}
-						<a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-							<i class="fab fa-instagram"></i>
+						<a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+							<i className="fab fa-instagram"></i>
 						</a>
 
 						{/* Linkedin */}
-						<a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-							<i class="fab fa-linkedin-in"></i>
+						<a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+							<i className="fab fa-linkedin-in"></i>
 						</a>
 
 						{/* Github */}
-						<a class="btn btn-outline-light btn-floating m-1" href="#!" role="button">
-							<i class="fab fa-github"></i>
+						<a className="btn btn-outline-light btn-floating m-1" href="#!" role="button">
+							<i className="fab fa-github"></i>
 						</a>
 						</section>
 						{/* Section: Social media */}
@@ -45,8 +45,8 @@ export default class Footer extends Component {
 
 					{/* Copyright */}
 					{/* style="background-color: rgba(0, 0, 0, 0.2);"*/}
-					<div class="text-center p-3">
-						<p>© 2021 Copyright <a class="text-white" href="http://localhost:3000/">Collancer</a></p>
+					<div className="text-center p-3">
+						<p>© 2021 Copyright <a className="text-white" href="http://localhost:3000/">Collancer</a></p>
 					</div>
 					{/* Copyright */}
 					</footer>

@@ -63,8 +63,8 @@ export default class Job extends Component {
 								<p className="font-weight-bold text-center" style={{'color': 'green'}}>${job.price}</p>
 							</div>
 							<div className="row d-flex align-items-center position-absolute p-2" style={{'bottom': 0, 'right': 25}}>
-								<div className="col-8">
-									<p>[CLIENT NAME]</p>
+								<div className="col-9">
+									<p>{job.clientName}</p>
 								</div>
 							</div>
 						</div>

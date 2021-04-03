@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
 import Checkbox from '../Checkbox';
+import { getUserMetadata } from '../AuthHelper';
 const axios = require('axios');
 
 class JobForm extends Component {
@@ -13,7 +14,8 @@ class JobForm extends Component {
 			skills: [],
 			otherSkills: '',
 			price: '',
-			paymentForms: []
+			paymentForms: [],
+      userProfile: null,
 		};
 
 		this.submitJob = this.submitJob.bind(this);
@@ -21,6 +23,21 @@ class JobForm extends Component {
 		this.handleCheckbox = this.handleCheckbox.bind(this);
 		this.handleValidation = this.handleValidation.bind(this);
 	}
+
+  componentDidMount() {
+    const { user, getAccessTokenSilently, isAuthenticated } = this.props.auth0;
+
+    const callback = (data) => {
+      this.setState({
+        userProfile: data
+      })
+    }
+
+    
+    if (isAuthenticated) {
+      getUserMetadata(user, getAccessTokenSilently, callback);
+    }
+  }
 
 	handleValidation(e) {
 		e.preventDefault();
@@ -62,7 +79,8 @@ class JobForm extends Component {
 			otherSkills: this.state.otherSkills,
 			price: this.state.price,
 			paymentForms: this.state.paymentForms,
-      userID: user.sub
+      userID: user.sub,
+      clientName: this.state.userProfile.user_metadata.username
 		};
 
 		// submit a post request (containing job data)
