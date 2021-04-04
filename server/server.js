@@ -91,6 +91,11 @@ app.get('/dashboard', (req, res) => {
   });
 });
 
+// send update request to create freelancer account
+app.patch('/dashboard', (req, res) => {
+  
+})
+
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);
 });

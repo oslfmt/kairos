@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
-import { getUserMetadata } from '../AuthHelper';
+import { getUserMetadata } from '../../helper/auth';
 import axios from 'axios';
 import Profile from './Profile';
 import PostsGrid from './PostsGrid';
@@ -15,7 +15,7 @@ export default function Dashboard() {
   // ERROR: there is some issue with userMetadata being undefined, on the very first render. After refresh, it works
   // The reason is probably it takes some time to update, so we need to wait until it is updated, before running
   // this effect immediately
-  useEffect(() => {  
+  useEffect(() => {
     if (isAuthenticated) {
       getUserMetadata(user, getAccessTokenSilently, setProfileData);
     }
@@ -34,11 +34,21 @@ export default function Dashboard() {
     return () => {
       setActivePostings([]);
     }
-  }, [isAuthenticated, user.sub]);
+  }, [isAuthenticated, user]);
 
   const renderPostGrid = (e) => {
     switch (e.target.name) {
       case 'active-jobs':
+        console.log('active');
+        break;
+      case 'active-postings':
+        console.log('active-postings');
+        break;
+      case 'completed-jobs':
+        console.log('completed');
+        break;
+      default:
+        console.log('active');
     }
   }
   
@@ -48,13 +58,13 @@ export default function Dashboard() {
         <div className="col-4">
           <div className="navbar bg-light">
             <div className="nav-item">
-              <Link to="">Dashboard</Link>
+            <button className="btn" type="button">Dashboard</button>
             </div>
             <div className="nav-item">
-              <Link to="">Messages</Link>
+            <button className="btn" type="button">Messages</button>
             </div>
             <div className="nav-item">
-              <Link to="">Settings</Link>
+            <button className="btn" type="button">Settings</button>
             </div>
           </div>
         </div>
@@ -65,10 +75,10 @@ export default function Dashboard() {
               <button className="btn" type="button" name="active-jobs" onClick={renderPostGrid}>Active Jobs</button>
             </div>
             <div className="nav-item">
-              <button className="btn" type="button" name="active-postings">Active Postings ({activePostings.length})</button>
+              <button className="btn" type="button" name="active-postings" onClick={renderPostGrid}>Active Postings ({activePostings.length})</button>
             </div>
             <div className="nav-item">
-            <button className="btn" type="button" name="completed-jobs">Completed Jobs</button>
+            <button className="btn" type="button" name="completed-jobs" onClick={renderPostGrid}>Completed Jobs</button>
             </div>
           </div>
         </div>

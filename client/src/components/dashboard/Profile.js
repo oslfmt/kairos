@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
-import { updateUserMetadata } from '../AuthHelper';
+import { updateUserMetadata } from '../../helper/auth';
 
 export default function Profile(props) {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();

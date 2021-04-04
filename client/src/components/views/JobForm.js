@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withAuth0 } from '@auth0/auth0-react';
 import Checkbox from '../Checkbox';
-import { getUserMetadata } from '../AuthHelper';
+import { getUserMetadata } from '../../helper/auth';
 const axios = require('axios');
 
 class JobForm extends Component {

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { useAuth0 } from '@auth0/auth0-react';
 import { Redirect } from 'react-router-dom';
-import { updateUserMetadata } from './AuthHelper';
+import { updateUserMetadata } from '../helper/auth';
+import handleInputChange from '../helper/form';
 
 /**
  * A form that first time users fill out to get their basic account set up
@@ -29,17 +30,7 @@ const SignUpForm = () => {
     }
   }
 
-  const handleInput = (e) => {
-    const userInput = e.target.value;
-    const id = e.target.id;
-
-    setProfileData(prevData => {
-      // make a copy of prevData, change field, and merge objects
-      let newData = { ...prevData };
-      newData[id] = userInput;
-      return { ...prevData, ...newData };
-    });
-  }
+  const handleChange = (e) => handleInputChange(e, setProfileData);
 
   if (redirect) {
     // ERROR: need to fix stack trace so when user clicks back, redirects to home page
@@ -51,17 +42,17 @@ const SignUpForm = () => {
           <h3>Please enter some info to set up your account:</h3>
           <div class="form-group">
             <label for="username">Name</label>
-            <input type="text" class="form-control" id="username" value={profileData.username} onChange={handleInput}/>
+            <input type="text" class="form-control" name="username" value={profileData.username} onChange={handleChange}/>
             <small class="form-text text-muted">Please enter your first and last name</small>
           </div>
           <div class="form-group">
             <label for="organization">Organization</label>
-            <input type="text" class="form-control" id="organization" value={profileData.organization} onChange={handleInput}/>
+            <input type="text" class="form-control" name="organization" value={profileData.organization} onChange={handleChange}/>
             <small class="form-text text-muted">Enter the university you attend, or an organization you are affiliated with.</small>
           </div>
           <div class="form-group">
             <label for="description">Description</label>
-            <input type="text" as="textarea" rows={3} class="form-control" id="description" value={profileData.description} onChange={handleInput}/>
+            <input type="text" as="textarea" rows={3} class="form-control" name="description" value={profileData.description} onChange={handleChange}/>
             <small class="form-text text-muted">A brief description of what you plan to use the site for.</small>
           </div>
           <button type="submit" class="btn btn-primary" onClick={handleSubmit}>Submit</button>
