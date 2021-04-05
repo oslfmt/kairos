@@ -22,20 +22,28 @@ class JobForm extends Component {
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.handleCheckbox = this.handleCheckbox.bind(this);
 		this.handleValidation = this.handleValidation.bind(this);
+    this.callback = this.callback.bind(this);
 	}
+
+  callback(data) {
+    this.setState({
+      userProfile: data
+    });
+  }
 
   componentDidMount() {
     const { user, getAccessTokenSilently, isAuthenticated } = this.props.auth0;
-
-    const callback = (data) => {
-      this.setState({
-        userProfile: data
-      })
-    }
-
     
     if (isAuthenticated) {
-      getUserMetadata(user, getAccessTokenSilently, callback);
+      getUserMetadata(user, getAccessTokenSilently, this.callback);
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { user, getAccessTokenSilently, isAuthenticated } = this.props.auth0;
+    
+    if (prevProps.auth0.isAuthenticated !== isAuthenticated) {
+      getUserMetadata(user, getAccessTokenSilently, this.callback)
     }
   }
 
