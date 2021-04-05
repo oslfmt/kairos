@@ -19,7 +19,7 @@ export default function Dashboard() {
     if (isAuthenticated) {
       getUserMetadata(user, getAccessTokenSilently, setProfileData);
     }
-  }, [getAccessTokenSilently, user, isAuthenticated]);
+  }, [setProfileData, isAuthenticated]);
 
   // on component mount, send a GET request to endpoint for user Jobs
   // set the received jobs array to component state
@@ -34,7 +34,7 @@ export default function Dashboard() {
     return () => {
       setActivePostings([]);
     }
-  }, [isAuthenticated, user]);
+  }, [setActivePostings, isAuthenticated]);
 
   const renderPostGrid = (e) => {
     switch (e.target.name) {

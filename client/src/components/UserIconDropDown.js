@@ -21,7 +21,7 @@ export default function UserIconDropDown() {
           <Link to="/dashboard" className="dropdown-item text-center">Profile</Link>
         </NavDropdown.Item>
         <NavDropdown.Item>
-          <CreateFreelancerModal />
+          <CreateFreelancerModal user={user} />
         </NavDropdown.Item>
         <NavDropdown.Item>
           <LogoutButton />
@@ -38,7 +38,6 @@ function CreateFreelancerModal() {
   const handleSubmit = () => {
     const options = {
       method: 'PATCH',
-
     }
     axios.request(options)
       .then(res => console.log(res));
