@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 
 // import helper function
@@ -33,6 +33,7 @@ export default function UserIconDropDown() {
 
 function CreateFreelancerModal() {
   const [show, setShow] = useState(false);
+  const [redirect, setRedirect] = useState(false);
   const [freelancerDetails, setFreelancerDetails] = useState({University: '', StudentID: '', Major: '', Skills: ''});
 
   const handleClose = () => setShow(false);
@@ -49,31 +50,35 @@ function CreateFreelancerModal() {
       .then(res => console.log(res))
       .catch(err => console.error(err));
 
-    handleClose();
+    setRedirect(true);
   }
 
-  return (
-    <>
-      <p onClick={() => setShow(true)}>Create Freelancer<br></br>Account</p>
-
-      <Modal size="lg" show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-            <Modal.Title>Create Freelancer Account</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <CreateFreelancerForm handler={handleChange} />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleSubmit}>
-              Submit
-            </Button>
-          </Modal.Footer>
-      </Modal>
-    </>
-  )
+  if (redirect) {
+    return <Redirect push to="/freelancerdashboard"/>;
+  } else {
+    return (
+      <>
+        <p onClick={() => setShow(true)} className="text-center">Create Freelancer<br></br>Account</p>
+  
+        <Modal size="lg" show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+              <Modal.Title>Create Freelancer Account</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <CreateFreelancerForm handler={handleChange} />
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={handleSubmit}>
+                Submit
+              </Button>
+            </Modal.Footer>
+        </Modal>
+      </>
+    );
+  }
 }
 
 function CreateFreelancerForm(props) {
