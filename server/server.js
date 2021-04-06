@@ -2,15 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const { Schema } = mongoose;
-const featuredSchema = new Schema({}, { collection: "featured" });
-module.exports = mongoose.model('featured', featuredSchema);  
 require('dotenv').config();
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 const PORT = 4000;
+
+// Import User
+let User = require('./User-model');
 
 // Import Search Functionality
 let Job = require('./Job-model');
@@ -91,10 +91,19 @@ app.get('/dashboard', (req, res) => {
   });
 });
 
-// send update request to create freelancer account
-app.patch('/dashboard', (req, res) => {
-  
-})
+// send post request to create new freelancer account
+app.post('/dashboard', (req, res) => {
+  let newFreelancer = new User(req.body);
+  console.log(newFreelancer);
+
+  newFreelancer.save()
+    .then(() => {
+      res.status(200).send("Freelancer account created");
+    })
+    .catch(err => {
+      res.status(400).send("Failed: " + err);
+    });
+});
 
 app.listen(PORT, () => {
   console.log('App listening at port ' + PORT);

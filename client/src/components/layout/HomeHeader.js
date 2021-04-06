@@ -45,7 +45,13 @@ const SignUpButton = () => {
 
   return (
     !isAuthenticated && (
-      <Nav.Link onClick={() => loginWithRedirect({screen_hint: 'signup'})}>
+      <Nav.Link onClick={() => loginWithRedirect({
+        screen_hint: 'signup',
+        appState: {
+          returnTo: '/signupinfo'
+        }
+      })}
+      >
         Sign Up
       </Nav.Link>
     )

@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-    name: String,
-    email: String,
-    password: String
-}, {timestamps: true});
+// NOTE: schema is case and type sensitive, ie, data passed in must conform EXACTLY to this schema
+// in order for a new document of this type to be created in the collection
+const UserSchema = new Schema({
+  University: String,
+  StudentID: String,
+  Major: String,
+  Skills: String
+});
 
-const User = mongoose.model('User', userSchema);
-module.exports = User;
+module.exports = mongoose.model('User', UserSchema);

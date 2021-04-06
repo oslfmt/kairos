@@ -11,8 +11,7 @@ export default function Dashboard() {
   const [activePostings, setActivePostings] = useState([]);
   const [profileData, setProfileData] = useState(null);
 
-  // effects run after every completed render, but can choose to fire only when certain values have changed
-  // ERROR: there is some issue with userMetadata being undefined, on the very first render. After refresh, it works
+  // ERROR: there is some issue with user_metadata being undefined, on the very first render. After refresh, it works
   // The reason is probably it takes some time to update, so we need to wait until it is updated, before running
   // this effect immediately
   useEffect(() => {
