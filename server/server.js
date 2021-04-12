@@ -91,10 +91,22 @@ app.get('/dashboard', (req, res) => {
   });
 });
 
+// post request to create new user document
+app.post('/signupform', (req, res) => {
+  let user = new User(req.body)
+  
+  user.save()
+    .then(() => {
+      res.status(200).send("New user created");
+    })
+    .catch(err => {
+      res.status(400).send("Failed: " + err);
+    });
+});
+
 // send post request to create new freelancer account
 app.post('/dashboard', (req, res) => {
   let newFreelancer = new User(req.body);
-  console.log(newFreelancer);
 
   newFreelancer.save()
     .then(() => {

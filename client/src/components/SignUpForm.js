@@ -3,6 +3,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Redirect } from 'react-router-dom';
 import { updateUserMetadata } from '../helper/auth';
 import handleInputChange from '../helper/form';
+import axios from 'axios';
 
 /**
  * A form that first time users fill out to get their basic account set up
@@ -25,8 +26,18 @@ const SignUpForm = () => {
     e.preventDefault();
 
     if (isAuthenticated) {
-      updateUserMetadata(user, profileData, getAccessTokenSilently)
-        .then(res => setRedirect(res))
+      // create a new user document on database
+      const options = {
+        method: 'POST',
+        url: 'http://localhost:4000/signupform',
+        data: {
+          userID: user.sub,
+          clientDetails: profileData,
+        }
+      };
+
+      axios.request(options)
+        .then(res => console.log(res))
     }
   }
 
