@@ -51,7 +51,7 @@ export default class Home extends Component {
           	<div className="jumbotron bg-transparent">
               <div className="row align-items-center">
                 <div className="col-8">
-                  <h1 className="display-2 pr-3">Collancer</h1>
+                  <h1 className="display-2 pr-3">Kairos</h1>
                 </div>
 								<div className="col-4">
 										<Link to="/signup" className="btn btn-lg btn-primary">Join</Link>

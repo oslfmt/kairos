@@ -38,6 +38,9 @@ const SignUpForm = () => {
 
       axios.request(options)
         .then(res => console.log(res))
+
+      updateUserMetadata(user, profileData, getAccessTokenSilently)
+        .then(setRedirect(true))
     }
   }
 

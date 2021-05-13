@@ -23,7 +23,6 @@ ReactDOM.render(
     audience="https://collancer-dev.us.auth0.com/api/v2/"
     scope="read:current_user update:current_user_metadata create:current_user_metadata"
     useRefreshTokens={true}
-    cacheLocation="localstorage"
   >
     <React.StrictMode>
       <InstantSearch searchClient={searchClient} indexName="test_jobs">
