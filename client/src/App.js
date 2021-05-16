@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -17,55 +17,104 @@ import { HomeHeader } from './components/layout/HomeHeader'
 import SignUpForm from './components/SignUpForm'
 import FreelancerDashboard from './components/dashboard/FreelancerDashboard';
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route path="/dashboard">
-            <Header />
-            <Dashboard />
-            <Footer />
-          </Route>
+// import CERAMIC & IDX
+import Ceramic from '@ceramicnetwork/http-client'
+import { IDX } from '@ceramicstudio/idx'
 
-          <Route path="/freelancerdashboard">
-            <Header />
-            <FreelancerDashboard />
-            <Footer />
-          </Route>
+// import resolvers
+import KeyDidResolver from 'key-did-resolver'
+import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 
-          <Route path="/signupinfo">
-            <SignUpForm />
-          </Route>
+// import DID instance
+import { DID } from 'dids';
 
-          <Route path="/postjob">
-            <Header />
-            <JobForm />
-          </Route>
+// import provider
+import { ThreeIdConnect,  EthereumAuthProvider } from '@3id/connect';
 
-          {/* render: func - passes route props (match, location, history) to BrowseGrid 
-              https://reactrouter.com/core/api/Route/render-func */}
-          <Route path="/browse"
-            render={(props) => (
-              <BrowseGrid {...props} />
-            )}
-          />
+function App() {
+  // create an instance of a ceramic client
+  const ceramic = new Ceramic('https://ceramic-clay.3boxlabs.com');
 
-          <Route path="/notify">
-            <Header />
-            <FreelancerList />
-          </Route>
+  // resolver registry for all DID methods node will support
+  const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) };
 
-          {/* load home page at root */}
-          <Route exact path="/">
-            <HomeHeader />
-            <Home />
-            <Footer />
-          </Route>
-        </Switch>
-      </Router>
-    );
+  // DID instance wraps the DID resolver
+  // const did = new DID({ resolver });
+
+  // set DID on ceramic client so client can use it to resolve DIDs to verify ownership of streams
+  // ceramic.setDID(did);
+
+  const aliases = {
+    alias1: 'definitionID 1',
+    alias2: 'definitionID 2',
   }
+  const idx = new IDX({ ceramic, aliases });
+
+  // authenticate the DID to perform writes with client; DID must have DID provider instance
+  useEffect(() => {
+    const getAddress = async () => {
+      const addresses = await window.ethereum.enable();
+
+      const threeIdConnect = new ThreeIdConnect();
+      const authProvider = new EthereumAuthProvider(window.ethereum, addresses[0]);
+      await threeIdConnect.connect(authProvider);
+
+      // provider instance
+      const provider = await threeIdConnect.getDidProvider();
+      ceramic.did.setProvider(provider);
+
+      await ceramic.did.authenticate();
+    }
+
+    getAddress();
+  })
+
+  return (
+    <Router>
+      <Switch>
+        <Route path="/dashboard">
+          <Header />
+          <Dashboard />
+          <Footer />
+        </Route>
+
+        <Route path="/freelancerdashboard">
+          <Header />
+          <FreelancerDashboard />
+          <Footer />
+        </Route>
+
+        <Route path="/signupinfo">
+          <SignUpForm />
+        </Route>
+
+        <Route path="/postjob">
+          <Header />
+          <JobForm />
+        </Route>
+
+        {/* render: func - passes route props (match, location, history) to BrowseGrid 
+            https://reactrouter.com/core/api/Route/render-func */}
+        <Route path="/browse"
+          render={(props) => (
+            <BrowseGrid {...props} />
+          )}
+        />
+
+        <Route path="/notify">
+          <Header />
+          <FreelancerList />
+        </Route>
+
+        {/* load home page at root */}
+        <Route exact path="/">
+          <HomeHeader />
+          <Home />
+          <Footer />
+        </Route>
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
