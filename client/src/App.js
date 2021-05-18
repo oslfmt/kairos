@@ -35,8 +35,17 @@ function App() {
   const [ceramic, setCeramic] = useState(null);
   const [authenticated, setAuthenticated] = useState(false);
 
+  const [currentAccount, setCurrentAccount] = useState(null);
+  const [provider, setProvider] = useState(null);
 
+  const metamask = {
+    currentAccount,
+    setCurrentAccount,
+    provider,
+    setProvider
+  }
 
+  // creates 1) ceramic instance, 2) DID instance which wraps resolver and 3) set DID on ceramic instance
   useEffect(() => {
     const configureDID = async () => {
       // create an instance of a ceramic client, allowing interaction with a remote ceramic node over HTTP
@@ -48,35 +57,32 @@ function App() {
       const did = new DID({ resolver });
       // set DID on ceramic client so client can use it to resolve DIDs to verify ownership of streams
       ceramic.setDID(did);
-
       setCeramic(ceramic);
     }
 
     configureDID();
-  }, [setCeramic]);
+  }, []);
 
-  // useEffect(() => {
-  //   const setupDID = async () => {
-  //     // request user's blockchain address
-  //     // NEED TO CHECK IF THERE IS AN INSTANCE
-  //     const addresses = await window.ethereum.enable();
+  // Authenticates DID with a DID provider instance in order to perform writes
+  useEffect(() => {
+    const authenticateDID = async () => {
+      // request authentication from user's blockchain wallet
+      const threeIdConnect = new ThreeIdConnect();
+      const authProvider = new EthereumAuthProvider(provider, currentAccount);
+      await threeIdConnect.connect(authProvider);
 
-  //     // request authentication from user's blockchain wallet
-  //     const threeIdConnect = new ThreeIdConnect();
-  //     const authProvider = new EthereumAuthProvider(window.ethereum, addresses[0]);
-  //     await threeIdConnect.connect(authProvider);
-
-  //     // create provider instance
-  //     const provider = await threeIdConnect.getDidProvider();
-  //     // set DID instance on ceramic client
-  //     ceramic.did.setProvider(provider);
+      // set DID instance on ceramic client
+      const didProvider = await threeIdConnect.getDidProvider();
+      ceramic.did.setProvider(didProvider);
       
-  //     // authenticate the DID
-  //     await ceramic.did.authenticate();
-  //   }
+      // authenticate the DID
+      await ceramic.did.authenticate();
+    }
 
-  //   setupDID();
-  // }, [setCeramic]);
+    if (currentAccount && provider) {
+      authenticateDID();
+    }
+  }, [ceramic, currentAccount, provider]);
 
   useEffect(() => {
     const setIDX = async () => {
@@ -139,7 +145,7 @@ function App() {
 
         {/* load home page at root */}
         <Route exact path="/">
-          <Home />
+          <Home {...metamask} />
         </Route>
       </Switch>
     </Router>

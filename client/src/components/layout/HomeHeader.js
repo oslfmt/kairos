@@ -1,17 +1,16 @@
 import React, { useState,  useEffect } from 'react';
-import Nav from 'react-bootstrap/esm/Nav';
-import Navbar from 'react-bootstrap/Navbar'
 import UserIconDropDown from '../UserIconDropDown';
-
+import { Link } from 'react-router-dom'
 import { handleAccountsChanged } from '../../helper/eth';
 
 // import provider detector
 import detectEthereumProvider from '@metamask/detect-provider';
 
 function HomeHeader(props) {
-  const authenticated = props.authenticated;
-  const [currentAccount, setCurrentAccount] = useState(null);
-  const [provider, setProvider] = useState(null);
+  const provider = props.provider;
+  const setProvider = props.setProvider;
+  const currentAccount = props.currentAccount;
+  const setCurrentAccount = props.setCurrentAccount;
 
   // checks that Metamask or an ethereum provider is installed
   useEffect(() => {
@@ -27,7 +26,7 @@ function HomeHeader(props) {
       }
     }
     detectProvider();
-  }, []);
+  }, [setProvider]);
 
   // Requests the ethereum accounts and sets it to the currentAccount
   useEffect(() => {
@@ -39,14 +38,14 @@ function HomeHeader(props) {
         console.error(err);
       });
     }
-  }, [provider])
+  }, [currentAccount, setCurrentAccount, provider])
 
   // updates react state address to proper account
   useEffect(() => {
     if (provider) {
       provider.on('accountsChanged', accounts => handleAccountsChanged(accounts, currentAccount, setCurrentAccount));
     }
-  }, [currentAccount]);
+  }, [currentAccount, setCurrentAccount, provider]);
 
   return (
     <nav className="navbar navbar-light bg-light justify-content-end p-4">
@@ -58,10 +57,19 @@ function HomeHeader(props) {
             <a className="nav-link">Advantages</a>
           </li>
           <li className="nav-item">
-            {!authenticated ? <SignUpButton setCurrentAccount={setCurrentAccount} currentAccount={currentAccount} provider={provider} /> : null}
+            {!currentAccount ? 
+              <SignUpButton 
+                setCurrentAccount={setCurrentAccount} 
+                currentAccount={currentAccount} 
+                provider={provider} /> 
+              : null
+            }
           </li>
           <li className="nav-item">
-            {!authenticated ? <LoginButton /> : "dashboard"}
+            {!currentAccount ? 
+              <LoginButton /> : 
+              <Link className="nav-link" to="/dashboard">Dashboard</Link>
+            }
           </li>
           <li className="nav-item">
             <UserIconDropDown />

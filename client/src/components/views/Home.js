@@ -6,7 +6,7 @@ import Job from '../Job/Job.js';
 import { HomeHeader } from '../layout/HomeHeader';
 import Footer from '../layout/Footer';
 
-export default function Home() {
+export default function Home(props) {
   const [jobs, setJobs] = useState([]);
 
   // fetch jobs and display
@@ -20,7 +20,7 @@ export default function Home() {
 
   return (
     <div>
-      <HomeHeader />
+      <HomeHeader {...props} />
       {/* Main section */}
       <section id="main">
         <div className="container mt-4">
