@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -18,7 +18,7 @@ import SignUpForm from './components/SignUpForm'
 import FreelancerDashboard from './components/dashboard/FreelancerDashboard';
 
 // import CERAMIC & IDX
-import Ceramic from '@ceramicnetwork/http-client'
+import Ceramic from '@ceramicnetwork/http-client';
 import { IDX } from '@ceramicstudio/idx'
 
 // import resolvers
@@ -28,52 +28,83 @@ import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 // import DID instance
 import { DID } from 'dids';
 
-// import provider
+// import DID provider
 import { ThreeIdConnect,  EthereumAuthProvider } from '@3id/connect';
 
 function App() {
-  // create an instance of a ceramic client
-  const ceramic = new Ceramic('https://ceramic-clay.3boxlabs.com');
+  const [ceramic, setCeramic] = useState(null);
+  const [authenticated, setAuthenticated] = useState(false);
 
-  // resolver registry for all DID methods node will support
-  const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) };
 
-  // DID instance wraps the DID resolver
-  // const did = new DID({ resolver });
 
-  // set DID on ceramic client so client can use it to resolve DIDs to verify ownership of streams
-  // ceramic.setDID(did);
-
-  const aliases = {
-    alias1: 'definitionID 1',
-    alias2: 'definitionID 2',
-  }
-  const idx = new IDX({ ceramic, aliases });
-
-  // authenticate the DID to perform writes with client; DID must have DID provider instance
   useEffect(() => {
-    const getAddress = async () => {
-      const addresses = await window.ethereum.enable();
+    const configureDID = async () => {
+      // create an instance of a ceramic client, allowing interaction with a remote ceramic node over HTTP
+      const ceramic = new Ceramic('https://ceramic-clay.3boxlabs.com');
 
-      const threeIdConnect = new ThreeIdConnect();
-      const authProvider = new EthereumAuthProvider(window.ethereum, addresses[0]);
-      await threeIdConnect.connect(authProvider);
+      // resolver registry for all DID methods node will support
+      const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) };
+      // DID instance wraps the DID resolver
+      const did = new DID({ resolver });
+      // set DID on ceramic client so client can use it to resolve DIDs to verify ownership of streams
+      ceramic.setDID(did);
 
-      // provider instance
-      const provider = await threeIdConnect.getDidProvider();
-      ceramic.did.setProvider(provider);
-
-      await ceramic.did.authenticate();
+      setCeramic(ceramic);
     }
 
-    getAddress();
-  })
+    configureDID();
+  }, [setCeramic]);
+
+  // useEffect(() => {
+  //   const setupDID = async () => {
+  //     // request user's blockchain address
+  //     // NEED TO CHECK IF THERE IS AN INSTANCE
+  //     const addresses = await window.ethereum.enable();
+
+  //     // request authentication from user's blockchain wallet
+  //     const threeIdConnect = new ThreeIdConnect();
+  //     const authProvider = new EthereumAuthProvider(window.ethereum, addresses[0]);
+  //     await threeIdConnect.connect(authProvider);
+
+  //     // create provider instance
+  //     const provider = await threeIdConnect.getDidProvider();
+  //     // set DID instance on ceramic client
+  //     ceramic.did.setProvider(provider);
+      
+  //     // authenticate the DID
+  //     await ceramic.did.authenticate();
+  //   }
+
+  //   setupDID();
+  // }, [setCeramic]);
+
+  useEffect(() => {
+    const setIDX = async () => {
+      const aliases = {
+        clientProfile: 'definitionID 1',
+        freelancerProfile: 'definitionID 2',
+      }
+  
+      const idx = new IDX({ ceramic, aliases });
+  
+      setAuthenticated(idx.authenticated);
+    }
+
+    if (ceramic) {
+      setIDX();
+    }
+  });
+
+  const auth = {
+    ceramic,
+    authenticated
+  };
 
   return (
     <Router>
       <Switch>
         <Route path="/dashboard">
-          <Header />
+          <Header {...auth} />
           <Dashboard />
           <Footer />
         </Route>
@@ -108,9 +139,7 @@ function App() {
 
         {/* load home page at root */}
         <Route exact path="/">
-          <HomeHeader />
           <Home />
-          <Footer />
         </Route>
       </Switch>
     </Router>

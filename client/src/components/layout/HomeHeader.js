@@ -1,60 +1,113 @@
-import React from 'react';
+import React, { useState,  useEffect } from 'react';
 import Nav from 'react-bootstrap/esm/Nav';
-import { useAuth0 } from '@auth0/auth0-react';
 import Navbar from 'react-bootstrap/Navbar'
 import UserIconDropDown from '../UserIconDropDown';
 
-const HomeHeader = () => {
+import { handleAccountsChanged } from '../../helper/eth';
+
+// import provider detector
+import detectEthereumProvider from '@metamask/detect-provider';
+
+function HomeHeader(props) {
+  const authenticated = props.authenticated;
+  const [currentAccount, setCurrentAccount] = useState(null);
+  const [provider, setProvider] = useState(null);
+
+  // checks that Metamask or an ethereum provider is installed
+  useEffect(() => {
+    const detectProvider = async () => {
+      const provider = await detectEthereumProvider();
+      if (provider) {
+        // check if something is overwritting window.ethereum
+        if (provider !== window.ethereum) {
+          console.error("Do you have multiple wallets installed?");
+        } else {
+          setProvider(provider);
+        }
+      }
+    }
+    detectProvider();
+  }, []);
+
+  // Requests the ethereum accounts and sets it to the currentAccount
+  useEffect(() => {
+    if (provider) {
+      provider
+      .request({ method: 'eth_accounts' })
+      .then(res => handleAccountsChanged(res, currentAccount, setCurrentAccount))
+      .catch(err => {
+        console.error(err);
+      });
+    }
+  }, [provider])
+
+  // updates react state address to proper account
+  useEffect(() => {
+    if (provider) {
+      provider.on('accountsChanged', accounts => handleAccountsChanged(accounts, currentAccount, setCurrentAccount));
+    }
+  }, [currentAccount]);
+
   return (
-    <Navbar bg="light" className="justify-content-end p-4">
-      <Nav>
-        <Nav.Item>
-          <Nav.Link>How It Works</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link>Advantages</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <SignUpButton />
-        </Nav.Item>
-        <Nav.Item>
-          <LoginButton />
-        </Nav.Item>
-        <Nav.Item>
-          <UserIconDropDown />
-        </Nav.Item>
-      </Nav>
-    </Navbar>
+    <nav className="navbar navbar-light bg-light justify-content-end p-4">
+      <ul className="nav">
+          <li className="nav-item">
+            <a className="nav-link">How It Works</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link">Advantages</a>
+          </li>
+          <li className="nav-item">
+            {!authenticated ? <SignUpButton setCurrentAccount={setCurrentAccount} currentAccount={currentAccount} provider={provider} /> : null}
+          </li>
+          <li className="nav-item">
+            {!authenticated ? <LoginButton /> : "dashboard"}
+          </li>
+          <li className="nav-item">
+            <UserIconDropDown />
+          </li>
+        </ul>
+    </nav>
   )
 }
 
-const LoginButton = () => {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+const SignUpButton = (props) => {
+  const setCurrentAccount = props.setCurrentAccount;
+  const currentAccount = props.currentAccount;
+  const provider = props.provider;
+
+  // request access to user accounts and then set accounts accordingly
+  const requestAccounts = () => {
+    if (provider) {
+      provider
+        .request({ method: 'eth_requestAccounts' })
+        .then(res => handleAccountsChanged(res, currentAccount, setCurrentAccount))
+        .catch(err => {
+          if (err.code === 4001) {
+            // EIP-1193 userRejectedRequest Error
+            alert("Please allow connection to Metamask to proceed.");
+          } else {
+            console.error(err);
+          }
+        });
+    } else {
+      // ask user to install metamask; update with "about" metamask page later
+      alert("Please install Metamask or another wallet provider!");
+    }
+  }
 
   return (
-    !isAuthenticated && (
-      <Nav.Link onClick={() => loginWithRedirect()}>
-        Log in
-      </Nav.Link>
-    )
+    <button className="btn" onClick={requestAccounts}>
+      Sign Up
+    </button>
   );
 }
 
-const SignUpButton = () => {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
-
+const LoginButton = () => {
   return (
-    !isAuthenticated && (
-      <Nav.Link onClick={() => loginWithRedirect({
-        screen_hint: 'signup',
-        appState: {
-          returnTo: '/signupinfo'
-        }
-      })}
-      >
-        Sign Up
-      </Nav.Link>
-    )
+    <button className="btn">
+      Log In
+    </button>
   );
 }
 

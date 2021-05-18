@@ -13,7 +13,6 @@ body {
 
 a, a:hover {
   text-decoration: none;
-  color: #333333;
   cursor: pointer;
 }
 
@@ -66,7 +65,8 @@ header a {
 #signup-form {
   margin-top: 6rem;
 }
-#signup-form .card-prof {
+#signup-form .card {
+  border: none;
   width: 50%;
   height: 80%;
 }
@@ -80,24 +80,24 @@ header a {
 /* ====================================== */
 /* PROFILE PAGE */
 /* ====================================== */
-#profile .col-4 .card-prof {
+#profile .col-4 .card {
   height: 800px;
   background-color: #9b59b6;
   border: none;
   margin-right: 3rem;
 }
-#profile .col-4 .card-prof img {
+#profile .col-4 .card img {
   height: 200px;
   width: 200px;
   border-radius: 50%;
   margin-top: 40px;
 }
-#profile .col-4 .card-prof button {
+#profile .col-4 .card button {
   width: 50px;
   height: 30px;
   margin-top: 0.25rem;
 }
-#profile .col-8 .card-prof-prof {
+#profile .col-8 .card {
   height: 40%;
   background-color: #bdc3c7;
   border: none;
@@ -128,10 +128,11 @@ header a {
 /* ====================================== */
 /* NOTIFY FREELANCER PAGE */
 /* ====================================== */
-#freelancers .card-prof {
+#freelancers .card {
+  border: none;
   height: 140px;
 }
-#freelancers .card-prof button {
+#freelancers .card button {
   height: 40px;
   margin-right: 1rem;
 }
