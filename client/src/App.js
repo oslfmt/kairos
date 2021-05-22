@@ -1,8 +1,6 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-// import css file
 import './css/main.css';
 
 // import pages
@@ -13,106 +11,82 @@ import FreelancerList from './components/Freelancer-list';
 import BrowseGrid from './components/search/BrowseGrid';
 import Dashboard from './components/dashboard/Dashboard';
 import Footer from './components/layout/Footer'
-import { HomeHeader } from './components/layout/HomeHeader'
 import SignUpForm from './components/SignUpForm'
 import FreelancerDashboard from './components/dashboard/FreelancerDashboard';
 
-// import CERAMIC & IDX
-import Ceramic from '@ceramicnetwork/http-client';
-import { IDX } from '@ceramicstudio/idx'
+import { ThreeIdConnect,  EthereumAuthProvider } from '@3id/connect';
+import Web3 from 'web3';
 
-// import resolvers
 import KeyDidResolver from 'key-did-resolver'
 import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
-
 // import DID instance
 import { DID } from 'dids';
 
-// import DID provider
-import { ThreeIdConnect,  EthereumAuthProvider } from '@3id/connect';
+// import provider detector
+import detectEthereumProvider from '@metamask/detect-provider';
 
-function App() {
-  const [ceramic, setCeramic] = useState(null);
-  const [authenticated, setAuthenticated] = useState(false);
-
+function App(props) {
+  const ceramic = props.ceramic;
   const [currentAccount, setCurrentAccount] = useState(null);
-  const [provider, setProvider] = useState(null);
+  const [did, setDid] = useState('');
 
-  const metamask = {
-    currentAccount,
-    setCurrentAccount,
-    provider,
-    setProvider
-  }
+  const [ethereum, setEthereum] = useState(null);
+  const [web3, setWeb3] = useState(null);
 
-  // creates 1) ceramic instance, 2) DID instance which wraps resolver and 3) set DID on ceramic instance
+  // checks that Metamask or an ethereum provider is installed
   useEffect(() => {
-    const configureDID = async () => {
-      // create an instance of a ceramic client, allowing interaction with a remote ceramic node over HTTP
-      const ceramic = new Ceramic('https://ceramic-clay.3boxlabs.com');
-
-      // resolver registry for all DID methods node will support
-      const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) };
-      // DID instance wraps the DID resolver
-      const did = new DID({ resolver });
-      // set DID on ceramic client so client can use it to resolve DIDs to verify ownership of streams
-      ceramic.setDID(did);
-      setCeramic(ceramic);
+    const detectProvider = async () => {
+      const provider = await detectEthereumProvider();
+      if (provider) {
+        // the bare provider in window.ethereum provided by metamask
+        setEthereum(provider);
+        // the provider object wrapped in a web3 convenience library
+        setWeb3(new Web3(provider));
+      }
     }
-
-    configureDID();
-  }, []);
+    
+    detectProvider();
+  }, [setWeb3, setEthereum]);
 
   // Authenticates DID with a DID provider instance in order to perform writes
   useEffect(() => {
     const authenticateDID = async () => {
       // request authentication from user's blockchain wallet
       const threeIdConnect = new ThreeIdConnect();
-      const authProvider = new EthereumAuthProvider(provider, currentAccount);
+      const authProvider = new EthereumAuthProvider(ethereum, currentAccount);
       await threeIdConnect.connect(authProvider);
 
       // set DID instance on ceramic client
-      const didProvider = await threeIdConnect.getDidProvider();
-      ceramic.did.setProvider(didProvider);
+      const didProvider = threeIdConnect.getDidProvider();
+
+      // not an optimal solution
+      try {
+        ceramic.did.setProvider(didProvider);
+      } catch (error) {
+        const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) };
+        const did = new DID({ resolver });
+        ceramic.setDID(did);
+
+        ceramic.did.setProvider(didProvider);
+      }
       
-      // authenticate the DID
-      await ceramic.did.authenticate();
+      // authenticate the DID (ceramic popup)
+      // returns the did
+      ceramic.did.authenticate()
+        .then(setDid)
+        .catch(console.error);
     }
 
-    if (currentAccount && provider) {
+    if (currentAccount) {
       authenticateDID();
     }
-  }, [ceramic, currentAccount, provider]);
-
-  useEffect(() => {
-    const setIDX = async () => {
-      const aliases = {
-        clientProfile: 'definitionID 1',
-        freelancerProfile: 'definitionID 2',
-      }
-  
-      const idx = new IDX({ ceramic, aliases });
-  
-      setAuthenticated(idx.authenticated);
-    }
-
-    if (ceramic) {
-      setIDX();
-    }
-  });
-
-  const auth = {
-    ceramic,
-    authenticated
-  };
+  }, [setDid, ceramic, currentAccount, ethereum]);
 
   return (
     <Router>
       <Switch>
         <Route path="/dashboard">
-          <Header {...auth} />
-          <Dashboard />
-          <Footer />
+          <Dashboard did={did} ceramic={ceramic} />
         </Route>
 
         <Route path="/freelancerdashboard">
@@ -145,7 +119,7 @@ function App() {
 
         {/* load home page at root */}
         <Route exact path="/">
-          <Home {...metamask} />
+          {!did ? <Home web3={web3} ethereum={ethereum} setCurrentAccount={setCurrentAccount} did={did} /> : <Redirect to="/dashboard" />}
         </Route>
       </Switch>
     </Router>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import CustomSearchBox from '../search/CustomSearchBox';
 import Job from '../Job/Job.js';
@@ -10,13 +10,13 @@ export default function Home(props) {
   const [jobs, setJobs] = useState([]);
 
   // fetch jobs and display
-  useEffect(() => {
-		axios.get('http://localhost:4000/')
-			.then(res => {
-        setJobs(res.data);
-			})
-			.catch(err => console.error(err));
-  });
+  // useEffect(() => {
+	// 	axios.get('http://localhost:4000/')
+	// 		.then(res => {
+  //       setJobs(res.data);
+	// 		})
+	// 		.catch(err => console.error(err));
+  // });
 
   return (
     <div>

@@ -3,49 +3,28 @@ import UserIconDropDown from '../UserIconDropDown';
 import { Link } from 'react-router-dom'
 import { handleAccountsChanged } from '../../helper/eth';
 
-// import provider detector
-import detectEthereumProvider from '@metamask/detect-provider';
-
 function HomeHeader(props) {
-  const provider = props.provider;
-  const setProvider = props.setProvider;
-  const currentAccount = props.currentAccount;
+  const ethereum = props.ethereum;
   const setCurrentAccount = props.setCurrentAccount;
-
-  // checks that Metamask or an ethereum provider is installed
-  useEffect(() => {
-    const detectProvider = async () => {
-      const provider = await detectEthereumProvider();
-      if (provider) {
-        // check if something is overwritting window.ethereum
-        if (provider !== window.ethereum) {
-          console.error("Do you have multiple wallets installed?");
-        } else {
-          setProvider(provider);
-        }
-      }
-    }
-    detectProvider();
-  }, [setProvider]);
+  const did = props.did;
 
   // Requests the ethereum accounts and sets it to the currentAccount
   useEffect(() => {
-    if (provider) {
-      provider
-      .request({ method: 'eth_accounts' })
-      .then(res => handleAccountsChanged(res, currentAccount, setCurrentAccount))
+    if (ethereum) {
+      ethereum.request({ method: 'eth_accounts' })
+      .then(accounts => setCurrentAccount(accounts[0]))
       .catch(err => {
         console.error(err);
       });
     }
-  }, [currentAccount, setCurrentAccount, provider])
+  })
 
   // updates react state address to proper account
-  useEffect(() => {
-    if (provider) {
-      provider.on('accountsChanged', accounts => handleAccountsChanged(accounts, currentAccount, setCurrentAccount));
-    }
-  }, [currentAccount, setCurrentAccount, provider]);
+  // useEffect(() => {
+  //   if (provider) {
+  //     provider.on('accountsChanged', accounts => handleAccountsChanged(accounts, currentAccount, setCurrentAccount));
+  //   }
+  // }, [currentAccount, setCurrentAccount, provider]);
 
   return (
     <nav className="navbar navbar-light bg-light justify-content-end p-4">
@@ -57,16 +36,13 @@ function HomeHeader(props) {
             <a className="nav-link">Advantages</a>
           </li>
           <li className="nav-item">
-            {!currentAccount ? 
-              <SignUpButton 
-                setCurrentAccount={setCurrentAccount} 
-                currentAccount={currentAccount} 
-                provider={provider} /> 
+            {!did ? 
+              <SignUpButton setCurrentAccount={setCurrentAccount} ethereum={ethereum} /> 
               : null
             }
           </li>
           <li className="nav-item">
-            {!currentAccount ? 
+            {!did ? 
               <LoginButton /> : 
               <Link className="nav-link" to="/dashboard">Dashboard</Link>
             }
@@ -80,16 +56,14 @@ function HomeHeader(props) {
 }
 
 const SignUpButton = (props) => {
+  const ethereum = props.ethereum;
   const setCurrentAccount = props.setCurrentAccount;
-  const currentAccount = props.currentAccount;
-  const provider = props.provider;
 
   // request access to user accounts and then set accounts accordingly
   const requestAccounts = () => {
-    if (provider) {
-      provider
-        .request({ method: 'eth_requestAccounts' })
-        .then(res => handleAccountsChanged(res, currentAccount, setCurrentAccount))
+    if (ethereum) {
+      ethereum.request({ method: 'eth_requestAccounts' })
+        .then(res => setCurrentAccount(res[0]))
         .catch(err => {
           if (err.code === 4001) {
             // EIP-1193 userRejectedRequest Error
