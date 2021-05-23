@@ -7,10 +7,12 @@ import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 
 import { IDX } from '@ceramicstudio/idx';
+import SignUpForm from '../SignUpForm';
 
 export default function Dashboard(props) {
   const ceramic = props.ceramic;
   const [activePostings, setActivePostings] = useState([]);
+
   const [profileData, setProfileData] = useState(null);
   const [idx, setIDX] = useState(null);
 
@@ -52,29 +54,19 @@ export default function Dashboard(props) {
   }
 
   useEffect(() => {
-    const loadIDXstuff = async () => {
-      const index = await props.idx.getIndex();
-      const did = props.idx.id;
+    const loadIdxIndex = async () => {
+      const index = await idx.getIndex(idx.id);
+      console.log(index)
       
-      const profile = await props.idx.get('basicProfile', did);
-      console.log(profile)
       // for (const alias in index) {
-      //   console.log(await props.idx.get(alias, did))
+      //   console.log(await idx.get(alias, idx.id))
       // }
     }
 
-    loadIDXstuff();
-  });
-
-  const setBasicProfile = async () => {
-    const basicProfileID = await props.idx.set('basicProfile', {
-      name: 'Victor',
-      description: 'Hello there',
-      gender: 'Male' 
-    });
-
-    console.log(basicProfileID)
-  }
+    if (idx) {
+      loadIdxIndex();
+    }
+  }, [idx]);
   
   return (
     <div>
@@ -115,9 +107,9 @@ export default function Dashboard(props) {
         <div className="row">
           <div className="col-4">
             <Profile userMetadata={profileData} setUserMetadata={setProfileData} />
-            <button className="btn" onClick={setBasicProfile}>Set Basic Profile</button>
           </div>
           <div className="col-8">
+            <SignUpForm idx={idx} />
             <PostsGrid activePostings={activePostings} />
           </div>
         </div>

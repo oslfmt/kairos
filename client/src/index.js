@@ -18,7 +18,7 @@ import { DID } from 'dids';
 
 const API_URL = 'https://ceramic-clay.3boxlabs.com';
 // for now, use local daemon
-const ceramic = new CeramicClient('https://localhost:7007');
+const ceramic = new CeramicClient(API_URL);
 // resolver registry for all DID methods node will support
 const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) };
 // DID instance wraps the DID resolver

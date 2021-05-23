@@ -42,6 +42,7 @@ function App(props) {
         setEthereum(provider);
         // the provider object wrapped in a web3 convenience library
         setWeb3(new Web3(provider));
+        console.log('checked provider')
       }
     }
     
@@ -119,7 +120,7 @@ function App(props) {
 
         {/* load home page at root */}
         <Route exact path="/">
-          {!did ? <Home web3={web3} ethereum={ethereum} setCurrentAccount={setCurrentAccount} did={did} /> : <Redirect to="/dashboard" />}
+          {!did ? <Home web3={web3} ethereum={ethereum} setCurrentAccount={setCurrentAccount} did={did} /> : <Redirect push to="/dashboard" />}
         </Route>
       </Switch>
     </Router>
