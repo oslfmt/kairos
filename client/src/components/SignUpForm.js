@@ -13,10 +13,9 @@ function SignUpForm(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await idx.set('CairosProfile', profileData);
-    const record = await idx.get('CairosProfile', idx.id);
-
-    return record;
+    idx.set('CairosProfile', profileData)
+      .then(recordID => console.log('Cairos Profile set: ' + recordID))
+      .catch(err => console.error(err));
   }
 
   const handleChange = (e) => handleInputChange(e, setProfileData);

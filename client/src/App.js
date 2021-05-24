@@ -34,6 +34,7 @@ function App(props) {
   const [web3, setWeb3] = useState(null);
 
   // checks that Metamask or an ethereum provider is installed
+  // if installed, sets both bare Metamask provider and web3 object
   useEffect(() => {
     const detectProvider = async () => {
       const provider = await detectEthereumProvider();
@@ -73,6 +74,7 @@ function App(props) {
       
       // authenticate the DID (ceramic popup)
       // returns the did
+      // THIS OPENS A POPUP ON EVERY REFRESH, TRY TO CONFIGURE SILENT LOGIN
       ceramic.did.authenticate()
         .then(setDid)
         .catch(console.error);

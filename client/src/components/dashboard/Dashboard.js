@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios';
 import Profile from './Profile';
 import PostsGrid from './PostsGrid';
 import { Link } from 'react-router-dom'
@@ -13,7 +12,8 @@ export default function Dashboard(props) {
   const ceramic = props.ceramic;
   const [activePostings, setActivePostings] = useState([]);
 
-  const [profileData, setProfileData] = useState(null);
+  const [cairosProfile, setCairosProfile] = useState(null);
+  const [renderSignup, setRenderSignup] = useState(false);
   const [idx, setIDX] = useState(null);
 
   // on component mount, send a GET request to endpoint for user Jobs
@@ -29,13 +29,33 @@ export default function Dashboard(props) {
   //   }
   // }, [setActivePostings]);
 
+  // Sets and loads the IDX
   useEffect(() => {
     const aliases = {
       CairosProfile: "kjzl6cwe1jw145xzqcqoxzuobn1gqznhdlquy1bbc1qnb0wmd91kzfielmpgzea"
     };
-
     setIDX(new IDX({ ceramic, aliases }));
   }, [ceramic]);
+
+  // check if index has a CairosProfile record
+  useEffect(() => {
+    const checkCairosProfile = async () => {
+      const hasCairosProfile = await idx.has('CairosProfile', idx.id);
+
+      if (hasCairosProfile) {
+        // load profile on page and don't render signup form
+        const cairosProfile = await idx.get('CairosProfile', idx.id);
+        setCairosProfile(cairosProfile);
+      } else {
+        // render signup form
+        setRenderSignup(true);
+      }
+    }
+
+    if (idx) {
+      checkCairosProfile();
+    }
+  }, [idx])
 
   const renderPostGrid = (e) => {
     switch (e.target.name) {
@@ -52,21 +72,6 @@ export default function Dashboard(props) {
         console.log('active');
     }
   }
-
-  useEffect(() => {
-    const loadIdxIndex = async () => {
-      const index = await idx.getIndex(idx.id);
-      console.log(index)
-      
-      // for (const alias in index) {
-      //   console.log(await idx.get(alias, idx.id))
-      // }
-    }
-
-    if (idx) {
-      loadIdxIndex();
-    }
-  }, [idx]);
   
   return (
     <div>
@@ -96,7 +101,7 @@ export default function Dashboard(props) {
                 <button className="btn" type="button" name="active-postings" onClick={renderPostGrid}>Active Postings ({activePostings.length})</button>
               </div>
               <div className="nav-item">
-              <button className="btn" type="button" name="completed-jobs" onClick={renderPostGrid}>Completed Jobs</button>
+                <button className="btn" type="button" name="completed-jobs" onClick={renderPostGrid}>Completed Jobs</button>
               </div>
             </div>
           </div>
@@ -106,11 +111,11 @@ export default function Dashboard(props) {
         </div>
         <div className="row">
           <div className="col-4">
-            <Profile userMetadata={profileData} setUserMetadata={setProfileData} />
+            {cairosProfile ? <Profile cairosProfile={cairosProfile} setCairosProfile={setCairosProfile} /> : null}
           </div>
           <div className="col-8">
-            <SignUpForm idx={idx} />
-            <PostsGrid activePostings={activePostings} />
+            {cairosProfile ? <PostsGrid activePostings={activePostings} /> : null}
+            {renderSignup ? <SignUpForm idx={idx} /> : null}
           </div>
         </div>
       </div>
