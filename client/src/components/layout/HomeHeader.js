@@ -1,7 +1,7 @@
-import React, { useState,  useEffect } from 'react';
+import React, { useEffect } from 'react';
 import UserIconDropDown from '../UserIconDropDown';
 import { Link } from 'react-router-dom'
-import { handleAccountsChanged } from '../../helper/eth';
+// import { handleAccountsChanged } from '../../helper/eth';
 
 function HomeHeader(props) {
   const ethereum = props.ethereum;
@@ -30,10 +30,10 @@ function HomeHeader(props) {
     <nav className="navbar navbar-light bg-light justify-content-end p-4">
       <ul className="nav">
           <li className="nav-item">
-            <a className="nav-link">How It Works</a>
+            <a href="index.html" className="nav-link">How It Works</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link">Advantages</a>
+            <a href="index.html" className="nav-link">Advantages</a>
           </li>
           <li className="nav-item">
             {!did ? 

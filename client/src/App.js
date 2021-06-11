@@ -39,16 +39,14 @@ function App(props) {
     const detectProvider = async () => {
       const provider = await detectEthereumProvider();
       if (provider) {
-        // the bare provider in window.ethereum provided by metamask
         setEthereum(provider);
-        // the provider object wrapped in a web3 convenience library
+        // creates web3 object which wraps barebones provider
         setWeb3(new Web3(provider));
         console.log('checked provider')
       }
     }
-    
     detectProvider();
-  }, [setWeb3, setEthereum]);
+  }, [setEthereum]);
 
   // Authenticates DID with a DID provider instance in order to perform writes
   useEffect(() => {
@@ -120,7 +118,6 @@ function App(props) {
           <FreelancerList />
         </Route>
 
-        {/* load home page at root */}
         <Route exact path="/">
           {!did ? <Home web3={web3} ethereum={ethereum} setCurrentAccount={setCurrentAccount} did={did} /> : <Redirect push to="/dashboard" />}
         </Route>

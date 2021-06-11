@@ -1,6 +1,4 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import ActiveJob from './ActiveJob';
 
 export default function PostsGrid(props) {
