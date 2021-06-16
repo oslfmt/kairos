@@ -3,21 +3,6 @@ import UserIconDropDown from '../UserIconDropDown';
 import { Link } from 'react-router-dom'
 // import { handleAccountsChanged } from '../../helper/eth';
 
-import { rLogin } from '../rLogin';
-
-const handleLogin = () => {
-  rLogin.connect()
-    .then((rLoginResponse) => {
-      const provider = rLoginResponse.provider;
-      const dataVault = rLoginResponse.dataVault;
-      const disconnect = rLoginResponse.disconnect;
-
-      // save the response to be used later, here we are using React context
-      context.rLoginresponse(rLoginResponse)
-    })
-    .catch((err) => console.log(err))
-}
-
 function HomeHeader(props) {
   const ethereum = props.ethereum;
   const setCurrentAccount = props.setCurrentAccount;
@@ -32,7 +17,7 @@ function HomeHeader(props) {
         console.error(err);
       });
     }
-  })
+  });
 
   // updates react state address to proper account
   // useEffect(() => {
@@ -102,7 +87,7 @@ const SignUpButton = (props) => {
 
 const LoginButton = () => {
   return (
-    <button className="btn" onClick={handleLogin}>
+    <button className="btn">
       Log In
     </button>
   );
