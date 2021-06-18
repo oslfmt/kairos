@@ -1,7 +1,8 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "CairosProfile",
-  "description": "A profile containing both client and freelancer profiles, the latter being optional",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/user.schema.json",
+  "title": "KairosProfile",
+  "description": "A user profile containing both client and freelancer profiles. Freelancer profile is added when the user creates one. Everyone has a client account by default",
   "type": "object",
   "properties": {
     "name": {
@@ -28,6 +29,14 @@
         "description": {
           "description": "description of client",
           "type": "string"
+        },
+        "jobs": {
+          "description": "jobs the client has posted, completed, or are in-progress",
+          "type": "array",
+          "items": {
+            "$ref": "https://example.com/jobs.schema.json"
+          },
+          "uniqueItems": true
         }
       }
     },
@@ -39,20 +48,13 @@
           "description": "Freelancer description",
           "type": "string"
         },
-        "university": {
-          "description": "university that freelancer goes to",
-          "type": "string"
-        },
-        "studentEmail": {
-          "description": "Email of student freelance",
-          "type": "string"
-        },
-        "majors": {
-          "description": "List of majors the freelancer is pursuing",
+        "affiliations": {
+          "description": "A list of the organizations the client identifies belonging to",
           "type": "array",
           "items": {
             "type": "string"
           },
+          "minItems": 1,
           "uniqueItems": true
         },
         "skills": {
@@ -60,6 +62,14 @@
           "type": "array",
           "items": {
             "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "jobs": {
+          "description": "jobs the freelancer is working on, applied for, or completed",
+          "type": "array",
+          "items": {
+            "$ref": "https://example.com/jobs.schema.json"
           },
           "uniqueItems": true
         }
