@@ -1,3 +1,2 @@
-# collancerv1.2
-# Founder - Victor
-# Co-Founder - Bory
+# Kairos - decentralized freelancing platform
+Victor & Bory
