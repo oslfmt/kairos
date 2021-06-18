@@ -42,9 +42,3 @@ contract ContractManager {
   event DeadlineChanged(uint contractID, uint deadline);
   event PaymentChanged(uint contractID, uint payment);
 }
-
-// TODO
-// 1. Figure out escrow payments and transfer of ether
-//    a) Depositing ether into escrow contract
-//    b) paying funds to freelancer
-//    c) returning funds to client
