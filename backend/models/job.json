@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/jobs.schema.json",
+  "title": "job",
+  "description": "A job posting by a user. Every job has 1 of 3 statuses: posted, active, completed",
+  "type": "object",
+  "required": ["id", "title", "description", "paymentTypes", "status"],
+  "properties": {
+    "id": {
+      "description": "uuid for the job",
+      "type": "integer"
+    },
+    "clientID": {
+      "description": "identifier of the client who posted the job",
+      "type": "integer"
+    },
+    "freelancerID": {
+      "description": "identifier of freelancer who worked/is working on job. (only required if status == active/complete)",
+      "type": "integer"
+    },
+    "title": {
+      "description": "title of the job",
+      "type": "string"
+    },
+    "description": {
+      "description": "job description",
+      "type": "string"
+    },
+    "price": {
+      "description": "the amount that the client will pay the freelancer",
+      "type": "integer"
+    },
+    "skills": {
+      "description": "the skills the client is looking for the freelancer to have",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "paymentTypes": {
+      "description": "the list of payment types client is willing to payout",
+      "type": "array",
+      "items": { 
+        "type": "string",
+        "enum": ["flat fee", "endorsement", "tips"]
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "status": {
+      "description": "the status of the job (posted/applied, active, complete)",
+      "type": "string",
+      "enum": ["posted/applied", "active", "complete"],
+      "maxItems": 1
+    }
+  }
+}
