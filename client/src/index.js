@@ -8,24 +8,6 @@ import { InstantSearch } from 'react-instantsearch-dom';
 // auth0 import
 import { Auth0Provider } from '@auth0/auth0-react';
 
-// ceramic client
-import CeramicClient from '@ceramicnetwork/http-client';
-// import resolvers
-import KeyDidResolver from 'key-did-resolver'
-import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
-// import DID instance
-import { DID } from 'dids';
-
-const API_URL = 'https://ceramic-clay.3boxlabs.com';
-// for now, use local daemon
-const ceramic = new CeramicClient(API_URL);
-// resolver registry for all DID methods node will support
-const resolver = { ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) };
-// DID instance wraps the DID resolver
-const did = new DID({ resolver });
-// set DID on ceramic client so client can use it to resolve DIDs to verify ownership of streams
-ceramic.setDID(did);
-
 // Algolia search import
 const searchClient = algoliasearch('R9Y9XV4UI3', '0925b07c442589f3802c5b4231d906e9');
 
@@ -44,7 +26,7 @@ ReactDOM.render(
   >
     <React.StrictMode>
       <InstantSearch searchClient={searchClient} indexName="test_jobs">
-        <App ceramic={ceramic} />
+        <App />
       </InstantSearch>
     </React.StrictMode>
   </Auth0Provider>,
