@@ -6,8 +6,7 @@ import './css/main.css';
 // import pages
 import Home from './components/views/Home';
 import Header from './components/layout/Header';
-import JobForm from './components/views/JobForm';
-import FreelancerList from './components/Freelancer-list';
+import JobForms from './components/views/JobForm';
 import BrowseGrid from './components/search/BrowseGrid';
 import Dashboard from './components/dashboard/Dashboard';
 import Footer from './components/layout/Footer'
@@ -31,6 +30,7 @@ function App() {
   const [web3, setWeb3] = useState(null);
   const [ceramic, setCeramic] = useState(null);
 
+  // set ceramic
   useEffect(() => {
     const API_URL = 'https://ceramic-clay.3boxlabs.com';
     const ceramic = new CeramicClient(API_URL);
@@ -40,6 +40,7 @@ function App() {
     setCeramic(ceramic);
   }, [setCeramic]);
 
+  // set ethereum object
   useEffect(() => {
     const detectProvider = async () => {
       const provider = await detectEthereumProvider();
@@ -47,9 +48,11 @@ function App() {
         setEthereum(provider);
       }
     }
+
     detectProvider();
   }, [setEthereum]);
 
+  // set web3
   useEffect(() => {
     const web3 = new Web3(ethereum);
     setWeb3(web3);
@@ -97,7 +100,7 @@ function App() {
 
         <Route path="/postjob">
           <Header />
-          <JobForm />
+          <JobForms ceramic={ceramic} />
         </Route>
 
         {/* render: func - passes route props (match, location, history) to BrowseGrid 
@@ -107,11 +110,6 @@ function App() {
             <BrowseGrid {...props} />
           )}
         />
-
-        <Route path="/notify">
-          <Header />
-          <FreelancerList />
-        </Route>
 
         <Route exact path="/">
           <Home web3={web3} ethereum={ethereum} setCurrentAccount={setCurrentAccount} did={did} />

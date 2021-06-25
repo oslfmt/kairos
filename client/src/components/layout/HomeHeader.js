@@ -19,13 +19,6 @@ function HomeHeader(props) {
     }
   });
 
-  // updates react state address to proper account
-  // useEffect(() => {
-  //   if (provider) {
-  //     provider.on('accountsChanged', accounts => handleAccountsChanged(accounts, currentAccount, setCurrentAccount));
-  //   }
-  // }, [currentAccount, setCurrentAccount, provider]);
-
   return (
     <nav className="navbar navbar-light bg-light justify-content-end p-4">
       <ul className="nav">
