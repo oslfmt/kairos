@@ -105,6 +105,9 @@ function JobForms(props) {
     // probably save this streamID somewhere to reference it later
     const streamID = doc.id.toString();
   }
+  // TODO
+  // 1. deploy schemas and figure out there commits, and how to import them
+  // 2. test submission of jobs and docs are submitted to ceramic streams
 
   return (
     <section id="postjob">

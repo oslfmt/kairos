@@ -99,7 +99,7 @@ contract SimpleEscrow is IArbitrable {
     // doesn't there need to be a check for if the arbitrationFeeDepositPeriod has ended?
     require(block.timestamp - reclaimedAt <= arbitrationFeeDepositPeriod, "Arbitration fee deposit period elapsed");
 
-    // if checks pass, deposit payee arbitration fee into contract balance, and open a dispute
+    // if checks pass, deposit payee arbitration fee into ARBITRATOR contract balance, and open a dispute
     arbitrator.createDispute(numberOfRulingOptions, "");
     status = Status.Disputed;
   }
