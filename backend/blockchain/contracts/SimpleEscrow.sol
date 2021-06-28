@@ -3,13 +3,13 @@ pragma solidity ^0.8.0;
 
 import "./IArbitrable.sol";
 import "./IArbitrator.sol";
+import "./IEvidence.sol";
 
-contract SimpleEscrow is IArbitrable {
+contract SimpleEscrow is IArbitrable, IEvidence {
   address payable public payer = payable(msg.sender);
   address payable public payee;
   uint256 public value;
   IArbitrator public arbitrator;
-  string public agreement;
   uint256 public createdAt;
   // time is set to short, for testing purposes
   uint256 public constant reclamationPeriod = 3 minutes;
@@ -17,18 +17,21 @@ contract SimpleEscrow is IArbitrable {
 
   enum Status {Initial, Reclaimed, Disputed, Resolved}
   Status public status;
-
   uint256 public reclaimedAt;
 
   enum RulingOptions {RefusedToArbitrate, PayerWins, PayeeWins}
   uint256 constant numberOfRulingOptions = 2;
 
-  constructor(address payable _payee, IArbitrator _arbitrator, string memory _agreement) payable {
+  uint256 constant metaEvidenceID = 0;
+  uint256 constant evidenceGroupID = 0;
+
+  constructor(address payable _payee, IArbitrator _arbitrator, string memory _metaevidence) payable {
     value = msg.value;
     payee = _payee;
     arbitrator = _arbitrator;
-    agreement = _agreement;
     createdAt = block.timestamp;
+
+    emit MetaEvidence(metaEvidenceID, _metaevidence);
   }
 
   function releaseFunds() public {
@@ -100,8 +103,11 @@ contract SimpleEscrow is IArbitrable {
     require(block.timestamp - reclaimedAt <= arbitrationFeeDepositPeriod, "Arbitration fee deposit period elapsed");
 
     // if checks pass, deposit payee arbitration fee into ARBITRATOR contract balance, and open a dispute
-    arbitrator.createDispute(numberOfRulingOptions, "");
+    uint256 disputeID = arbitrator.createDispute{value: msg.value}(numberOfRulingOptions, "");
     status = Status.Disputed;
+
+    // emit dispute event
+    emit Dispute(arbitrator, disputeID, metaEvidenceID, evidenceGroupID);
   }
 
   function remainingTimeToReclaim() public view returns (uint256) {
@@ -112,5 +118,11 @@ contract SimpleEscrow is IArbitrable {
   function remainingTimeToDepositArbitrationFee() public view returns (uint256) {
     require(status == Status.Reclaimed, "Transaction is not in Reclaimed state");
     return (block.timestamp - reclaimedAt) > arbitrationFeeDepositPeriod ? 0 : (reclaimedAt + arbitrationFeeDepositPeriod - block.timestamp);
+  }
+
+  function submitEvidence(string memory _evidence) public {
+    require(status != Status.Resolved, "Transaction not in resolved state");
+    require(msg.sender == payer || msg.sender == payee, "Third parties are not allowed to submit evidence");
+    emit Evidence(arbitrator, evidenceGroupID, msg.sender, _evidence);
   }
 }

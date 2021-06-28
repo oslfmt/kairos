@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import "bootstrap/dist/css/bootstrap.min.css";
 import './css/main.css';
 
+// import schemas
+import Job from './models/job.json';
+import User from './models/user.json';
+
 // import pages
 import Home from './components/views/Home';
 import Header from './components/layout/Header';
@@ -22,6 +26,7 @@ import Web3 from 'web3';
 
 // import provider detector
 import detectEthereumProvider from '@metamask/detect-provider';
+import { TileDocument } from '@ceramicnetwork/stream-tile';
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -80,6 +85,24 @@ function App() {
       authenticateDID();
     }
   }, [setDid, ceramic, currentAccount, ethereum]);
+
+  // useEffect(() => {
+  //   const deploySchemas = async () => {
+  //     const jobSchema = await TileDocument.create(ceramic, Job, { tag: "schema" });
+  //     const userSchema = await TileDocument.create(ceramic, User, { tag: "schema" });
+  //     console.log(jobSchema)
+  //     console.log(userSchema)
+
+  //     const jobStreamID = jobSchema.id.toString();
+  //     const userStreamID = userSchema.id.toString();
+
+  //     console.log(jobStreamID)
+  //     console.log(userStreamID)
+  //     // save to database?
+  //   }
+
+  //   deploySchemas();
+  // });
 
   return (
     <Router>
