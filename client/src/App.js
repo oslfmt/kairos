@@ -86,6 +86,9 @@ function App() {
     }
   }, [setDid, ceramic, currentAccount, ethereum]);
 
+  // TODO: deploy schemas ONCE and then use streamIDs of them in the app
+  // 1. publish the schemas to ceramic node as TileDocs
+  // 2. store the streamID of the schemas to a JSON file that will be used by app
   // useEffect(() => {
   //   const deploySchemas = async () => {
   //     const jobSchema = await TileDocument.create(ceramic, Job, { tag: "schema" });
