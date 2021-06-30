@@ -104,6 +104,6 @@ contract Escrow is IArbitrable, IEvidence {
 }
 
 // TODO
-// - Test smart contracts in trufflef
+// - Test smart contracts in truffle
 // - test smart contracts against centralized arbitrator on kleros kovan
 // - figure out "extraData" implementation (if necessary), ie, # of votes, subcourt IDs, etc.

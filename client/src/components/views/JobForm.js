@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { TileDocument } from '@ceramicnetwork/stream-tile';
 
-// KEEP IN MIND: this can be filling out a kleros contract instead
+// import schema commitIDs
+import schemas from '../../config.json';
+
 function JobForms(props) {
   const ceramic = props.ceramic;
   const [title, setTitle] = useState("");
@@ -92,18 +94,19 @@ function JobForms(props) {
 	}
 
   const handleSubmit = async () => {
-    // ceramic passed in from props, content from form, metadata is JOB schema and family is JOB
+    // grab job details from user form
     const content = { title, description, skills, otherSkills, payments, price };
 
     const metadata = {
       family: "jobs",
-      schema: 'schemaDoc.commitId'
+      schema: schemas.Job,
     };
 
-    const doc = await TileDocument.create(ceramic, content, metadata);
+    const jobDoc = await TileDocument.create(ceramic, content, metadata);
 
     // probably save this streamID somewhere to reference it later
-    const streamID = doc.id.toString();
+    const streamID = jobDoc.id.toString();
+    console.log(streamID);
   }
   // TODO
   // 1. deploy schemas and figure out there commits, and how to import them
