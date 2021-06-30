@@ -3,10 +3,6 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import "bootstrap/dist/css/bootstrap.min.css";
 import './css/main.css';
 
-// import schemas
-import Job from './models/job.json';
-import User from './models/user.json';
-
 // import pages
 import Home from './components/views/Home';
 import Header from './components/layout/Header';
@@ -26,7 +22,6 @@ import Web3 from 'web3';
 
 // import provider detector
 import detectEthereumProvider from '@metamask/detect-provider';
-import { TileDocument } from '@ceramicnetwork/stream-tile';
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState(null);

@@ -6,6 +6,8 @@ const Ceramic = require('@ceramicnetwork/http-client').default;
 const { Ed25519Provider } = require('key-did-provider-ed25519');
 const { Resolver } = require('did-resolver')
 const fromString = require('uint8arrays/from-string');
+const { writeFile } = require('fs').promises;
+require('dotenv').config();
 
 // import schemas
 const User = require('./models/user.json');
@@ -23,9 +25,21 @@ async function run() {
   await ceramic.did.authenticate();
 
   // publish schemas
-  const job = await TileDocument.create(ceramic, Job);
-  const user = await TileDocument.create(ceramic, User);
-  console.log(job)
+  const jobSchema = await TileDocument.create(ceramic, Job);
+  const userSchema = await TileDocument.create(ceramic, User);
+
+  // write config to json file
+  const config = {
+    schemas: {
+      Job: jobSchema.commitId.toString(),
+      User: userSchema.commitId.toString(),
+    },
+  };
+
+  // write schema commitIds to config file to be used later
+  await writeFile('./src/config.json', JSON.stringify(config));
+  console.log('Config written to src/config.json file', config);
+  process.exit(0);
 }
 
 run().catch(console.error);
