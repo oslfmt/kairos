@@ -20,6 +20,7 @@
     "bootstrap": "^5.0.1",
     "dids": "^2.1.0",
     "dotenv": "^8.2.0",
+    "key-did-provider-ed25519": "^1.1.0",
     "key-did-resolver": "^1.2.0",
     "node": "^15.4.0",
     "npm": "^6.14.13",
@@ -30,10 +31,12 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "sass": "^1.30.0",
+    "uint8arrays": "^2.1.5",
     "web-vitals": "^0.2.4",
     "web3": "^1.3.6"
   },
   "scripts": {
+    "bootstrap": "node ./bootstrap.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
