@@ -1,16 +1,19 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.0;
 
-import "./IArbitrable.sol";
-import "./IArbitrator.sol";
-import "./IEvidence.sol";
+import "./interfaces/IArbitrable.sol";
+import "./interfaces/IArbitrator.sol";
+import "./interfaces/IEvidence.sol";
 
 contract Escrow is IArbitrable, IEvidence {
   enum Status {Initial, Reclaimed, Disputed, Resolved}
   enum RulingOptions {RefusedToArbitrate, PayerWins, PayeeWins}
   uint256 constant numberOfRulingOptions = 2;
+  // for now, default arbitrator is Kleros Court on Kovan (later change to mainnet)
+  // why does wrapping address in IArbitrator work??
+  IArbitrator defaultArbitrator = IArbitrator(0x60B2AbfDfaD9c0873242f59f2A8c32A3Cc682f80);
 
-  struct TX {
+  struct Contract {
     address payable payer;
     address payable payee;
     IArbitrator arbitrator;
@@ -25,23 +28,22 @@ contract Escrow is IArbitrable, IEvidence {
     uint256 arbitrationFeeDepositPeriod;
   }
 
-  TX[] public txs;
-  mapping (uint256 => uint256) disputeIDtoTXID;
+  Contract[] public contracts;
+  mapping (uint256 => uint256) disputeIDtoContractID;
 
-  function newTransaction(
-    address payable _payee, 
-    IArbitrator _arbitrator, 
+  function createNewContract(
+    address payable _payee,
     string memory _metaEvidence, 
     uint256 _reclamationPeriod, 
     uint256 _arbitrationFeeDepositPeriod
-    ) public payable returns (uint256 txID) {
-      emit MetaEvidence(txs.length, _metaEvidence);
+    ) public payable returns (uint256 contractID) {
+      emit MetaEvidence(contracts.length, _metaEvidence);
 
-      txs.push(
-        TX({
+      contracts.push(
+        Contract({
           payer: payable(msg.sender),
           payee: _payee,
-          arbitrator: _arbitrator,
+          arbitrator: defaultArbitrator,
           status: Status.Initial,
           value: msg.value,
           disputeID: 0,
@@ -54,11 +56,11 @@ contract Escrow is IArbitrable, IEvidence {
         })
       );
 
-      txID = txs.length;
+      contractID = contracts.length - 1;
   }
 
-  function releaseFunds(uint256 _txID) public {
-    TX storage transaction = txs[_txID];
+  function releaseFunds(uint256 _contractID) public {
+    Contract storage transaction = contracts[_contractID];
     require(transaction.status == Status.Initial, "Transaction is not in initial state");
 
     // payee can only reclaim funds if the reclamationPeriod has passed
@@ -71,45 +73,11 @@ contract Escrow is IArbitrable, IEvidence {
     transaction.payee.transfer(transaction.value);
   }
 
-  function reclaimFunds(uint256 _txID) public payable {
-    TX storage transaction = txs[_txID];
-
-    require(
-      transaction.status == Status.Initial || transaction.status == Status.Reclaimed,
-      "Transaction is not in an initial or reclaimed state"
-    );
-
-    require(msg.sender == transaction.payer, "Only payer can reclaim funds");
-
-    // if payer has already called function, putting status in a reclaimed state AND the payee hasn't deposited the
-    // arbitration fee, then the payer can reclaim the funds in escrow
-    if (transaction.status == Status.Reclaimed) {
-      require(
-        block.timestamp - transaction.reclaimedAt > transaction.arbitrationFeeDepositPeriod,
-        "Payee still has time to deposit arbitration fee"
-      );
-      // payer wins by default and gets refunded escrowBalance + arbitrationFee
-      transaction.payer.transfer(transaction.value + transaction.payerFeeDeposit);
-      transaction.status = Status.Resolved;
-    } else {
-      // otherwise, payer is calling reclaim for the first time, and must check to see if contract is still in period
-      require(block.timestamp - transaction.createdAt <= transaction.reclamationPeriod, "Reclamation period ended");
-      // require the payer to pay arbitration fee
-      require(
-        msg.value >= transaction.arbitrator.arbitrationCost(""),
-        "Can't reclaim funds without depositing the arbitration fee"
-      );
-      transaction.payerFeeDeposit = msg.value;
-      transaction.reclaimedAt = block.timestamp; // start the reclamation phase
-      transaction.status = Status.Reclaimed; // set contract status to reclaimed state
-    }
-  }
-
   // this is the place where we put the rules to enforce the ruling, which the arbitrator decides
   // Note: does NOT handle refusedToArbitrate event
   function rule(uint256 _disputeID, uint256 _ruling) override public {
-    uint256 txID = disputeIDtoTXID[_disputeID];
-    TX storage transaction = txs[txID];
+    uint256 txID = disputeIDtoContractID[_disputeID];
+    Contract storage transaction = contracts[txID];
 
     // first check if the caller has the right to rule on the contract
     require(msg.sender == address(transaction.arbitrator), "Only the arbitrator can execute a ruling");
@@ -127,39 +95,10 @@ contract Escrow is IArbitrable, IEvidence {
     emit Ruling(transaction.arbitrator, _disputeID, _ruling);
   }
 
-  function depositArbitrationFeeForPayee(uint256 _txID) public payable {
-    TX storage transaction = txs[_txID];
-    // check that state of contract is reclaimed
-    require(transaction.status == Status.Reclaimed, "Transaction is not in reclaimed state");
-    // doesn't there need to be a check for if the arbitrationFeeDepositPeriod has ended?
-    require(block.timestamp - transaction.reclaimedAt <= transaction.arbitrationFeeDepositPeriod, "Arbitration fee deposit period elapsed");
-
-    // if checks pass, deposit payee arbitration fee into ARBITRATOR contract balance, and open a dispute
-    transaction.payeeFeeDeposit = msg.value;
-    transaction.disputeID = transaction.arbitrator.createDispute{value: msg.value}(numberOfRulingOptions, "");
-    transaction.status = Status.Disputed;
-    disputeIDtoTXID[transaction.disputeID] = _txID;
-
-    // emit dispute event
-    emit Dispute(transaction.arbitrator, transaction.disputeID, _txID, _txID);
-  }
-
-  function remainingTimeToReclaim(uint256 _txID) public view returns (uint256) {
-    TX storage transaction = txs[_txID];
-    require(transaction.status == Status.Initial, "Transaction is not in Initial state");
-    return (block.timestamp - transaction.createdAt) > transaction.reclamationPeriod ? 0 : (transaction.createdAt + transaction.reclamationPeriod - block.timestamp);
-  }
-
-  function remainingTimeToDepositArbitrationFee(uint256 _txID) public view returns (uint256) {
-    TX storage transaction = txs[_txID];
-    require(transaction.status == Status.Reclaimed, "Transaction is not in Reclaimed state");
-    return (block.timestamp - transaction.reclaimedAt) > transaction.arbitrationFeeDepositPeriod ? 0 : (transaction.reclaimedAt + transaction.arbitrationFeeDepositPeriod - block.timestamp);
-  }
-
-  function submitEvidence(uint256 _txID, string memory _evidence) public {
-    TX storage transaction = txs[_txID];
+  function submitEvidence(uint256 _contractID, string memory _evidence) public {
+    Contract storage transaction = contracts[_contractID];
     require(transaction.status != Status.Resolved, "Transaction not in resolved state");
     require(msg.sender == transaction.payer || msg.sender == transaction.payee, "Third parties are not allowed to submit evidence");
-    emit Evidence(transaction.arbitrator, _txID, msg.sender, _evidence);
+    emit Evidence(transaction.arbitrator, _contractID, msg.sender, _evidence);
   }
 }

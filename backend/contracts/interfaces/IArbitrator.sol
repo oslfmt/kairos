@@ -1,5 +1,3 @@
-pragma solidity ^0.8.0;
-
 /**
  * @authors: [@ferittuncer, @hbarcelos]
  * @reviewers: [@remedcu]
