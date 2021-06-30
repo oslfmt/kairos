@@ -83,7 +83,7 @@
       "type": "event"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"contract IArbitrator\",\"name\":\"_arbitrator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_disputeID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_metaEvidenceID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_evidenceGroupID\",\"type\":\"uint256\"}],\"name\":\"Dispute\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"contract IArbitrator\",\"name\":\"_arbitrator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_evidenceGroupID\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_party\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_evidence\",\"type\":\"string\"}],\"name\":\"Evidence\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_metaEvidenceID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_evidence\",\"type\":\"string\"}],\"name\":\"MetaEvidence\",\"type\":\"event\"}],\"devdoc\":{\"events\":{\"Dispute(address,uint256,uint256,uint256)\":{\"details\":\"To be emitted when a dispute is created to link the correct meta-evidence to the disputeID.\",\"params\":{\"_arbitrator\":\"The arbitrator of the contract.\",\"_disputeID\":\"ID of the dispute in the Arbitrator contract.\",\"_evidenceGroupID\":\"Unique identifier of the evidence group that is linked to this dispute.\",\"_metaEvidenceID\":\"Unique identifier of meta-evidence.\"}},\"Evidence(address,uint256,address,string)\":{\"details\":\"To be raised when evidence is submitted. Should point to the resource (evidences are not to be stored on chain due to gas considerations).\",\"params\":{\"_arbitrator\":\"The arbitrator of the contract.\",\"_evidence\":\"IPFS path to evidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/evidence.json'\",\"_evidenceGroupID\":\"Unique identifier of the evidence group the evidence belongs to.\",\"_party\":\"The address of the party submiting the evidence. Note that 0x0 refers to evidence not submitted by any party.\"}},\"MetaEvidence(uint256,string)\":{\"details\":\"To be emitted when meta-evidence is submitted.\",\"params\":{\"_evidence\":\"IPFS path to metaevidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/metaevidence.json'\",\"_metaEvidenceID\":\"Unique identifier of meta-evidence.\"}}},\"kind\":\"dev\",\"methods\":{},\"title\":\"IEvidence  ERC-1497: Evidence Standard\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/victor/kairos/backend/contracts/IEvidence.sol\":\"IEvidence\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/victor/kairos/backend/contracts/IArbitrable.sol\":{\"keccak256\":\"0x1f239a63bd2b7bb743aff20da0cf4ad46408d77f34ef2b9a9002df5dbc827311\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://5b296dc7ce9da41ae2405d454aa360dc85d289697a85972925f3cc97a405326a\",\"dweb:/ipfs/QmRzmwGGNuwTq9WZucbr3wQipsko6Ymgey7iW7NwQcjx2L\"]},\"/home/victor/kairos/backend/contracts/IArbitrator.sol\":{\"keccak256\":\"0xacc551e354d7a391dc8231800d2e35811d4def00d6174aea0716ee9e1be88dd3\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://50d298f7d92e9e6200bd327e4f5c6ff905233a8cb7101a0eb28e350535a7c96f\",\"dweb:/ipfs/QmYP2Bs47tj85mRH26Tj6YE2qQ9vqG12FgYsnp4NwVL8jn\"]},\"/home/victor/kairos/backend/contracts/IEvidence.sol\":{\"keccak256\":\"0x1d315a0cba381f46b4fc1dbcf3ee137fb6de280ffa0f231b861054dcaf38b728\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0b58d814357456a26cda3141844ae7b5401e7c90a2215d11cc62bd8846995faf\",\"dweb:/ipfs/QmPRP74AXopx6tiQYCfK3MxKaeEVxMqujsXrt8y9vMxLv9\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"contract IArbitrator\",\"name\":\"_arbitrator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_disputeID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_metaEvidenceID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_evidenceGroupID\",\"type\":\"uint256\"}],\"name\":\"Dispute\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"contract IArbitrator\",\"name\":\"_arbitrator\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_evidenceGroupID\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"_party\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_evidence\",\"type\":\"string\"}],\"name\":\"Evidence\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"_metaEvidenceID\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_evidence\",\"type\":\"string\"}],\"name\":\"MetaEvidence\",\"type\":\"event\"}],\"devdoc\":{\"events\":{\"Dispute(address,uint256,uint256,uint256)\":{\"details\":\"To be emitted when a dispute is created to link the correct meta-evidence to the disputeID.\",\"params\":{\"_arbitrator\":\"The arbitrator of the contract.\",\"_disputeID\":\"ID of the dispute in the Arbitrator contract.\",\"_evidenceGroupID\":\"Unique identifier of the evidence group that is linked to this dispute.\",\"_metaEvidenceID\":\"Unique identifier of meta-evidence.\"}},\"Evidence(address,uint256,address,string)\":{\"details\":\"To be raised when evidence is submitted. Should point to the resource (evidences are not to be stored on chain due to gas considerations).\",\"params\":{\"_arbitrator\":\"The arbitrator of the contract.\",\"_evidence\":\"IPFS path to evidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/evidence.json'\",\"_evidenceGroupID\":\"Unique identifier of the evidence group the evidence belongs to.\",\"_party\":\"The address of the party submiting the evidence. Note that 0x0 refers to evidence not submitted by any party.\"}},\"MetaEvidence(uint256,string)\":{\"details\":\"To be emitted when meta-evidence is submitted.\",\"params\":{\"_evidence\":\"IPFS path to metaevidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/metaevidence.json'\",\"_metaEvidenceID\":\"Unique identifier of meta-evidence.\"}}},\"kind\":\"dev\",\"methods\":{},\"title\":\"IEvidence  ERC-1497: Evidence Standard\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/home/victor/kairos/backend/contracts/interfaces/IEvidence.sol\":\"IEvidence\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/victor/kairos/backend/contracts/interfaces/IArbitrable.sol\":{\"keccak256\":\"0x1f239a63bd2b7bb743aff20da0cf4ad46408d77f34ef2b9a9002df5dbc827311\",\"license\":\"GPL-3.0\",\"urls\":[\"bzz-raw://5b296dc7ce9da41ae2405d454aa360dc85d289697a85972925f3cc97a405326a\",\"dweb:/ipfs/QmRzmwGGNuwTq9WZucbr3wQipsko6Ymgey7iW7NwQcjx2L\"]},\"/home/victor/kairos/backend/contracts/interfaces/IArbitrator.sol\":{\"keccak256\":\"0x1809c674bdf3c6a31f205828d0e4730610a960cdbb8d3917906d56db73a300c2\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://8c43f34f40a8ff85e9b9d7e59ff35b17a9764f237516b9f14a7e9585a7f1045c\",\"dweb:/ipfs/QmdHhaNQrADyyRtN8noEydh7z5WUXgFww94u6Cj7dmo91Z\"]},\"/home/victor/kairos/backend/contracts/interfaces/IEvidence.sol\":{\"keccak256\":\"0x1d315a0cba381f46b4fc1dbcf3ee137fb6de280ffa0f231b861054dcaf38b728\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0b58d814357456a26cda3141844ae7b5401e7c90a2215d11cc62bd8846995faf\",\"dweb:/ipfs/QmPRP74AXopx6tiQYCfK3MxKaeEVxMqujsXrt8y9vMxLv9\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -92,26 +92,26 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "/**\n * @authors: [@ferittuncer, @hbarcelos]\n * @reviewers: []\n * @auditors: []\n * @bounties: []\n * @deployments: []\n * SPDX-License-Identifier: MIT\n */\npragma solidity >=0.7;\n\nimport \"./IArbitrator.sol\";\n\n/** @title IEvidence\n *  ERC-1497: Evidence Standard\n */\ninterface IEvidence {\n    /**\n     * @dev To be emitted when meta-evidence is submitted.\n     * @param _metaEvidenceID Unique identifier of meta-evidence.\n     * @param _evidence IPFS path to metaevidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/metaevidence.json'\n     */\n    event MetaEvidence(uint256 indexed _metaEvidenceID, string _evidence);\n\n    /**\n     * @dev To be raised when evidence is submitted. Should point to the resource (evidences are not to be stored on chain due to gas considerations).\n     * @param _arbitrator The arbitrator of the contract.\n     * @param _evidenceGroupID Unique identifier of the evidence group the evidence belongs to.\n     * @param _party The address of the party submiting the evidence. Note that 0x0 refers to evidence not submitted by any party.\n     * @param _evidence IPFS path to evidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/evidence.json'\n     */\n    event Evidence(\n        IArbitrator indexed _arbitrator,\n        uint256 indexed _evidenceGroupID,\n        address indexed _party,\n        string _evidence\n    );\n\n    /**\n     * @dev To be emitted when a dispute is created to link the correct meta-evidence to the disputeID.\n     * @param _arbitrator The arbitrator of the contract.\n     * @param _disputeID ID of the dispute in the Arbitrator contract.\n     * @param _metaEvidenceID Unique identifier of meta-evidence.\n     * @param _evidenceGroupID Unique identifier of the evidence group that is linked to this dispute.\n     */\n    event Dispute(\n        IArbitrator indexed _arbitrator,\n        uint256 indexed _disputeID,\n        uint256 _metaEvidenceID,\n        uint256 _evidenceGroupID\n    );\n}",
-  "sourcePath": "/home/victor/kairos/backend/contracts/IEvidence.sol",
+  "sourcePath": "/home/victor/kairos/backend/contracts/interfaces/IEvidence.sol",
   "ast": {
-    "absolutePath": "/home/victor/kairos/backend/contracts/IEvidence.sol",
+    "absolutePath": "/home/victor/kairos/backend/contracts/interfaces/IEvidence.sol",
     "exportedSymbols": {
       "IArbitrable": [
-        270
+        644
       ],
       "IArbitrator": [
-        367
+        740
       ],
       "IEvidence": [
-        403
+        776
       ]
     },
-    "id": 404,
+    "id": 777,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 369,
+        "id": 742,
         "literals": [
           "solidity",
           ">=",
@@ -121,12 +121,12 @@
         "src": "152:22:4"
       },
       {
-        "absolutePath": "/home/victor/kairos/backend/contracts/IArbitrator.sol",
+        "absolutePath": "/home/victor/kairos/backend/contracts/interfaces/IArbitrator.sol",
         "file": "./IArbitrator.sol",
-        "id": 370,
+        "id": 743,
         "nodeType": "ImportDirective",
-        "scope": 404,
-        "sourceUnit": 368,
+        "scope": 777,
+        "sourceUnit": 741,
         "src": "176:27:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -137,15 +137,15 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 371,
+          "id": 744,
           "nodeType": "StructuredDocumentation",
           "src": "205:56:4",
           "text": "@title IEvidence\n  ERC-1497: Evidence Standard"
         },
         "fullyImplemented": true,
-        "id": 403,
+        "id": 776,
         "linearizedBaseContracts": [
-          403
+          776
         ],
         "name": "IEvidence",
         "nodeType": "ContractDefinition",
@@ -153,26 +153,26 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 372,
+              "id": 745,
               "nodeType": "StructuredDocumentation",
               "src": "288:269:4",
               "text": " @dev To be emitted when meta-evidence is submitted.\n @param _metaEvidenceID Unique identifier of meta-evidence.\n @param _evidence IPFS path to metaevidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/metaevidence.json'"
             },
-            "id": 378,
+            "id": 751,
             "name": "MetaEvidence",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 377,
+              "id": 750,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 374,
+                  "id": 747,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_metaEvidenceID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 378,
+                  "scope": 751,
                   "src": "581:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -181,7 +181,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 373,
+                    "id": 746,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "581:7:4",
@@ -194,12 +194,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 376,
+                  "id": 749,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_evidence",
                   "nodeType": "VariableDeclaration",
-                  "scope": 378,
+                  "scope": 751,
                   "src": "614:16:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -208,7 +208,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 375,
+                    "id": 748,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "614:6:4",
@@ -227,47 +227,47 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 379,
+              "id": 752,
               "nodeType": "StructuredDocumentation",
               "src": "638:572:4",
               "text": " @dev To be raised when evidence is submitted. Should point to the resource (evidences are not to be stored on chain due to gas considerations).\n @param _arbitrator The arbitrator of the contract.\n @param _evidenceGroupID Unique identifier of the evidence group the evidence belongs to.\n @param _party The address of the party submiting the evidence. Note that 0x0 refers to evidence not submitted by any party.\n @param _evidence IPFS path to evidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/evidence.json'"
             },
-            "id": 390,
+            "id": 763,
             "name": "Evidence",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 389,
+              "id": 762,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 382,
+                  "id": 755,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_arbitrator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 390,
+                  "scope": 763,
                   "src": "1239:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IArbitrator_$367",
+                    "typeIdentifier": "t_contract$_IArbitrator_$740",
                     "typeString": "contract IArbitrator"
                   },
                   "typeName": {
-                    "id": 381,
+                    "id": 754,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 380,
+                      "id": 753,
                       "name": "IArbitrator",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 367,
+                      "referencedDeclaration": 740,
                       "src": "1239:11:4"
                     },
-                    "referencedDeclaration": 367,
+                    "referencedDeclaration": 740,
                     "src": "1239:11:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IArbitrator_$367",
+                      "typeIdentifier": "t_contract$_IArbitrator_$740",
                       "typeString": "contract IArbitrator"
                     }
                   },
@@ -275,12 +275,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 384,
+                  "id": 757,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_evidenceGroupID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 390,
+                  "scope": 763,
                   "src": "1280:32:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -289,7 +289,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 383,
+                    "id": 756,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1280:7:4",
@@ -302,12 +302,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 386,
+                  "id": 759,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_party",
                   "nodeType": "VariableDeclaration",
-                  "scope": 390,
+                  "scope": 763,
                   "src": "1322:22:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -316,7 +316,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 385,
+                    "id": 758,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1322:7:4",
@@ -330,12 +330,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 388,
+                  "id": 761,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_evidence",
                   "nodeType": "VariableDeclaration",
-                  "scope": 390,
+                  "scope": 763,
                   "src": "1354:16:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -344,7 +344,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 387,
+                    "id": 760,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1354:6:4",
@@ -363,47 +363,47 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 391,
+              "id": 764,
               "nodeType": "StructuredDocumentation",
               "src": "1383:413:4",
               "text": " @dev To be emitted when a dispute is created to link the correct meta-evidence to the disputeID.\n @param _arbitrator The arbitrator of the contract.\n @param _disputeID ID of the dispute in the Arbitrator contract.\n @param _metaEvidenceID Unique identifier of meta-evidence.\n @param _evidenceGroupID Unique identifier of the evidence group that is linked to this dispute."
             },
-            "id": 402,
+            "id": 775,
             "name": "Dispute",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 401,
+              "id": 774,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 394,
+                  "id": 767,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_arbitrator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 402,
+                  "scope": 775,
                   "src": "1824:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IArbitrator_$367",
+                    "typeIdentifier": "t_contract$_IArbitrator_$740",
                     "typeString": "contract IArbitrator"
                   },
                   "typeName": {
-                    "id": 393,
+                    "id": 766,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 392,
+                      "id": 765,
                       "name": "IArbitrator",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 367,
+                      "referencedDeclaration": 740,
                       "src": "1824:11:4"
                     },
-                    "referencedDeclaration": 367,
+                    "referencedDeclaration": 740,
                     "src": "1824:11:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IArbitrator_$367",
+                      "typeIdentifier": "t_contract$_IArbitrator_$740",
                       "typeString": "contract IArbitrator"
                     }
                   },
@@ -411,12 +411,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 396,
+                  "id": 769,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_disputeID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 402,
+                  "scope": 775,
                   "src": "1865:26:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -425,7 +425,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 395,
+                    "id": 768,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1865:7:4",
@@ -438,12 +438,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 398,
+                  "id": 771,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_metaEvidenceID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 402,
+                  "scope": 775,
                   "src": "1901:23:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -452,7 +452,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 397,
+                    "id": 770,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1901:7:4",
@@ -465,12 +465,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 400,
+                  "id": 773,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_evidenceGroupID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 402,
+                  "scope": 775,
                   "src": "1934:24:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -479,7 +479,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 399,
+                    "id": 772,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1934:7:4",
@@ -496,31 +496,31 @@
             "src": "1801:164:4"
           }
         ],
-        "scope": 404,
+        "scope": 777,
         "src": "262:1705:4"
       }
     ],
     "src": "152:1815:4"
   },
   "legacyAST": {
-    "absolutePath": "/home/victor/kairos/backend/contracts/IEvidence.sol",
+    "absolutePath": "/home/victor/kairos/backend/contracts/interfaces/IEvidence.sol",
     "exportedSymbols": {
       "IArbitrable": [
-        270
+        644
       ],
       "IArbitrator": [
-        367
+        740
       ],
       "IEvidence": [
-        403
+        776
       ]
     },
-    "id": 404,
+    "id": 777,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 369,
+        "id": 742,
         "literals": [
           "solidity",
           ">=",
@@ -530,12 +530,12 @@
         "src": "152:22:4"
       },
       {
-        "absolutePath": "/home/victor/kairos/backend/contracts/IArbitrator.sol",
+        "absolutePath": "/home/victor/kairos/backend/contracts/interfaces/IArbitrator.sol",
         "file": "./IArbitrator.sol",
-        "id": 370,
+        "id": 743,
         "nodeType": "ImportDirective",
-        "scope": 404,
-        "sourceUnit": 368,
+        "scope": 777,
+        "sourceUnit": 741,
         "src": "176:27:4",
         "symbolAliases": [],
         "unitAlias": ""
@@ -546,15 +546,15 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 371,
+          "id": 744,
           "nodeType": "StructuredDocumentation",
           "src": "205:56:4",
           "text": "@title IEvidence\n  ERC-1497: Evidence Standard"
         },
         "fullyImplemented": true,
-        "id": 403,
+        "id": 776,
         "linearizedBaseContracts": [
-          403
+          776
         ],
         "name": "IEvidence",
         "nodeType": "ContractDefinition",
@@ -562,26 +562,26 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 372,
+              "id": 745,
               "nodeType": "StructuredDocumentation",
               "src": "288:269:4",
               "text": " @dev To be emitted when meta-evidence is submitted.\n @param _metaEvidenceID Unique identifier of meta-evidence.\n @param _evidence IPFS path to metaevidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/metaevidence.json'"
             },
-            "id": 378,
+            "id": 751,
             "name": "MetaEvidence",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 377,
+              "id": 750,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 374,
+                  "id": 747,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_metaEvidenceID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 378,
+                  "scope": 751,
                   "src": "581:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -590,7 +590,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 373,
+                    "id": 746,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "581:7:4",
@@ -603,12 +603,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 376,
+                  "id": 749,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_evidence",
                   "nodeType": "VariableDeclaration",
-                  "scope": 378,
+                  "scope": 751,
                   "src": "614:16:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -617,7 +617,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 375,
+                    "id": 748,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "614:6:4",
@@ -636,47 +636,47 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 379,
+              "id": 752,
               "nodeType": "StructuredDocumentation",
               "src": "638:572:4",
               "text": " @dev To be raised when evidence is submitted. Should point to the resource (evidences are not to be stored on chain due to gas considerations).\n @param _arbitrator The arbitrator of the contract.\n @param _evidenceGroupID Unique identifier of the evidence group the evidence belongs to.\n @param _party The address of the party submiting the evidence. Note that 0x0 refers to evidence not submitted by any party.\n @param _evidence IPFS path to evidence, example: '/ipfs/Qmarwkf7C9RuzDEJNnarT3WZ7kem5bk8DZAzx78acJjMFH/evidence.json'"
             },
-            "id": 390,
+            "id": 763,
             "name": "Evidence",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 389,
+              "id": 762,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 382,
+                  "id": 755,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_arbitrator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 390,
+                  "scope": 763,
                   "src": "1239:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IArbitrator_$367",
+                    "typeIdentifier": "t_contract$_IArbitrator_$740",
                     "typeString": "contract IArbitrator"
                   },
                   "typeName": {
-                    "id": 381,
+                    "id": 754,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 380,
+                      "id": 753,
                       "name": "IArbitrator",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 367,
+                      "referencedDeclaration": 740,
                       "src": "1239:11:4"
                     },
-                    "referencedDeclaration": 367,
+                    "referencedDeclaration": 740,
                     "src": "1239:11:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IArbitrator_$367",
+                      "typeIdentifier": "t_contract$_IArbitrator_$740",
                       "typeString": "contract IArbitrator"
                     }
                   },
@@ -684,12 +684,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 384,
+                  "id": 757,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_evidenceGroupID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 390,
+                  "scope": 763,
                   "src": "1280:32:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -698,7 +698,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 383,
+                    "id": 756,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1280:7:4",
@@ -711,12 +711,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 386,
+                  "id": 759,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_party",
                   "nodeType": "VariableDeclaration",
-                  "scope": 390,
+                  "scope": 763,
                   "src": "1322:22:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -725,7 +725,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 385,
+                    "id": 758,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1322:7:4",
@@ -739,12 +739,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 388,
+                  "id": 761,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_evidence",
                   "nodeType": "VariableDeclaration",
-                  "scope": 390,
+                  "scope": 763,
                   "src": "1354:16:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -753,7 +753,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 387,
+                    "id": 760,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "1354:6:4",
@@ -772,47 +772,47 @@
           {
             "anonymous": false,
             "documentation": {
-              "id": 391,
+              "id": 764,
               "nodeType": "StructuredDocumentation",
               "src": "1383:413:4",
               "text": " @dev To be emitted when a dispute is created to link the correct meta-evidence to the disputeID.\n @param _arbitrator The arbitrator of the contract.\n @param _disputeID ID of the dispute in the Arbitrator contract.\n @param _metaEvidenceID Unique identifier of meta-evidence.\n @param _evidenceGroupID Unique identifier of the evidence group that is linked to this dispute."
             },
-            "id": 402,
+            "id": 775,
             "name": "Dispute",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 401,
+              "id": 774,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 394,
+                  "id": 767,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_arbitrator",
                   "nodeType": "VariableDeclaration",
-                  "scope": 402,
+                  "scope": 775,
                   "src": "1824:31:4",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_IArbitrator_$367",
+                    "typeIdentifier": "t_contract$_IArbitrator_$740",
                     "typeString": "contract IArbitrator"
                   },
                   "typeName": {
-                    "id": 393,
+                    "id": 766,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 392,
+                      "id": 765,
                       "name": "IArbitrator",
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 367,
+                      "referencedDeclaration": 740,
                       "src": "1824:11:4"
                     },
-                    "referencedDeclaration": 367,
+                    "referencedDeclaration": 740,
                     "src": "1824:11:4",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_IArbitrator_$367",
+                      "typeIdentifier": "t_contract$_IArbitrator_$740",
                       "typeString": "contract IArbitrator"
                     }
                   },
@@ -820,12 +820,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 396,
+                  "id": 769,
                   "indexed": true,
                   "mutability": "mutable",
                   "name": "_disputeID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 402,
+                  "scope": 775,
                   "src": "1865:26:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -834,7 +834,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 395,
+                    "id": 768,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1865:7:4",
@@ -847,12 +847,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 398,
+                  "id": 771,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_metaEvidenceID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 402,
+                  "scope": 775,
                   "src": "1901:23:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -861,7 +861,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 397,
+                    "id": 770,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1901:7:4",
@@ -874,12 +874,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 400,
+                  "id": 773,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_evidenceGroupID",
                   "nodeType": "VariableDeclaration",
-                  "scope": 402,
+                  "scope": 775,
                   "src": "1934:24:4",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -888,7 +888,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 399,
+                    "id": 772,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1934:7:4",
@@ -905,7 +905,7 @@
             "src": "1801:164:4"
           }
         ],
-        "scope": 404,
+        "scope": 777,
         "src": "262:1705:4"
       }
     ],
@@ -917,7 +917,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-06-28T16:16:00.600Z",
+  "updatedAt": "2021-06-30T14:38:11.415Z",
   "devdoc": {
     "events": {
       "Dispute(address,uint256,uint256,uint256)": {
