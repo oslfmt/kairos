@@ -1,3 +1,4 @@
+// This script publishes the definitions and schemas necessary to run the application
 const TileDocument = require('@ceramicnetwork/stream-tile').TileDocument;
 const KeyDidResolver = require('key-did-resolver').default;
 const ThreeIdResolver = require('@ceramicnetwork/3id-did-resolver').default;
@@ -7,6 +8,7 @@ const { Ed25519Provider } = require('key-did-provider-ed25519');
 const { Resolver } = require('did-resolver')
 const fromString = require('uint8arrays/from-string');
 const { writeFile } = require('fs').promises;
+// const { createDefinition, publishSchema, publishIDXConfig, isSecureSchema } = require('@ceramicstudio/idx-tools');
 require('dotenv').config();
 
 // import schemas
@@ -25,15 +27,28 @@ async function run() {
   await ceramic.did.authenticate();
 
   // publish schemas
-  const jobSchema = await TileDocument.create(ceramic, Job);
-  const userSchema = await TileDocument.create(ceramic, User);
+  const jobSchema = await TileDocument.create(ceramic, Job, { family: "schema" });
+  const userSchema = await TileDocument.create(ceramic, User, { family: "schema" });
+
+  // create definition using userSchema commitID
+  const userDefinition = await TileDocument.create(
+    ceramic,
+    {
+      name: 'KairosProfile',
+      description: 'user profile',
+      schema: userSchema.commitId.toUrl()
+    }
+  );
 
   // write config to json file
   const config = {
+    definitions: {
+      KairosProfile: userDefinition.id.toString()
+    },
     schemas: {
       Job: jobSchema.commitId.toString(),
       User: userSchema.commitId.toString(),
-    },
+    }
   };
 
   // write schema commitIds to config file to be used later

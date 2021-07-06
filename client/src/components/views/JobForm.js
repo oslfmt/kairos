@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { TileDocument } from '@ceramicnetwork/stream-tile';
+import { v4 as uuidv4 } from 'uuid';
 
 // import schema commitIDs
-import schemas from '../../config.json';
+import models from '../../config.json';
 
 function JobForms(props) {
   const ceramic = props.ceramic;
@@ -82,6 +83,13 @@ function JobForms(props) {
 			document.querySelector("#desc-error").classList.add('d-none');
 		}
 
+    if (Number.isInteger(price)) {
+      document.querySelector("#price-error").classList.remove('d-none');
+      errors = 1;
+    } else {
+      document.querySelector("#price-error").classList.add('d-none');
+    }
+
 		// submit form if no errors
 		if (!errors) {
 			handleSubmit();
@@ -95,22 +103,24 @@ function JobForms(props) {
 
   const handleSubmit = async () => {
     // grab job details from user form
-    const content = { title, description, skills, otherSkills, payments, price };
-
+    /**
+     * Schema validation
+     * - price is not an integer (must be an integer)
+     * - missing ID (figure out how to generate ID)
+     * - missing status
+     */
+    let uuid = uuidv4();
+    let status = "posted"
+    const content = { uuid, title, description, skills, otherSkills, payments, price, status };
     const metadata = {
       family: "jobs",
-      schema: schemas.Job,
+      schema: models.schemas.Job,
     };
 
     const jobDoc = await TileDocument.create(ceramic, content, metadata);
-
     // probably save this streamID somewhere to reference it later
     const streamID = jobDoc.id.toString();
-    console.log(streamID);
   }
-  // TODO
-  // 1. deploy schemas and figure out there commits, and how to import them
-  // 2. test submission of jobs and docs are submitted to ceramic streams
 
   return (
     <section id="postjob">
@@ -173,7 +183,7 @@ function JobForms(props) {
             <Checkbox label="Open to discussion" onChange={handleCheckbox} />
           </div>
           <div className="form-group">
-            <label>What price range are you willing to pay?</label>
+            <label>What price will you pay?</label>
             <input type="text" className="form-control" name="price" onChange={handleInputChange} />
             <p id="price-error" className="small-text font-italic d-none">Please enter a price that is a number</p>
           </div>

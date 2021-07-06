@@ -1,12 +1,12 @@
 {
-  "$schema": "http://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/jobs.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/schemas/job.json",
   "title": "job",
   "description": "A job posting by a user. Every job has 1 of 3 statuses: posted, active, completed",
   "type": "object",
   "required": ["id", "title", "description", "paymentTypes", "status"],
   "properties": {
-    "id": {
+    "uuid": {
       "description": "uuid for the job",
       "type": "integer"
     },
@@ -44,7 +44,7 @@
       "type": "array",
       "items": { 
         "type": "string",
-        "enum": ["flat fee", "endorsement", "tips"]
+        "enum": ["Flat fee", "Pay what I want", "Endorsement", "Open to discussion"]
       },
       "uniqueItems": true,
       "minItems": 1
@@ -52,7 +52,7 @@
     "status": {
       "description": "the status of the job (posted/applied, active, complete)",
       "type": "string",
-      "enum": ["posted/applied", "active", "complete"],
+      "enum": ["posted", "active", "complete"],
       "maxItems": 1
     }
   }

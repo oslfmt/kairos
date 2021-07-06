@@ -23,12 +23,19 @@ import Web3 from 'web3';
 // import provider detector
 import detectEthereumProvider from '@metamask/detect-provider';
 
+// import contract abis
+import Escrow from './build/contracts/Escrow.json'
+import EscrowDisputeManager from './build/contracts/EscrowDisputeManager.json'
+
 function App() {
   const [currentAccount, setCurrentAccount] = useState(null);
   const [did, setDid] = useState('');
   const [ethereum, setEthereum] = useState(null);
   const [web3, setWeb3] = useState(null);
   const [ceramic, setCeramic] = useState(null);
+
+  const [escrowContract, setEscrowContract] = useState(null);
+  const [escrowDisputeManager, setEscrowDisputeManager] = useState(null);
 
   // set ceramic
   useEffect(() => {
@@ -81,26 +88,20 @@ function App() {
     }
   }, [setDid, ceramic, currentAccount, ethereum]);
 
-  // TODO: deploy schemas ONCE and then use streamIDs of them in the app
-  // 1. publish the schemas to ceramic node as TileDocs
-  // 2. store the streamID of the schemas to a JSON file that will be used by app
-  // useEffect(() => {
-  //   const deploySchemas = async () => {
-  //     const jobSchema = await TileDocument.create(ceramic, Job, { tag: "schema" });
-  //     const userSchema = await TileDocument.create(ceramic, User, { tag: "schema" });
-  //     console.log(jobSchema)
-  //     console.log(userSchema)
+  // load in contracts to frontend
+  useEffect(() => {
+    const loadContracts = async () => {
+      let escrow = new web3.eth.Contract(Escrow.abi);
+      let escrowDisputeManager = new web3.eth.Contract(EscrowDisputeManager.abi)
+      
+      setEscrowContract(escrow);
+      setEscrowDisputeManager(escrowDisputeManager);
+    }
 
-  //     const jobStreamID = jobSchema.id.toString();
-  //     const userStreamID = userSchema.id.toString();
-
-  //     console.log(jobStreamID)
-  //     console.log(userStreamID)
-  //     // save to database?
-  //   }
-
-  //   deploySchemas();
-  // });
+    if (web3) {
+      loadContracts();
+    }
+  }, [web3])
 
   return (
     <Router>
