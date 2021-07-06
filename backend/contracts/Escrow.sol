@@ -11,7 +11,7 @@ contract Escrow is IArbitrable, IEvidence {
   uint256 constant numberOfRulingOptions = 2;
   // for now, default arbitrator is Kleros Court on Kovan (later change to mainnet)
   // why does wrapping address in IArbitrator work??
-  IArbitrator defaultArbitrator = IArbitrator(0x60B2AbfDfaD9c0873242f59f2A8c32A3Cc682f80);
+  IArbitrator public defaultArbitrator = IArbitrator(0x60B2AbfDfaD9c0873242f59f2A8c32A3Cc682f80);
 
   struct Contract {
     address payable payer;
@@ -36,27 +36,27 @@ contract Escrow is IArbitrable, IEvidence {
     string memory _metaEvidence, 
     uint256 _reclamationPeriod, 
     uint256 _arbitrationFeeDepositPeriod
-    ) public payable returns (uint256 contractID) {
-      emit MetaEvidence(contracts.length, _metaEvidence);
+  ) public payable returns (uint256 contractID) {
+    emit MetaEvidence(contracts.length, _metaEvidence);
 
-      contracts.push(
-        Contract({
-          payer: payable(msg.sender),
-          payee: _payee,
-          arbitrator: defaultArbitrator,
-          status: Status.Initial,
-          value: msg.value,
-          disputeID: 0,
-          createdAt: block.timestamp,
-          reclaimedAt: 0,
-          payerFeeDeposit: 0,
-          payeeFeeDeposit: 0,
-          reclamationPeriod: _reclamationPeriod,
-          arbitrationFeeDepositPeriod: _arbitrationFeeDepositPeriod
-        })
-      );
+    contracts.push(
+      Contract({
+        payer: payable(msg.sender),
+        payee: _payee,
+        arbitrator: defaultArbitrator,
+        status: Status.Initial,
+        value: msg.value,
+        disputeID: 0,
+        createdAt: block.timestamp,
+        reclaimedAt: 0,
+        payerFeeDeposit: 0,
+        payeeFeeDeposit: 0,
+        reclamationPeriod: _reclamationPeriod,
+        arbitrationFeeDepositPeriod: _arbitrationFeeDepositPeriod
+      })
+    );
 
-      contractID = contracts.length - 1;
+    contractID = contracts.length - 1;
   }
 
   function releaseFunds(uint256 _contractID) public {
@@ -100,6 +100,10 @@ contract Escrow is IArbitrable, IEvidence {
     require(transaction.status != Status.Resolved, "Transaction not in resolved state");
     require(msg.sender == transaction.payer || msg.sender == transaction.payee, "Third parties are not allowed to submit evidence");
     emit Evidence(transaction.arbitrator, _contractID, msg.sender, _evidence);
+  }
+
+  function contractBalance() public view returns (uint) {
+    return address(this).balance;
   }
 }
 
