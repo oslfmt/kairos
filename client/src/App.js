@@ -89,6 +89,8 @@ function App() {
   }, [setDid, ceramic, currentAccount, ethereum]);
 
   // load in contracts to frontend
+  // is there more efficient way to do this, such as load in a script?
+  // TODO: look off of other dapp examples to efficiently load in all contracts & contract methods for easy & clean access
   useEffect(() => {
     const loadContracts = async () => {
       let escrow = new web3.eth.Contract(Escrow.abi);
@@ -101,7 +103,7 @@ function App() {
     if (web3) {
       loadContracts();
     }
-  }, [web3])
+  }, [web3]);
 
   return (
     <Router>

@@ -27,7 +27,7 @@ function JobForms(props) {
         setDescription(value);
         break;
       case 'price':
-        setPrice(value);
+        setPrice(parseInt(value));
         break;
       case 'otherSkills':
         setOtherSkills(value);
@@ -83,12 +83,12 @@ function JobForms(props) {
 			document.querySelector("#desc-error").classList.add('d-none');
 		}
 
-    if (Number.isInteger(price)) {
-      document.querySelector("#price-error").classList.remove('d-none');
-      errors = 1;
-    } else {
-      document.querySelector("#price-error").classList.add('d-none');
-    }
+    // if (Number.isInteger(price)) {
+    //   document.querySelector("#price-error").classList.remove('d-none');
+    //   errors = 1;
+    // } else {
+    //   document.querySelector("#price-error").classList.add('d-none');
+    // }
 
 		// submit form if no errors
 		if (!errors) {
@@ -109,8 +109,8 @@ function JobForms(props) {
      * - missing ID (figure out how to generate ID)
      * - missing status
      */
-    let uuid = uuidv4();
-    let status = "posted"
+    let uuid = uuidv4(); // generate uuid
+    let status = "posted"; // initial status is posted
     const content = { uuid, title, description, skills, otherSkills, payments, price, status };
     const metadata = {
       family: "jobs",

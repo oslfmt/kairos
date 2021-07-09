@@ -4,11 +4,11 @@
   "title": "job",
   "description": "A job posting by a user. Every job has 1 of 3 statuses: posted, active, completed",
   "type": "object",
-  "required": ["id", "title", "description", "paymentTypes", "status"],
+  "required": ["uuid", "title", "description", "paymentTypes", "status"],
   "properties": {
     "uuid": {
       "description": "uuid for the job",
-      "type": "integer"
+      "type": "string"
     },
     "clientID": {
       "description": "identifier of the client who posted the job",
@@ -50,7 +50,7 @@
       "minItems": 1
     },
     "status": {
-      "description": "the status of the job (posted/applied, active, complete)",
+      "description": "the status of the job (posted, active, complete)",
       "type": "string",
       "enum": ["posted", "active", "complete"],
       "maxItems": 1
