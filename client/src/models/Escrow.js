@@ -87,3 +87,8 @@ export class Escrow {
 
   // add listeners for events?
 }
+
+//TODO
+// 1. figure out whether {from: address} is necessary in wrapper method calls
+// 2. figure out how to setWeb3 and setAddress works with frontend
+// 3. figure out of event listener wrappers are necessary and how to set them up
