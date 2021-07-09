@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import CustomSearchBox from '../search/CustomSearchBox';
-import Job from '../Job/Job.js';
-import { HomeHeader } from '../layout/HomeHeader';
-import Footer from '../layout/Footer';
+import CustomSearchBox from '../components/search/CustomSearchBox';
+import Job from '../components/Job/Job';
+import { HomeHeader } from '../components/layout/HomeHeader';
+import Footer from '../components/layout/Footer';
 
 export default function Home(props) {
   const [jobs, setJobs] = useState([]);

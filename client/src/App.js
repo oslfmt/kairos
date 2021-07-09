@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import './css/main.css';
 
 // import pages
-import Home from './components/views/Home';
+import Home from './views/Home';
 import Header from './components/layout/Header';
-import JobForms from './components/views/JobForm';
+import JobForms from './views/JobForm';
 import BrowseGrid from './components/search/BrowseGrid';
 import Dashboard from './components/dashboard/Dashboard';
 import Footer from './components/layout/Footer'

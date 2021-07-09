@@ -3,7 +3,7 @@ import { TileDocument } from '@ceramicnetwork/stream-tile';
 import { v4 as uuidv4 } from 'uuid';
 
 // import schema commitIDs
-import models from '../../config.json';
+import models from '../config.json';
 
 function JobForms(props) {
   const ceramic = props.ceramic;
