@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './css/main.css';
 
@@ -26,6 +26,7 @@ import detectEthereumProvider from '@metamask/detect-provider';
 // import contract abis
 import Escrow from './build/contracts/Escrow.json'
 import EscrowDisputeManager from './build/contracts/EscrowDisputeManager.json'
+import ContractForm from './components/ContractForm';
 
 function App() {
   const [currentAccount, setCurrentAccount] = useState(null);
@@ -134,6 +135,10 @@ function App() {
             <BrowseGrid {...props} />
           )}
         />
+
+        <Route path="/createcontract">
+          <ContractForm />
+        </Route>
 
         <Route exact path="/">
           <Home web3={web3} ethereum={ethereum} setCurrentAccount={setCurrentAccount} did={did} />
