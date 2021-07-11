@@ -8,25 +8,28 @@ const { Ed25519Provider } = require('key-did-provider-ed25519');
 const { Resolver } = require('did-resolver')
 const fromString = require('uint8arrays/from-string');
 const { writeFile } = require('fs').promises;
-// const { createDefinition, publishSchema, publishIDXConfig, isSecureSchema } = require('@ceramicstudio/idx-tools');
 require('dotenv').config();
 
 // import schemas
 const User = require('./models/user.json');
 const Job = require('./models/job.json');
-
+const config = require('./src/config.json');
 const API_URL = 'https://ceramic-clay.3boxlabs.com';
+let ceramic; // global ceramic instance
 
-async function run() {
+async function setCeramic() {
   const seed = fromString(process.env.SEED, 'base16');
-  const ceramic = new Ceramic(API_URL);
+  ceramic = new Ceramic(API_URL);
   const resolver = new Resolver({ ...KeyDidResolver.getResolver(), ...ThreeIdResolver.getResolver(ceramic) });
   const provider = new Ed25519Provider(seed);
   const did = new DID({ provider, resolver });
   ceramic.setDID(did);
   await ceramic.did.authenticate();
 
-  // publish schemas
+  console.log('Initialized ceramic instance');
+}
+
+async function publishSchemas() {
   const jobSchema = await TileDocument.create(ceramic, Job, { family: "schema" });
   const userSchema = await TileDocument.create(ceramic, User, { family: "schema" });
 
@@ -57,4 +60,29 @@ async function run() {
   process.exit(0);
 }
 
-run().catch(console.error);
+async function updateSchema(streamID, newSchema) {
+  const doc = await TileDocument.load(ceramic, streamID);
+  await doc.update(newSchema);
+}
+
+function main() {
+  try {
+    // initialize ceramic instance
+    setCeramic();
+
+    // publish or update the schemas, depending on args
+    if (process.argv[2] === "publish") {
+      publishSchemas();
+    } else if (process.argv[2] === "update") {
+      if (process.argv[3] === "user") {
+        updateSchema(config.schemas.User, User);
+      } else if (process.argv[3] === "job") {
+        updateSchema(config.schemas.Job, Job)
+      }
+    }
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+main();
