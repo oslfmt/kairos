@@ -4,8 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 // import schema commitIDs
 import models from '../config.json';
+import ContractForm from '../components/ContractForm';
 
-function JobForms(props) {
+function JobForm(props) {
   const ceramic = props.ceramic;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -13,6 +14,9 @@ function JobForms(props) {
   const [otherSkills, setOtherSkills] = useState("");
   const [payments, setPayments] = useState([]);
   const [price, setPrice] = useState(0);
+
+  const [validated, setValidated] = useState(false);
+  const [display, setDisplay] = useState(false);
 
   const handleInputChange = (e) => {
     const target = e.target;
@@ -32,6 +36,7 @@ function JobForms(props) {
       case 'otherSkills':
         setOtherSkills(value);
         break;
+      default:
     }
   }
 
@@ -92,16 +97,17 @@ function JobForms(props) {
 
 		// submit form if no errors
 		if (!errors) {
-			handleSubmit();
-			// update UI with success/failure msg
-			document.querySelector('.notification').classList.remove('d-none');
+			// handleSubmit();
 			document.querySelector('.error-msg').classList.add('d-none');
+
+      setValidated(true);
 		} else {
 			document.querySelector('.error-msg').classList.remove('d-none');
 		}
 	}
 
-  const handleSubmit = async () => {
+  // only submits job details, not contract
+  const submitJob = async () => {
     // grab job details from user form
     /**
      * Schema validation
@@ -120,6 +126,7 @@ function JobForms(props) {
     const jobDoc = await TileDocument.create(ceramic, content, metadata);
     // probably save this streamID somewhere to reference it later
     const streamID = jobDoc.id.toString();
+    console.log(streamID);
   }
 
   return (
@@ -187,9 +194,16 @@ function JobForms(props) {
             <input type="text" className="form-control" name="price" onChange={handleInputChange} />
             <p id="price-error" className="small-text font-italic d-none">Please enter a price that is a number</p>
           </div>
-          <button onClick={handleValidation} className="btn btn-primary mb-5">Submit</button>
+          <button onClick={handleValidation} className="btn btn-primary mb-5">Continue</button>
         </form>
-        <p className="d-none notification">Job successfully posted!</p>
+        {validated ?
+          <div>
+            <p>Would you like to submit a contract now?</p> 
+            <button className="btn btn-primary" onClick={() => setDisplay(true)}>Yes</button>
+            <button className="btn btn-primary" onClick={submitJob}>No, submit now</button>
+          </div> : null
+        }
+        {display ? <ContractForm escrowInstance={props.escrowInstance} /> : null}
         <p className="d-none error-msg">There were errors in submitting this form</p>
       </div>
     </section>
@@ -209,4 +223,4 @@ const Checkbox = (props) => {
   )
 }
 
-export default JobForms;
+export default JobForm;

@@ -7,9 +7,9 @@ export class Escrow {
   contractInstance = null;
 
   // this function must be called first, could be constructor
-  setWeb3(web3) {
+  constructor(web3) {
     this.web3 = web3;
-    this.contractInstance = this.web3.eth.Contract(Config.ESCROW_ABI, Config.ESCROW_ADDRESS);
+    this.contractInstance = new this.web3.eth.Contract(Config.ESCROW_ABI, Config.ESCROW_ADDRESS);
   }
 
   getWeb3() {

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import UserIconDropDown from '../UserIconDropDown';
 import { Link } from 'react-router-dom'
-// import { handleAccountsChanged } from '../../helper/eth';
 
 function HomeHeader(props) {
   const ethereum = props.ethereum;
@@ -9,6 +8,8 @@ function HomeHeader(props) {
   const did = props.did;
 
   // Requests the ethereum accounts and sets it to the currentAccount
+  // not completely sure what this effect does (I think if user already granted access to account, then this
+  // effect just grabs the currentAccount and sets it in state)
   useEffect(() => {
     if (ethereum) {
       ethereum.request({ method: 'eth_accounts' })

@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Escrow } from '../models/Escrow';
+import React, { useState } from 'react'
 
 // this component is a form that is used to create a new contract
-export default function ContractForm() {
+export default function ContractForm(props) {
+  const escrowInstance = props.escrowInstance;
   // is there a more efficient way to manage state? redux? objects?
   const [payee, setPayee] = useState("");
   const [reclamationPeriod, setReclamationPeriod] = useState("");
   const [arbitrationFeeDepositPeriod, setArbitrationFeeDepositPeriod] = useState("");
   const [value, setValue] = useState("");
   const [contractDetails, setContractDetails] = useState("");
-
-  const [escrowContract, setEscrowContract] = useState("");
-
-  useEffect(() => {
-    let escrowContractInstance = new Escrow();
-    setEscrowContract(escrowContractInstance);
-  }, [setEscrowContract]);
 
   const handleInputChange = (e) => {
     const target = e.target;
@@ -38,19 +31,24 @@ export default function ContractForm() {
       case 'contractDetails':
         setContractDetails(userInput);
         break;
+      default:
     }
   }
-  console.log(escrowContract)
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    escrowContract.createNewContract(
-      payee, 
-      contractDetails, 
-      reclamationPeriod, 
-      arbitrationFeeDepositPeriod, 
-      {from: 'currentAccount', value: value} // what happens if this metadata is not included?
-    );
+  // submits Job details AND contract
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   escrowInstance.createNewContract(
+  //     payee, 
+  //     contractDetails, 
+  //     reclamationPeriod, 
+  //     arbitrationFeeDepositPeriod, 
+  //     {from: 'currentAccount', value: value} // what happens if this metadata is not included?
+  //   );
+  // }
+
+  const handleSubmit = () => {
+    
   }
 
   return (

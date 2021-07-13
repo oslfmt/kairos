@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { updateUserMetadata } from '../../helper/auth';
 
 export default function Profile(props) {
   const [editMode, setEditMode] = useState(false);
