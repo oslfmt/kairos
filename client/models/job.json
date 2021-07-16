@@ -54,6 +54,10 @@
       "type": "string",
       "enum": ["posted", "active", "complete"],
       "maxItems": 1
+    },
+    "contract": {
+      "description": "the contractID associated with the job. can be updated",
+      "type": "string"
     }
   }
 }

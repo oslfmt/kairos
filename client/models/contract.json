@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/schemas/contract.json",
+  "title": "contract",
+  "description": "holds the contract metadata",
+  "type": "object",
+  "properties": {
+    "reclamationPeriod": {
+      "description": "how long the client will have to reclaim funds in case of dispute",
+      "type": "integer",
+      "minimum": 0
+    },
+    "arbitrationFeeDepositPeriod": {
+      "description": "how long parties have to deposit an arbitration fee in case of a dispute",
+      "type": "integer",
+      "minimum": 0
+    },
+    "value": {
+      "description": "the amount to be deposited in escrow and paid to freelancer",
+      "type": "integer",
+      "minimum": 0
+    },
+    "contractDetails": {
+      "description": "Any other information client wants to include in contract",
+      "type": "string"
+    }
+  }
+}

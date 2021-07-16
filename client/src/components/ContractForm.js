@@ -1,10 +1,13 @@
+import { TileDocument } from '@ceramicnetwork/stream-tile';
+import models from '../config.json';
 import React, { useState } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 
 // this component is a form that is used to create a new contract
 export default function ContractForm(props) {
-  const escrowInstance = props.escrowInstance;
+  const jobData = props.data;
+  const ceramic = props.ceramic;
   // is there a more efficient way to manage state? redux? objects?
-  const [payee, setPayee] = useState("");
   const [reclamationPeriod, setReclamationPeriod] = useState("");
   const [arbitrationFeeDepositPeriod, setArbitrationFeeDepositPeriod] = useState("");
   const [value, setValue] = useState("");
@@ -16,9 +19,6 @@ export default function ContractForm(props) {
     const name = target.name;
 
     switch (name) {
-      case 'payee':
-        setPayee(userInput);
-        break;
       case 'reclamationPeriod':
         setReclamationPeriod(userInput);
         break;
@@ -35,30 +35,40 @@ export default function ContractForm(props) {
     }
   }
 
-  // submits Job details AND contract
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   escrowInstance.createNewContract(
-  //     payee, 
-  //     contractDetails, 
-  //     reclamationPeriod, 
-  //     arbitrationFeeDepositPeriod, 
-  //     {from: 'currentAccount', value: value} // what happens if this metadata is not included?
-  //   );
-  // }
+  // submits Job details AND contract details to ceramic
+  const submitJobAndContract = async (e) => {
+    e.preventDefault();
 
-  const handleSubmit = () => {
-    
+    const contract = { reclamationPeriod, arbitrationFeeDepositPeriod, value, contractDetails };
+    const contractMetdata = {
+      family: "contracts",
+      schema: models.schemas.Contract,
+    };
+
+    // create contract document
+    const contractDoc = await TileDocument.create(ceramic, contract, contractMetdata);
+    const contractStreamID = contractDoc.id.toString();
+
+    let uuid = uuidv4(); // generate uuid
+    let status = "posted"; // initial status is posted
+    // use previous contractStreamID created in new job
+    const job = { uuid, ...jobData, status, contractDetails: contractStreamID };
+    const jobMetadata = {
+      family: "jobs",
+      schema: models.schemas.Job,
+    };
+
+    // create job document
+    const jobDoc = await TileDocument.create(ceramic, job, jobMetadata);
+    const jobStreamID = jobDoc.id.toString();
+    // save streamID somewhere for later reference to job
+    // actually might not need uuid for schemas, since streamID functions as a unique ID
   }
 
   return (
     <div className="container mt-5">
       <h1>Create a new contract</h1>
       <form>
-        <div className="form-group mb-4">
-          <label>Payee</label>
-          <input name="payee" className="form-control" value={payee} onChange={handleInputChange} />
-        </div>
         <div className="form-group mb-4">
           <label>Reclamation Period</label>
           <input name="reclamationPeriod" className="form-control" value={reclamationPeriod} onChange={handleInputChange} />
@@ -75,7 +85,7 @@ export default function ContractForm(props) {
           <label>Contract Details</label>
           <textarea name="contractDetails" className="form-control" value={contractDetails} onChange={handleInputChange} />
         </div>
-        <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+        <button className="btn btn-primary" onClick={submitJobAndContract}>Submit</button>
       </form>
     </div>
   );

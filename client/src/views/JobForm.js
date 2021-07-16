@@ -106,7 +106,10 @@ function JobForm(props) {
 		}
 	}
 
-  // only submits job details, not contract
+  // for now, just an aggregate of all jobData
+  let jobData = { title, description, skills, otherSkills, payments, price };
+
+  // only submits job details, not contract details
   const submitJob = async () => {
     // grab job details from user form
     /**
@@ -115,13 +118,13 @@ function JobForm(props) {
      * - missing ID (figure out how to generate ID)
      * - missing status
      */
-    let uuid = uuidv4(); // generate uuid
-    let status = "posted"; // initial status is posted
-    const content = { uuid, title, description, skills, otherSkills, payments, price, status };
-    const metadata = {
-      family: "jobs",
-      schema: models.schemas.Job,
-    };
+     let uuid = uuidv4(); // generate uuid
+     let status = "posted"; // initial status is posted
+     const content = { uuid, title, description, skills, otherSkills, payments, price, status };
+     const metadata = {
+       family: "jobs",
+       schema: models.schemas.Job,
+     };
 
     const jobDoc = await TileDocument.create(ceramic, content, metadata);
     // probably save this streamID somewhere to reference it later
@@ -203,7 +206,7 @@ function JobForm(props) {
             <button className="btn btn-primary" onClick={submitJob}>No, submit now</button>
           </div> : null
         }
-        {display ? <ContractForm escrowInstance={props.escrowInstance} /> : null}
+        {display ? <ContractForm jobData={jobData} {...ceramic} /> : null}
         <p className="d-none error-msg">There were errors in submitting this form</p>
       </div>
     </section>
