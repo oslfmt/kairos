@@ -45,7 +45,7 @@ export default function ContractForm(props) {
       schema: models.schemas.Contract,
     };
 
-    // create contract document
+    // create contract document -- gets submitted to "contracts" collection??
     const contractDoc = await TileDocument.create(ceramic, contract, contractMetdata);
     const contractStreamID = contractDoc.id.toString();
 
@@ -58,11 +58,12 @@ export default function ContractForm(props) {
       schema: models.schemas.Job,
     };
 
-    // create job document
+    // create job document -- saved in "jobs" collection??
     const jobDoc = await TileDocument.create(ceramic, job, jobMetadata);
     const jobStreamID = jobDoc.id.toString();
     // save streamID somewhere for later reference to job
     // actually might not need uuid for schemas, since streamID functions as a unique ID
+    console.log(jobStreamID);
   }
 
   return (

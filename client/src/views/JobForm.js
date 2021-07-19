@@ -123,7 +123,7 @@ function JobForm(props) {
      const content = { uuid, title, description, skills, otherSkills, payments, price, status };
      const metadata = {
        family: "jobs",
-       schema: models.schemas.Job,
+      //  schema: models.schemas.Job,
      };
 
     const jobDoc = await TileDocument.create(ceramic, content, metadata);
@@ -206,7 +206,7 @@ function JobForm(props) {
             <button className="btn btn-primary" onClick={submitJob}>No, submit now</button>
           </div> : null
         }
-        {display ? <ContractForm jobData={jobData} {...ceramic} /> : null}
+        {display ? <ContractForm jobData={jobData} ceramic={ceramic} /> : null}
         <p className="d-none error-msg">There were errors in submitting this form</p>
       </div>
     </section>

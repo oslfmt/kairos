@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/schemas/user.json",
+  "$id": "http://example.com/schema/user.json",
   "title": "KairosProfile",
   "description": "A user profile containing both client and freelancer profiles. Freelancer profile is added when the user creates one. Everyone has a client account by default",
   "type": "object",
@@ -32,7 +32,7 @@
           "description": "jobs the client has posted, completed, or are in-progress",
           "type": "array",
           "items": {
-            "$ref": "/schemas/job.json"
+            "$ref": "/schema/job.json"
           },
           "uniqueItems": true,
           "maxItems": 1000
@@ -70,7 +70,7 @@
           "description": "jobs the freelancer is working on, applied for, or completed",
           "type": "array",
           "items": {
-            "$ref": "/schemas/job.json"
+            "$ref": "/schema/job.json"
           },
           "uniqueItems": true,
           "maxItems": 1000

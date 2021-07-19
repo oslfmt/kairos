@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://example.com/schemas/job.json",
+  "$id": "http://example.com/schema/job.json",
   "title": "job",
   "description": "A job posting by a user. Every job has 1 of 3 statuses: posted, active, completed",
   "type": "object",
@@ -56,7 +56,7 @@
       "maxItems": 1
     },
     "contract": {
-      "description": "the contractID associated with the job. can be updated",
+      "description": "the contract (streamID) associated with the job",
       "type": "string"
     }
   }

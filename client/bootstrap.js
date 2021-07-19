@@ -13,7 +13,10 @@ require('dotenv').config();
 // import schemas
 const User = require('./models/user.json');
 const Job = require('./models/job.json');
-const config = require('./src/config.json');
+const Contract = require('./models/contract.json');
+// import configFile to pull in schemas for updates
+const configFile = require('./src/config.json');
+
 const API_URL = 'https://ceramic-clay.3boxlabs.com';
 let ceramic; // global ceramic instance
 
@@ -32,6 +35,7 @@ async function setCeramic() {
 async function publishSchemas() {
   const jobSchema = await TileDocument.create(ceramic, Job, { family: "schema" });
   const userSchema = await TileDocument.create(ceramic, User, { family: "schema" });
+  const contractSchema = await TileDocument.create(ceramic, Contract, { family: "schema" });
 
   // create definition using userSchema commitID
   const userDefinition = await TileDocument.create(
@@ -51,6 +55,7 @@ async function publishSchemas() {
     schemas: {
       Job: jobSchema.commitId.toString(),
       User: userSchema.commitId.toString(),
+      Contract: contractSchema.commitId.toString(),
     }
   };
 
@@ -62,10 +67,11 @@ async function publishSchemas() {
 
 async function updateSchema(streamID, newSchema) {
   const doc = await TileDocument.load(ceramic, streamID);
-  await doc.update(newSchema);
+  console.log(doc);
+  return await doc.update(newSchema);
 }
 
-function main() {
+async function main() {
   try {
     // initialize ceramic instance
     setCeramic();
@@ -75,9 +81,12 @@ function main() {
       publishSchemas();
     } else if (process.argv[2] === "update") {
       if (process.argv[3] === "user") {
-        updateSchema(config.schemas.User, User);
+        updateSchema(configFile.schemas.User, User);
       } else if (process.argv[3] === "job") {
-        updateSchema(config.schemas.Job, Job)
+        let newID = await updateSchema(configFile.schemas.Job, Job)
+        console.log("Update Job schema with new streamID:", newID);
+      } else if (process.argv[3] === "contract") {
+        updateSchema(configFile.schemas.Contract, Contract);
       }
     }
   } catch(e) {
